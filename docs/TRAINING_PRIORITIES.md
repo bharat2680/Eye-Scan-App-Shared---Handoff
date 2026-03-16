@@ -1,29 +1,64 @@
 # Training Priorities
 
-Last updated: 2026-03-16 22:55 Australia/Melbourne
+Last updated: 2026-03-17 00:07 Australia/Sydney
 
 ## Product truth
 
-- The app now has an honest evaluation-only anterior screening pipeline.
-- The biggest remaining weakness is the broad `surface_abnormal` bucket.
+- the app already has an honest evaluation-only anterior screening pipeline
+- the biggest remaining weakness is the vague `surface_abnormal` bucket
+- glaucoma can wait for now unless it is already mid-run
 
 ## Highest-priority next training work
 
 Do next:
 
-1. train narrower anterior surface specialists
-2. keep packaging each run with metrics, label maps, and intended-use notes
-3. preserve the current pipeline order:
-   - quality gate
-   - surface router
-   - condition specialist
+1. use the finished `conjunctivitis_vs_normal` package as the first narrow
+   surface-follow-on candidate
+2. train `uveitis_vs_normal`
+3. train `pterygium_vs_normal`
+4. train `eyelid_abnormality_vs_normal` only if eyelid disease is still in scope
 
-## Best next anterior specialist candidates
+## Exact training sequence
 
-1. `conjunctivitis_vs_normal`
-2. `pterygium_vs_normal`
-3. `uveitis_vs_normal`
-4. `eyelid_abnormality_vs_normal`
+1. regenerate manifests:
+
+```powershell
+python scripts/prepare_manifests.py
+```
+
+2. train conjunctivitis specialist:
+
+```powershell
+python training/anterior/train.py --config configs/anterior_conjunctivitis_vs_normal_v1_simplecnn.json
+```
+
+3. train uveitis specialist:
+
+```powershell
+python training/anterior/train.py --config configs/anterior_uveitis_vs_normal_v1_simplecnn.json
+```
+
+4. train pterygium specialist:
+
+```powershell
+python training/anterior/train.py --config configs/anterior_pterygium_vs_normal_v1_simplecnn.json
+```
+
+5. train eyelid specialist if still in scope:
+
+```powershell
+python training/anterior/train.py --config configs/anterior_eyelid_abnormality_vs_normal_v1_simplecnn.json
+```
+
+## Current best package already available
+
+- `anterior_conjunctivitis_vs_normal_v1_simplecnn`
+- local package path on Dell:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_conjunctivitis_vs_normal_v1_simplecnn_package`
+- decision threshold:
+  `0.15` on `p(conjunctivitis)`
+- deployment recommendation:
+  `evaluation_only`
 
 ## Keep separate for now
 
@@ -33,4 +68,3 @@ Do next:
 Reason:
 
 - those belong to the fundus branch, not the current anterior app flow
-

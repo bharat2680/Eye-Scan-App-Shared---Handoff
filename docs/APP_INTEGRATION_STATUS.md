@@ -1,16 +1,18 @@
 # App Integration Status
 
-Last updated: 2026-03-16 22:55 Australia/Melbourne
+Last updated: 2026-03-17 00:07 Australia/Sydney
 
 ## Current app-side behavior
 
-The EyeScan iPhone build now uses an app-local anterior screening pipeline instead of the old quality-only stub.
+The EyeScan iPhone build already uses an evaluation-only anterior screening
+pipeline instead of the old quality-only stub.
 
 Current backend sequence:
 
-1. anterior quality gate
-2. anterior surface routing model
-3. cataract-vs-normal model only when the surface model predicts `normal_surface`
+1. `anterior_quality_gate_v1`
+2. `anterior_surface_binary_v2_simplecnn`
+3. `anterior_cataract_vs_normal_v1_simplecnn` only when the surface model
+   predicts `normal_surface`
 
 ## Current backend result modes
 
@@ -35,16 +37,27 @@ Current backend sequence:
 - routed evaluation endpoint:
   `POST /v1/predict`
 
-## Validation completed on the Mac
+## Dell-side update relevant to the app
 
-- `python3 -m unittest backend.test_app` passed
-- `flutter test` passed
-- `flutter analyze` passed
-- live backend health check confirmed all three integrated components are available
+The next best surface-specific specialist now exists on the Dell side:
+
+- `anterior_conjunctivitis_vs_normal_v1_simplecnn`
+- status:
+  `evaluation_only`
+- intended app role:
+  run only after `surface_abnormal` to narrow some broad surface-positive cases
+  into `Possible conjunctivitis pattern detected`
+
+This means the app-side bottleneck is no longer "find a first candidate," but
+"decide when and how to add a second-stage surface specialist without
+overclaiming diagnosis."
 
 ## Recommended app-side follow-up
 
-1. Add a visible `TEST MODE` badge and prevent test-mode exports from being confused with real results.
-2. Separate or clear saved history before formal export evidence runs.
-3. Add narrower anterior specialists after the surface router so surface-positive results become less vague.
-
+1. keep the current three-stage anterior pipeline unchanged for now
+2. add a visible `TEST MODE` badge and prevent test-mode exports from being
+   confused with real results
+3. integrate the conjunctivitis specialist only as an evaluation-only follow-on
+   inside the current `surface_abnormal` branch
+4. if no narrower specialist clears threshold, keep the fallback wording:
+   `Surface abnormality pattern detected`
