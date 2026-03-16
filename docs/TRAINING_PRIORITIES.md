@@ -12,11 +12,10 @@ Last updated: 2026-03-17 00:07 Australia/Sydney
 
 Do next:
 
-1. use the finished `conjunctivitis_vs_normal` package as the first narrow
-   surface-follow-on candidate
-2. train `uveitis_vs_normal`
-3. train `pterygium_vs_normal`
-4. train `eyelid_abnormality_vs_normal` only if eyelid disease is still in scope
+1. train `uveitis_vs_normal`
+2. train `pterygium_vs_normal`
+3. train `eyelid_abnormality_vs_normal` only if eyelid disease is still in scope
+4. keep glaucoma separate from the current anterior app branch
 
 ## Exact training sequence
 
@@ -58,7 +57,7 @@ python training/anterior/train.py --config configs/anterior_eyelid_abnormality_v
 - decision threshold:
   `0.15` on `p(conjunctivitis)`
 - deployment recommendation:
-  `evaluation_only`
+  integrated on Mac as `evaluation_only`
 
 ## Keep separate for now
 

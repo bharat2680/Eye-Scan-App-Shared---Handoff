@@ -12,9 +12,11 @@ specific evaluation-only outputs.
 - integrated:
   - `anterior_quality_gate_v1`
   - `anterior_surface_binary_v2_simplecnn`
+  - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
   - `anterior_cataract_vs_normal_v1_simplecnn`
 - live app can already show:
   - `Possible cataract pattern detected`
+  - `Possible conjunctivitis pattern detected`
   - `Surface abnormality pattern detected`
   - `No screen-positive finding`
   - `Image quality needs recapture`
@@ -27,7 +29,7 @@ specific evaluation-only outputs.
   - `anterior_pterygium_vs_normal_v1`
   - `anterior_eyelid_abnormality_vs_normal_v1`
 - exact `SimpleCNN` configs for those four candidates
-- one finished new specialist artifact:
+- one finished new specialist artifact that is now integrated on Mac:
   - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
 
 ## Best current next specialist
@@ -53,11 +55,9 @@ specific evaluation-only outputs.
 
 ## Recommended next Dell sequence
 
-1. treat the conjunctivitis package as the first real follow-on candidate for
-   the `surface_abnormal` branch
-2. next train `anterior_uveitis_vs_normal_v1_simplecnn`
-3. then train `anterior_pterygium_vs_normal_v1_simplecnn`
-4. only then decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+1. next train `anterior_uveitis_vs_normal_v1_simplecnn`
+2. then train `anterior_pterygium_vs_normal_v1_simplecnn`
+3. only then decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
    belongs in the same branch or should stay separate
 
 ## Important caution

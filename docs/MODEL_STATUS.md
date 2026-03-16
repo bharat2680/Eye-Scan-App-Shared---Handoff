@@ -6,7 +6,8 @@ Last updated: 2026-03-17 00:07 Australia/Sydney
 
 1. `anterior_quality_gate_v1`
 2. `anterior_surface_binary_v2_simplecnn`
-3. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
+3. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only after `surface_abnormal`
+4. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
 
 ## Integrated model roles
 
@@ -48,8 +49,6 @@ Last updated: 2026-03-17 00:07 Australia/Sydney
 - deployment status:
   integrated as `evaluation_only`
 
-## New Dell-side candidate artifact
-
 ### `anterior_conjunctivitis_vs_normal_v1_simplecnn`
 
 - exact dataset path:
@@ -76,7 +75,7 @@ Last updated: 2026-03-17 00:07 Australia/Sydney
   threshold-tuned `test_accuracy=0.9934`
   threshold-tuned confusion matrix `[[53, 1], [0, 97]]`
 - deployment status:
-  `evaluation_only`
+  integrated as `evaluation_only`
 - intended use:
   run only after `surface_abnormal` so the app can narrow some broad
   surface-positive results to
@@ -88,7 +87,7 @@ Last updated: 2026-03-17 00:07 Australia/Sydney
 ## Main remaining weakness
 
 `Surface abnormality pattern detected` is still broad whenever no narrower
-surface specialist is available or confident enough.
+surface specialist is available or confident enough beyond conjunctivitis.
 
 ## Exact next specialist queue
 
@@ -102,6 +101,8 @@ surface specialist is available or confident enough.
   `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_uveitis_vs_normal_v1_simplecnn`
 - deployment status:
   `not_run_yet`
+- current role:
+  best next follow-on candidate after conjunctivitis
 
 ### `anterior_pterygium_vs_normal_v1_simplecnn`
 

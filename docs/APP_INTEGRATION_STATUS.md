@@ -11,7 +11,9 @@ Current backend sequence:
 
 1. `anterior_quality_gate_v1`
 2. `anterior_surface_binary_v2_simplecnn`
-3. `anterior_cataract_vs_normal_v1_simplecnn` only when the surface model
+3. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only when the surface
+   model predicts `surface_abnormal`
+4. `anterior_cataract_vs_normal_v1_simplecnn` only when the surface model
    predicts `normal_surface`
 
 ## Current backend result modes
@@ -27,6 +29,8 @@ Current backend sequence:
 - saved history stores screening metadata
 - individual PDF export includes screening result when present
 - multi-result PDF export includes screening result when present
+- app/backend can now narrow some surface-positive cases to
+  `Possible conjunctivitis pattern detected`
 
 ## Current local backend endpoints
 
@@ -37,27 +41,28 @@ Current backend sequence:
 - routed evaluation endpoint:
   `POST /v1/predict`
 
-## Dell-side update relevant to the app
+## Latest integrated Mac-side addition
 
-The next best surface-specific specialist now exists on the Dell side:
+The first narrower surface-specific specialist is now integrated on the Mac
+side:
 
 - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
 - status:
   `evaluation_only`
-- intended app role:
-  run only after `surface_abnormal` to narrow some broad surface-positive cases
-  into `Possible conjunctivitis pattern detected`
+- current app role:
+  runs only after `surface_abnormal` to narrow some broad surface-positive
+  cases into `Possible conjunctivitis pattern detected`
 
-This means the app-side bottleneck is no longer "find a first candidate," but
-"decide when and how to add a second-stage surface specialist without
-overclaiming diagnosis."
+This means the app-side bottleneck is now no longer "integrate the first
+specialist," but "decide which next surface specialist should follow
+conjunctivitis."
 
 ## Recommended app-side follow-up
 
-1. keep the current three-stage anterior pipeline unchanged for now
+1. keep the current four-stage anterior pipeline stable for now
 2. add a visible `TEST MODE` badge and prevent test-mode exports from being
    confused with real results
-3. integrate the conjunctivitis specialist only as an evaluation-only follow-on
-   inside the current `surface_abnormal` branch
+3. treat `anterior_uveitis_vs_normal_v1_simplecnn` as the next best
+   follow-on candidate for the `surface_abnormal` branch
 4. if no narrower specialist clears threshold, keep the fallback wording:
    `Surface abnormality pattern detected`
