@@ -1,23 +1,51 @@
 # Training Priorities
 
-Last updated: 2026-03-17 00:07 Australia/Sydney
+Last updated: 2026-03-17 08:58 Australia/Sydney
 
 ## Product truth
 
 - the app already has an honest evaluation-only anterior screening pipeline
-- the biggest remaining weakness is the vague `surface_abnormal` bucket
+- the current live order is:
+  1. `anterior_quality_gate_v1`
+  2. `anterior_surface_binary_v2_simplecnn`
+  3. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only after
+     `surface_abnormal`
+  4. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
+- the biggest remaining weakness is the still-broad fallback result:
+  `Surface abnormality pattern detected`
 - glaucoma can wait for now unless it is already mid-run
 
-## Highest-priority next training work
+## Highest-priority next Dell work
 
 Do next:
 
-1. train `uveitis_vs_normal`
-2. train `pterygium_vs_normal`
-3. train `eyelid_abnormality_vs_normal` only if eyelid disease is still in scope
-4. keep glaucoma separate from the current anterior app branch
+1. package and review `anterior_uveitis_vs_normal_v1_simplecnn`
+2. package and review `anterior_pterygium_vs_normal_v1_simplecnn`
+3. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+   belongs in the same app branch or stays optional
+4. gather cleaner external validation data for the new surface specialists
 
-## Exact training sequence
+Why this order is best:
+
+- `uveitis_vs_normal` has the strongest new local result after conjunctivitis
+  while still having materially better support than `pterygium`
+- `pterygium_vs_normal` looks excellent locally but has too little positive
+  support to trust without caution
+- `eyelid_abnormality_vs_normal` is usable, but it is not a clean replacement
+  for the current surface-positive branch
+
+## Current local training status
+
+- completed:
+  - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
+  - `anterior_uveitis_vs_normal_v1_simplecnn`
+  - `anterior_pterygium_vs_normal_v1_simplecnn`
+  - `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+- all four remain `evaluation_only`
+- packaged Mac-ready folders now exist under:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages`
+
+## Exact rerun sequence
 
 1. regenerate manifests:
 
@@ -25,45 +53,66 @@ Do next:
 python scripts/prepare_manifests.py
 ```
 
-2. train conjunctivitis specialist:
+2. rerun conjunctivitis specialist if needed:
 
 ```powershell
 python training/anterior/train.py --config configs/anterior_conjunctivitis_vs_normal_v1_simplecnn.json
 ```
 
-3. train uveitis specialist:
+3. rerun uveitis specialist:
 
 ```powershell
 python training/anterior/train.py --config configs/anterior_uveitis_vs_normal_v1_simplecnn.json
 ```
 
-4. train pterygium specialist:
+4. rerun pterygium specialist:
 
 ```powershell
 python training/anterior/train.py --config configs/anterior_pterygium_vs_normal_v1_simplecnn.json
 ```
 
-5. train eyelid specialist if still in scope:
+5. rerun eyelid specialist if still in scope:
 
 ```powershell
 python training/anterior/train.py --config configs/anterior_eyelid_abnormality_vs_normal_v1_simplecnn.json
 ```
 
-## Current best package already available
+6. if any long run is interrupted, recover metrics from the saved checkpoint:
 
-- `anterior_conjunctivitis_vs_normal_v1_simplecnn`
-- local package path on Dell:
-  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_conjunctivitis_vs_normal_v1_simplecnn_package`
-- decision threshold:
-  `0.15` on `p(conjunctivitis)`
-- deployment recommendation:
-  integrated on Mac as `evaluation_only`
+```powershell
+python scripts/evaluate_checkpoint.py --config <config-path>
+```
 
-## Keep separate for now
+## Recommended app-side decision rule
 
-- glaucoma work
-- general fundus multi-class work
+- keep the current quality gate first
+- keep the current `surface_abnormal` router first
+- if `surface_abnormal`, keep `conjunctivitis` as the first narrower specialist
+- review `uveitis` next, then `pterygium`
+- only add `eyelid_abnormality` if the product explicitly wants eyelid findings
+- only show a more specific evaluation-only label when the selected specialist
+  threshold is met
+- if no specific specialist clears threshold, keep the fallback wording:
+  `Surface abnormality pattern detected`
 
-Reason:
+## Required handoff for every specialist run
 
-- those belong to the fundus branch, not the current anterior app flow
+- exact dataset path
+- exact manifest path
+- exact config path
+- exact artifact path
+- label map
+- preprocessing contract
+- threshold strategy
+- validation metrics
+- test metrics
+- deployment status
+- intended use
+- known failure modes
+
+## Explicitly not recommended first
+
+- another mixed all-anterior classifier
+- exposing diagnosis language without routed gating
+- glaucoma work ahead of the surface-specific anterior cleanup unless it is
+  already mid-run

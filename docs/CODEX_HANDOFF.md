@@ -1,6 +1,6 @@
-# Codex Handoff
+# EyeScan Codex Handoff
 
-Last updated: 2026-03-17 00:07 Australia/Sydney
+Last updated: 2026-03-17 08:58 Australia/Sydney
 
 ## Shared goal
 
@@ -21,49 +21,82 @@ specific evaluation-only outputs.
   - `No screen-positive finding`
   - `Image quality needs recapture`
 
-## What the Dell side has added since the last shared update
+## What the Dell side added in this pass
 
-- exact manifests for:
-  - `anterior_conjunctivitis_vs_normal_v1`
-  - `anterior_uveitis_vs_normal_v1`
-  - `anterior_pterygium_vs_normal_v1`
-  - `anterior_eyelid_abnormality_vs_normal_v1`
-- exact `SimpleCNN` configs for those four candidates
-- one finished new specialist artifact that is now integrated on Mac:
-  - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
+- finished the remaining local surface-specialist training runs:
+  - `anterior_uveitis_vs_normal_v1_simplecnn`
+  - `anterior_pterygium_vs_normal_v1_simplecnn`
+  - `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+- packaged Mac-ready artifact folders for those runs under:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages`
+- refreshed the workspace and shared handoff docs with the new metrics and
+  deployment recommendations
 
-## Best current next specialist
+## New packaged candidate artifacts
 
-### `anterior_conjunctivitis_vs_normal_v1_simplecnn`
+### `anterior_uveitis_vs_normal_v1_simplecnn`
 
-- exact dataset path:
-  `F:\datasets\Image Dataset on Eye Diseases Classification.zip`
-- exact config path:
-  `C:\Users\HP\OneDrive\Documents\Playground\configs\anterior_conjunctivitis_vs_normal_v1_simplecnn.json`
 - exact artifact path:
-  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_conjunctivitis_vs_normal_v1_simplecnn`
-- local package path on Dell:
-  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_conjunctivitis_vs_normal_v1_simplecnn_package`
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_uveitis_vs_normal_v1_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_uveitis_vs_normal_v1_simplecnn_package`
 - threshold:
-  `0.15` on `p(conjunctivitis)`
+  `0.5` on `p(uveitis)`
 - test summary:
-  default `test_accuracy=0.9669`
-  threshold-tuned `test_accuracy=0.9934`
-  threshold-tuned confusion matrix `[[53, 1], [0, 97]]`
+  default `test_accuracy=0.9846`
+  threshold-tuned `test_accuracy=0.9846`
+  threshold-tuned confusion matrix `[[96, 1], [1, 32]]`
 - deployment status:
   `evaluation_only`
 
-## Recommended next Dell sequence
+### `anterior_pterygium_vs_normal_v1_simplecnn`
 
-1. next train `anterior_uveitis_vs_normal_v1_simplecnn`
-2. then train `anterior_pterygium_vs_normal_v1_simplecnn`
-3. only then decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
-   belongs in the same branch or should stay separate
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_pterygium_vs_normal_v1_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_pterygium_vs_normal_v1_simplecnn_package`
+- threshold:
+  `0.05` on `p(pterygium)`
+- test summary:
+  default `test_accuracy=1.0000`
+  threshold-tuned `test_accuracy=1.0000`
+  threshold-tuned confusion matrix `[[97, 0], [0, 15]]`
+- deployment status:
+  `evaluation_only`
+- caution:
+  tiny local support makes this a high-variance result
 
-## Important caution
+### `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
 
-- do not collapse back into a monolithic all-anterior classifier
-- do not treat the current specialist outputs as medical diagnosis
-- do not judge the latest PDF batch without separating:
-  - `SCREENING_PIPELINE`
-  - `TEST_MODE`
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_eyelid_abnormality_vs_normal_v1_simplecnn_package`
+- threshold:
+  `0.35` on `p(eyelid_abnormality)`
+- test summary:
+  default `test_accuracy=0.9318`
+  threshold-tuned `test_accuracy=0.9261`
+  threshold-tuned confusion matrix `[[74, 5], [8, 89]]`
+- deployment status:
+  `evaluation_only`
+- caution:
+  useful as an optional branch, but not a clean default replacement for the
+  current surface-positive route
+
+## Recommended next Mac sequence
+
+1. keep the current integrated pipeline stable
+2. review `anterior_uveitis_vs_normal_v1_simplecnn` as the next best
+   surface-positive candidate after conjunctivitis
+3. review `anterior_pterygium_vs_normal_v1_simplecnn` next, with explicit
+   caution on low sample support
+4. only add `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` if eyelid
+   findings remain intentionally in scope
+5. if no narrower specialist clears threshold, keep the fallback wording:
+   `Surface abnormality pattern detected`
+
+## Not the priority right now
+
+- glaucoma work unless it is already mid-run
+- fundus cleanup ahead of the anterior surface-specificity gap

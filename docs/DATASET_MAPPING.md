@@ -1,40 +1,48 @@
 # Dataset Mapping
 
-Last updated: 2026-03-17 00:07 Australia/Sydney
+Last updated: 2026-03-17 08:58 Australia/Sydney
 
-## Current known dataset references
+## Current local source for anterior specialists
 
-### Dell-side references
+Source:
 
 - `F:\datasets\Image Dataset on Eye Diseases Classification.zip`
-- `F:\datasets\Mendeley Dataset\Original Dataset.zip`
-- `F:\datasets\TEyeDSComplete`
-- `F:\datasets\EyeScan_Anterior_Images\Real_Extracted_Images`
 
-### User-mentioned external-drive reference
+Raw labels available:
 
-- `F:\My Passports\Datasets`
+- `cataract`
+- `conjunctivitis`
+- `eyelid`
+- `normal`
+- `pterygium`
+- `uveitis`
 
-## Recommended current EyeScan role by source
+## Current routed use in the live app
 
-### `Image Dataset on Eye Diseases Classification.zip`
+- `anterior_quality_gate_v1` runs first on the Mac side
+- `anterior_surface_binary_v2_simplecnn` separates:
+  - `normal_surface`
+  - `surface_abnormal`
+- `anterior_conjunctivitis_vs_normal_v1_simplecnn` now runs after
+  `surface_abnormal`
+- `anterior_cataract_vs_normal_v1_simplecnn` runs only after `normal_surface`
 
-Use for:
+This means the current local dataset should now be used to split the
+`surface_abnormal` bucket into narrower evaluation-only specialists instead of
+building another all-anterior classifier.
 
-- anterior surface routing bootstrap
-- cataract-vs-normal specialist
-- future narrower surface specialists
+## Derived task-specific views now available
 
-Available label family:
+### `anterior_surface_binary_v1`
 
-- cataract
-- conjunctivitis
-- eyelid
-- normal
-- pterygium
-- uveitis
-
-## Task-specific anterior views now prepared
+- positive:
+  `conjunctivitis`, `pterygium`, `uveitis`
+- negative:
+  `normal`
+- excluded:
+  `cataract`, `eyelid`
+- current role:
+  first surface-abnormal router
 
 ### `anterior_conjunctivitis_vs_normal_v1`
 
@@ -47,7 +55,9 @@ Available label family:
   val `54 / 97`
   test `54 / 97`
 - current role:
-  best next surface-specific bootstrap specialist
+  first integrated surface-specific bootstrap specialist
+- current artifact status:
+  `evaluation_only`, integrated on Mac after `surface_abnormal`
 
 ### `anterior_uveitis_vs_normal_v1`
 
@@ -60,7 +70,11 @@ Available label family:
   val `33 / 97`
   test `33 / 97`
 - current role:
-  next best follow-on candidate after conjunctivitis
+  next inflammatory-looking surface specialist after conjunctivitis
+- current artifact status:
+  `evaluation_only`, packaged for Mac review
+- caution:
+  label quality may be noisy and visually overlap with other red-eye causes
 
 ### `anterior_pterygium_vs_normal_v1`
 
@@ -73,9 +87,12 @@ Available label family:
   val `15 / 97`
   test `15 / 97`
 - current role:
-  longer-shot narrow surface specialist
+  longer-shot surface specialist candidate
+- current artifact status:
+  `evaluation_only`, packaged for Mac review
 - caution:
-  very small positive class in the current local source
+  current positive count is very small, so treat this as evaluation-only until
+  more curated data is added
 
 ### `anterior_eyelid_abnormality_vs_normal_v1`
 
@@ -89,6 +106,10 @@ Available label family:
   test `79 / 97`
 - current role:
   optional separate branch if eyelid disease remains in product scope
+- current artifact status:
+  `evaluation_only`, packaged but not recommended as a default surface follow-on
+- caution:
+  this is not a clean replacement for the current surface-positive branch
 
 ### `anterior_cataract_vs_normal_v1`
 
@@ -98,24 +119,23 @@ Available label family:
   `normal`
 - current role:
   cataract specialist after `normal_surface`
+- current artifact status:
+  `evaluation_only`, integrated on Mac after `normal_surface`
 
-### `anterior_surface_binary_v1`
+## Interpretation guidance
 
-- positive:
-  `conjunctivitis`, `pterygium`, `uveitis`
-- negative:
-  `normal`
-- excluded:
-  `cataract`, `eyelid`
-- current role:
-  first surface-abnormal router
+- `surface_abnormal` should stay a router or fallback label, not a final
+  diagnosis label
+- `conjunctivitis_vs_normal` is already the first narrow surface-specific head
+  in the live app
+- `uveitis_vs_normal` is the strongest next Dell-side candidate to review after
+  conjunctivitis
+- `pterygium_vs_normal` is promising but data-limited
+- `eyelid_abnormality_vs_normal` should only be promoted if the product still
+  wants eyelid findings in scope
 
-### `Mendeley Dataset\Original Dataset.zip`
+## Fundus note for this pass
 
-Use for:
-
-- fundus branch only
-- DR-vs-healthy
-- glaucoma-related fundus experiments
-
-Do not mix its fundus labels into the current anterior app flow.
+- local fundus manifests and artifacts still exist in this workspace
+- they are not the current app-facing priority while the surface-positive
+  anterior branch is being made more specific

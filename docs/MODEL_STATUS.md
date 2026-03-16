@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-17 00:07 Australia/Sydney
+Last updated: 2026-03-17 08:58 Australia/Sydney
 
 ## Current integrated anterior app pipeline
 
@@ -9,20 +9,24 @@ Last updated: 2026-03-17 00:07 Australia/Sydney
 3. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only after `surface_abnormal`
 4. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
 
-## Integrated model roles
-
-### `anterior_quality_gate_v1`
-
-- role:
-  quality pass/fail only
-- deployment status:
-  integrated
+## Current integrated anterior artifacts
 
 ### `anterior_surface_binary_v2_simplecnn`
 
-- output labels:
-  `normal_surface`, `surface_abnormal`
-- decision rule:
+- exact dataset path:
+  `F:\datasets\Image Dataset on Eye Diseases Classification.zip`
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\anterior_surface_binary_v1.jsonl`
+- exact config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\anterior_surface_binary_v2_simplecnn.json`
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_surface_binary_v2_simplecnn`
+- label map:
+  `normal_surface -> 0`, `surface_abnormal -> 1`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
   plain `argmax`
 - validation metrics:
   `val_accuracy=0.9849`, `val_loss=0.0611`
@@ -30,24 +34,46 @@ Last updated: 2026-03-17 00:07 Australia/Sydney
   `test_accuracy=0.9950`
   confusion matrix `[[96, 1], [0, 102]]`
 - deployment status:
-  integrated as `evaluation_only`
+  `evaluation_only`
+- intended use:
+  first routed specialist after the anterior quality gate
+- known failure modes:
+  surface-positive output still merges several non-cataract anterior findings
+  and should not be shown as a diagnosis
 
 ### `anterior_cataract_vs_normal_v1_simplecnn`
 
-- output labels:
-  `cataract`, `normal`
-- decision rule:
-  positive label `cataract`
-  threshold `0.15` on `p(cataract)`
+- exact dataset path:
+  `F:\datasets\Image Dataset on Eye Diseases Classification.zip`
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\anterior_cataract_vs_normal_v1.jsonl`
+- exact config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\anterior_cataract_vs_normal_v1_simplecnn.json`
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_cataract_vs_normal_v1_simplecnn`
+- label map:
+  `cataract -> 0`, `normal -> 1`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on the `cataract` score with
+  `selected_threshold=0.15`
 - validation metrics:
-  `val_accuracy=0.8958`, `val_loss=0.2602`
+  best checkpoint `val_accuracy=0.8958`, `val_loss=0.2602`
   threshold-tuned `balanced_accuracy=0.9273`
 - test metrics:
   default `test_accuracy=0.9553`
+  default confusion matrix `[[75, 7], [1, 96]]`
   threshold-tuned `test_accuracy=0.9609`
   threshold-tuned confusion matrix `[[80, 2], [5, 92]]`
 - deployment status:
-  integrated as `evaluation_only`
+  `evaluation_only`
+- intended use:
+  run only after `normal_surface`
+- known failure modes:
+  trained on one local source only and not validated on an external clinical
+  holdout
 
 ### `anterior_conjunctivitis_vs_normal_v1_simplecnn`
 
@@ -59,15 +85,18 @@ Last updated: 2026-03-17 00:07 Australia/Sydney
   `C:\Users\HP\OneDrive\Documents\Playground\configs\anterior_conjunctivitis_vs_normal_v1_simplecnn.json`
 - exact artifact path:
   `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_conjunctivitis_vs_normal_v1_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_conjunctivitis_vs_normal_v1_simplecnn_package`
 - label map:
   `conjunctivitis -> 0`, `normal -> 1`
-- preprocessing:
-  RGB, `224 x 224`, direct resize, `float32`, internal `Rescaling(1.0 / 255.0)`
-- decision rule:
-  positive label `conjunctivitis`
-  threshold `0.15` on `p(conjunctivitis)`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on the `conjunctivitis` score with
+  `selected_threshold=0.15`
 - validation metrics:
-  `val_accuracy=0.9875`, `val_loss=0.0920`
+  best checkpoint `val_accuracy=0.9875`, `val_loss=0.0920`
   threshold-tuned `balanced_accuracy=0.9897`
 - test metrics:
   default `test_accuracy=0.9669`
@@ -75,53 +104,139 @@ Last updated: 2026-03-17 00:07 Australia/Sydney
   threshold-tuned `test_accuracy=0.9934`
   threshold-tuned confusion matrix `[[53, 1], [0, 97]]`
 - deployment status:
-  integrated as `evaluation_only`
+  `evaluation_only`
 - intended use:
   run only after `surface_abnormal` so the app can narrow some broad
-  surface-positive results to
-  `Possible conjunctivitis pattern detected`
+  surface-positive results to `Possible conjunctivitis pattern detected`
 - known failure modes:
   single-source bootstrap training only and likely overlap with other red-eye
   causes not labeled separately here
 
-## Main remaining weakness
-
-`Surface abnormality pattern detected` is still broad whenever no narrower
-surface specialist is available or confident enough beyond conjunctivitis.
-
-## Exact next specialist queue
+## New Dell-side specialist artifacts ready for Mac review
 
 ### `anterior_uveitis_vs_normal_v1_simplecnn`
 
-- dataset path:
+- exact dataset path:
   `F:\datasets\Image Dataset on Eye Diseases Classification.zip`
-- config path:
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\anterior_uveitis_vs_normal_v1.jsonl`
+- exact config path:
   `C:\Users\HP\OneDrive\Documents\Playground\configs\anterior_uveitis_vs_normal_v1_simplecnn.json`
-- artifact path:
+- exact artifact path:
   `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_uveitis_vs_normal_v1_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_uveitis_vs_normal_v1_simplecnn_package`
+- label map:
+  `normal -> 0`, `uveitis -> 1`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on the `uveitis` score with
+  `selected_threshold=0.5`
+- validation metrics:
+  best checkpoint `val_accuracy=0.9792`, `val_loss=0.1344`
+  threshold-tuned `balanced_accuracy=0.9846`
+- test metrics:
+  default `test_accuracy=0.9846`
+  default confusion matrix `[[96, 1], [1, 32]]`
+  threshold-tuned `test_accuracy=0.9846`
+  threshold-tuned confusion matrix `[[96, 1], [1, 32]]`
 - deployment status:
-  `not_run_yet`
-- current role:
-  best next follow-on candidate after conjunctivitis
+  `evaluation_only`
+- intended use:
+  optional follow-on specialist after `surface_abnormal` to narrow some
+  inflammatory-looking cases
+- known failure modes:
+  single-source bootstrap only, no external holdout, and likely overlap with
+  other red-eye causes
 
 ### `anterior_pterygium_vs_normal_v1_simplecnn`
 
-- dataset path:
+- exact dataset path:
   `F:\datasets\Image Dataset on Eye Diseases Classification.zip`
-- config path:
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\anterior_pterygium_vs_normal_v1.jsonl`
+- exact config path:
   `C:\Users\HP\OneDrive\Documents\Playground\configs\anterior_pterygium_vs_normal_v1_simplecnn.json`
-- artifact path:
+- exact artifact path:
   `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_pterygium_vs_normal_v1_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_pterygium_vs_normal_v1_simplecnn_package`
+- label map:
+  `normal -> 0`, `pterygium -> 1`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on the `pterygium` score with
+  `selected_threshold=0.05`
+- validation metrics:
+  best checkpoint `val_accuracy=1.0000`, `val_loss=0.0262`
+  threshold-tuned `balanced_accuracy=1.0000`
+- test metrics:
+  default `test_accuracy=1.0000`
+  default confusion matrix `[[97, 0], [0, 15]]`
+  threshold-tuned `test_accuracy=1.0000`
+  threshold-tuned confusion matrix `[[97, 0], [0, 15]]`
 - deployment status:
-  `not_run_yet`
+  `evaluation_only`
+- intended use:
+  optional follow-on specialist after `surface_abnormal` for a more specific
+  evaluation-only label such as `Possible pterygium pattern detected`
+- known failure modes:
+  current local support is tiny with only `72` positive train images and `15`
+  positive test images, so the perfect score should be treated cautiously
 
 ### `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
 
-- dataset path:
+- exact dataset path:
   `F:\datasets\Image Dataset on Eye Diseases Classification.zip`
-- config path:
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\anterior_eyelid_abnormality_vs_normal_v1.jsonl`
+- exact config path:
   `C:\Users\HP\OneDrive\Documents\Playground\configs\anterior_eyelid_abnormality_vs_normal_v1_simplecnn.json`
-- artifact path:
+- exact artifact path:
   `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_eyelid_abnormality_vs_normal_v1_simplecnn_package`
+- label map:
+  `eyelid_abnormality -> 0`, `normal -> 1`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on the `eyelid_abnormality` score with
+  `selected_threshold=0.35`
+- validation metrics:
+  best checkpoint `val_accuracy=0.9205`, `val_loss=0.2539`
+  threshold-tuned `balanced_accuracy=0.9247`
+- test metrics:
+  default `test_accuracy=0.9318`
+  default confusion matrix `[[72, 7], [5, 92]]`
+  threshold-tuned `test_accuracy=0.9261`
+  threshold-tuned confusion matrix `[[74, 5], [8, 89]]`
 - deployment status:
-  `not_run_yet`
+  `evaluation_only`
+- intended use:
+  optional separate specialist only if eyelid findings remain in product scope
+- known failure modes:
+  not a clean surface-only head, depends on eyelid visibility in framing, and
+  the selected validation threshold generalized slightly worse than plain
+  `argmax` on the held-out local test split
+
+## Best next Mac review order
+
+1. keep the current integrated four-stage anterior pipeline stable
+2. review `anterior_uveitis_vs_normal_v1_simplecnn` as the next surface-positive
+   candidate after conjunctivitis
+3. review `anterior_pterygium_vs_normal_v1_simplecnn` next, but keep it
+   explicitly cautious because of tiny local support
+4. only pull `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` into the app
+   if eyelid findings are intentionally in scope
+
+## Deprioritized for this pass
+
+- glaucoma-specific work is parked unless it is already mid-run
+- fundus artifacts still exist locally, but the current app-facing priority is
+  better specificity for anterior surface-positive results

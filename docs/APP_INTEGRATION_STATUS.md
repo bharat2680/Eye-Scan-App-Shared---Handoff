@@ -1,6 +1,6 @@
 # App Integration Status
 
-Last updated: 2026-03-17 00:07 Australia/Sydney
+Last updated: 2026-03-17 08:58 Australia/Sydney
 
 ## Current app-side behavior
 
@@ -41,10 +41,7 @@ Current backend sequence:
 - routed evaluation endpoint:
   `POST /v1/predict`
 
-## Latest integrated Mac-side addition
-
-The first narrower surface-specific specialist is now integrated on the Mac
-side:
+## Current integrated surface-specific specialist
 
 - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
 - status:
@@ -53,16 +50,31 @@ side:
   runs only after `surface_abnormal` to narrow some broad surface-positive
   cases into `Possible conjunctivitis pattern detected`
 
-This means the app-side bottleneck is now no longer "integrate the first
-specialist," but "decide which next surface specialist should follow
-conjunctivitis."
+## New Dell-side packages now ready for Mac review
+
+- `anterior_uveitis_vs_normal_v1_simplecnn`
+  package path on Dell:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_uveitis_vs_normal_v1_simplecnn_package`
+- `anterior_pterygium_vs_normal_v1_simplecnn`
+  package path on Dell:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_pterygium_vs_normal_v1_simplecnn_package`
+- `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+  package path on Dell:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_eyelid_abnormality_vs_normal_v1_simplecnn_package`
+
+These are all still `evaluation_only`. The best next app candidate after the
+already-integrated conjunctivitis head is `anterior_uveitis_vs_normal_v1_simplecnn`.
 
 ## Recommended app-side follow-up
 
 1. keep the current four-stage anterior pipeline stable for now
 2. add a visible `TEST MODE` badge and prevent test-mode exports from being
    confused with real results
-3. treat `anterior_uveitis_vs_normal_v1_simplecnn` as the next best
-   follow-on candidate for the `surface_abnormal` branch
-4. if no narrower specialist clears threshold, keep the fallback wording:
+3. review `anterior_uveitis_vs_normal_v1_simplecnn` next for the
+   `surface_abnormal` branch
+4. review `anterior_pterygium_vs_normal_v1_simplecnn` after that, with
+   explicit caution on low sample support
+5. only pull `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` into the app
+   if eyelid findings are intentionally in scope
+6. if no narrower specialist clears threshold, keep the fallback wording:
    `Surface abnormality pattern detected`
