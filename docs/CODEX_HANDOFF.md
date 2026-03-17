@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-17 08:58 Australia/Sydney
+Last updated: 2026-03-17 15:13 Australia/Sydney
 
 ## Shared goal
 
@@ -110,5 +110,12 @@ specific evaluation-only outputs.
   improve over `v1`
 - `fundus_glaucoma_vs_healthy_v3_mobilenet` was rejected because it performed
   materially worse than the local baseline
+- `fundus_glaucoma_vs_healthy_v4_mobilenet_headonly` was rejected because it
+  collapsed to predicting `glaucoma` for every test image
+- `fundus_dr_vs_healthy_v3_mobilenet_headonly` was rejected because it
+  collapsed to predicting `diabetic_retinopathy` for every test image
 - the best current local fundus-side artifact still remains
   `fundus_router_v1_simplecnn`
+- practical recommendation:
+  pause local fundus disease-specialist promotion until we have better
+  specialist datasets or a more substantial recipe change

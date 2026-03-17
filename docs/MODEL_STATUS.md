@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-17 08:58 Australia/Sydney
+Last updated: 2026-03-17 15:13 Australia/Sydney
 
 ## Current integrated anterior app pipeline
 
@@ -281,9 +281,18 @@ Last updated: 2026-03-17 08:58 Australia/Sydney
   finished slightly worse than `v1`
 - `fundus_glaucoma_vs_healthy_v3_mobilenet`
   performed materially worse with `test_accuracy=0.5674`
+- `fundus_glaucoma_vs_healthy_v4_mobilenet_headonly`
+  also collapsed to the disease class with `test_accuracy=0.5674` and
+  confusion matrix `[[202, 0], [154, 0]]`
+- `fundus_dr_vs_healthy_v3_mobilenet_headonly`
+  also collapsed to the disease class with `test_accuracy=0.5947` and
+  confusion matrix `[[226, 0], [154, 0]]`
 
 ## Deprioritized for this pass
 
 - glaucoma-specific work is parked unless it is already mid-run
 - fundus artifacts still exist locally, but the current app-facing priority is
   better specificity for anterior surface-positive results
+- no new local fundus disease specialist is recommended for Mac integration
+  from this pass; the next likely fundus gain needs better specialist data
+  rather than another small local rerun

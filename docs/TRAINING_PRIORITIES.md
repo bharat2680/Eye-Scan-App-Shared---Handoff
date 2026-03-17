@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-17 08:58 Australia/Sydney
+Last updated: 2026-03-17 15:13 Australia/Sydney
 
 ## Product truth
 
@@ -19,8 +19,10 @@ Last updated: 2026-03-17 08:58 Australia/Sydney
 
 Do next:
 
-1. package and review `anterior_uveitis_vs_normal_v1_simplecnn`
-2. package and review `anterior_pterygium_vs_normal_v1_simplecnn`
+1. coordinate Mac review and integration of
+   `anterior_uveitis_vs_normal_v1_simplecnn`
+2. coordinate Mac review of `anterior_pterygium_vs_normal_v1_simplecnn` with
+   explicit caution on low support
 3. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
    belongs in the same app branch or stays optional
 4. gather cleaner external validation data for the new surface specialists
@@ -38,12 +40,15 @@ Why this order is best:
 
 - `fundus_router_v1_simplecnn` remains the strongest local fundus-side artifact
   with `test_accuracy=0.9819`
-- simple reruns did not improve the disease specialists:
+- local disease-specialist reruns still did not improve enough to promote:
   - `fundus_glaucoma_vs_healthy_v2_balanced_simplecnn` rejected
   - `fundus_dr_vs_healthy_v2_balanced_simplecnn` rejected
   - `fundus_glaucoma_vs_healthy_v3_mobilenet` rejected
-- the next useful fundus progress probably requires cleaner specialist data or a
-  more substantial training recipe shift, not another minor SimpleCNN rerun
+  - `fundus_glaucoma_vs_healthy_v4_mobilenet_headonly` rejected
+  - `fundus_dr_vs_healthy_v3_mobilenet_headonly` rejected
+- the two head-only MobileNet transfer-learning runs also collapsed to the
+  disease class, so the next useful fundus progress probably requires cleaner
+  specialist data or a larger recipe change, not another local baseline rerun
 
 ## Current local training status
 
