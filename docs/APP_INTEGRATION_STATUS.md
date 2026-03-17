@@ -1,6 +1,6 @@
 # App Integration Status
 
-Last updated: 2026-03-17 08:58 Australia/Sydney
+Last updated: 2026-03-17 19:27 AEDT
 
 ## Current app-side behavior
 
@@ -13,7 +13,11 @@ Current backend sequence:
 2. `anterior_surface_binary_v2_simplecnn`
 3. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only when the surface
    model predicts `surface_abnormal`
-4. `anterior_cataract_vs_normal_v1_simplecnn` only when the surface model
+4. `anterior_uveitis_vs_normal_v1_simplecnn` only when the surface model
+   predicts `surface_abnormal` and conjunctivitis stays negative
+5. `anterior_pterygium_vs_normal_v1_simplecnn` only when the surface model
+   predicts `surface_abnormal` and both earlier surface specialists stay negative
+6. `anterior_cataract_vs_normal_v1_simplecnn` only when the surface model
    predicts `normal_surface`
 
 ## Current backend result modes
@@ -31,6 +35,10 @@ Current backend sequence:
 - multi-result PDF export includes screening result when present
 - app/backend can now narrow some surface-positive cases to
   `Possible conjunctivitis pattern detected`
+- app/backend can now narrow some surface-positive cases to
+  `Possible uveitis pattern detected`
+- app/backend can now narrow some surface-positive cases to
+  `Possible pterygium pattern detected`
 
 ## Current local backend endpoints
 
@@ -41,40 +49,35 @@ Current backend sequence:
 - routed evaluation endpoint:
   `POST /v1/predict`
 
-## Current integrated surface-specific specialist
+## Current integrated surface-specific specialists
 
 - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
-- status:
-  `evaluation_only`
-- current app role:
-  runs only after `surface_abnormal` to narrow some broad surface-positive
-  cases into `Possible conjunctivitis pattern detected`
-
-## New Dell-side packages now ready for Mac review
-
 - `anterior_uveitis_vs_normal_v1_simplecnn`
-  package path on Dell:
-  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_uveitis_vs_normal_v1_simplecnn_package`
 - `anterior_pterygium_vs_normal_v1_simplecnn`
-  package path on Dell:
-  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_pterygium_vs_normal_v1_simplecnn_package`
+- status:
+  all three remain `evaluation_only`
+- current app role:
+  they run only after `surface_abnormal` to narrow some broad surface-positive
+  cases before the app falls back to `Surface abnormality pattern detected`
+
+## Remaining optional Dell-side package not yet integrated
+
 - `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
   package path on Dell:
   `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages\anterior_eyelid_abnormality_vs_normal_v1_simplecnn_package`
-
-These are all still `evaluation_only`. The best next app candidate after the
-already-integrated conjunctivitis head is `anterior_uveitis_vs_normal_v1_simplecnn`.
+- status:
+  `evaluation_only`
+- current recommendation:
+  keep it optional unless eyelid findings are intentionally in product scope
 
 ## Recommended app-side follow-up
 
-1. keep the current four-stage anterior pipeline stable for now
+1. keep the current six-stage anterior pipeline stable for now
 2. add a visible `TEST MODE` badge and prevent test-mode exports from being
    confused with real results
-3. review `anterior_uveitis_vs_normal_v1_simplecnn` next for the
-   `surface_abnormal` branch
-4. review `anterior_pterygium_vs_normal_v1_simplecnn` after that, with
-   explicit caution on low sample support
-5. only pull `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` into the app
+3. externally validate the integrated `uveitis` and `pterygium` heads before
+   treating them as more than evaluation-only specialists
+4. only pull `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` into the app
    if eyelid findings are intentionally in scope
-6. if no narrower specialist clears threshold, keep the fallback wording:
+5. if no narrower specialist clears threshold, keep the fallback wording:
    `Surface abnormality pattern detected`

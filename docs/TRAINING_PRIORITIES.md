@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-17 16:08 Australia/Sydney
+Last updated: 2026-03-17 19:27 AEDT
 
 ## Product truth
 
@@ -10,7 +10,12 @@ Last updated: 2026-03-17 16:08 Australia/Sydney
   2. `anterior_surface_binary_v2_simplecnn`
   3. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only after
      `surface_abnormal`
-  4. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
+  4. `anterior_uveitis_vs_normal_v1_simplecnn` only after `surface_abnormal`
+     and only when conjunctivitis stays negative
+  5. `anterior_pterygium_vs_normal_v1_simplecnn` only after
+     `surface_abnormal` and only when the earlier surface specialists stay
+     negative
+  6. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
 - the biggest remaining weakness is the still-broad fallback result:
   `Surface abnormality pattern detected`
 - glaucoma can wait for now unless it is already mid-run
@@ -19,10 +24,11 @@ Last updated: 2026-03-17 16:08 Australia/Sydney
 
 Do next:
 
-1. coordinate Mac review and integration of
+1. gather broader validation data for the already-integrated
    `anterior_uveitis_vs_normal_v1_simplecnn`
-2. coordinate Mac review of `anterior_pterygium_vs_normal_v1_simplecnn` with
-   explicit caution on low support
+2. gather broader validation data for the already-integrated
+   `anterior_pterygium_vs_normal_v1_simplecnn` with explicit caution on low
+   support
 3. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
    belongs in the same app branch or stays optional
 4. gather cleaner external validation data for the new surface specialists
@@ -157,7 +163,7 @@ python scripts/evaluate_checkpoint.py --config <config-path>
 - keep the current quality gate first
 - keep the current `surface_abnormal` router first
 - if `surface_abnormal`, keep `conjunctivitis` as the first narrower specialist
-- review `uveitis` next, then `pterygium`
+- keep `uveitis` next, then `pterygium`
 - only add `eyelid_abnormality` if the product explicitly wants eyelid findings
 - only show a more specific evaluation-only label when the selected specialist
   threshold is met

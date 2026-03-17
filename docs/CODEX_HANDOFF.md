@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-17 16:08 Australia/Sydney
+Last updated: 2026-03-17 19:27 AEDT
 
 ## Shared goal
 
@@ -13,10 +13,14 @@ specific evaluation-only outputs.
   - `anterior_quality_gate_v1`
   - `anterior_surface_binary_v2_simplecnn`
   - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
+  - `anterior_uveitis_vs_normal_v1_simplecnn`
+  - `anterior_pterygium_vs_normal_v1_simplecnn`
   - `anterior_cataract_vs_normal_v1_simplecnn`
 - live app can already show:
   - `Possible cataract pattern detected`
   - `Possible conjunctivitis pattern detected`
+  - `Possible uveitis pattern detected`
+  - `Possible pterygium pattern detected`
   - `Surface abnormality pattern detected`
   - `No screen-positive finding`
   - `Image quality needs recapture`
@@ -31,6 +35,15 @@ specific evaluation-only outputs.
   `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages`
 - refreshed the workspace and shared handoff docs with the new metrics and
   deployment recommendations
+
+## Latest Mac integration note
+
+- `anterior_uveitis_vs_normal_v1_simplecnn` is now integrated after
+  conjunctivitis in the `surface_abnormal` branch
+- `anterior_pterygium_vs_normal_v1_simplecnn` is now integrated after both
+  conjunctivitis and uveitis stay negative
+- live backend version is now:
+  `anterior_screening_eval_v4`
 
 ## New packaged candidate artifacts
 
@@ -87,10 +100,10 @@ specific evaluation-only outputs.
 ## Recommended next Mac sequence
 
 1. keep the current integrated pipeline stable
-2. review `anterior_uveitis_vs_normal_v1_simplecnn` as the next best
-   surface-positive candidate after conjunctivitis
-3. review `anterior_pterygium_vs_normal_v1_simplecnn` next, with explicit
-   caution on low sample support
+2. externally validate the integrated `uveitis` and `pterygium` branches,
+   especially the tiny-support `pterygium` head
+3. keep monitoring the broad fallback rate for
+   `Surface abnormality pattern detected`
 4. only add `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` if eyelid
    findings remain intentionally in scope
 5. if no narrower specialist clears threshold, keep the fallback wording:

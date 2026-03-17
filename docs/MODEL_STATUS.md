@@ -1,13 +1,17 @@
 # Model Status
 
-Last updated: 2026-03-17 16:08 Australia/Sydney
+Last updated: 2026-03-17 19:27 AEDT
 
 ## Current integrated anterior app pipeline
 
 1. `anterior_quality_gate_v1`
 2. `anterior_surface_binary_v2_simplecnn`
 3. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only after `surface_abnormal`
-4. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
+4. `anterior_uveitis_vs_normal_v1_simplecnn` only after `surface_abnormal`
+   and only when conjunctivitis stays negative
+5. `anterior_pterygium_vs_normal_v1_simplecnn` only after `surface_abnormal`
+   and only when both conjunctivitis and uveitis stay negative
+6. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
 
 ## Current integrated anterior artifacts
 
@@ -112,7 +116,7 @@ Last updated: 2026-03-17 16:08 Australia/Sydney
   single-source bootstrap training only and likely overlap with other red-eye
   causes not labeled separately here
 
-## New Dell-side specialist artifacts ready for Mac review
+## Newer anterior specialist artifacts
 
 ### `anterior_uveitis_vs_normal_v1_simplecnn`
 
@@ -144,6 +148,8 @@ Last updated: 2026-03-17 16:08 Australia/Sydney
   threshold-tuned confusion matrix `[[96, 1], [1, 32]]`
 - deployment status:
   `evaluation_only`
+- app integration status:
+  integrated on the Mac in `anterior_screening_eval_v4`
 - intended use:
   optional follow-on specialist after `surface_abnormal` to narrow some
   inflammatory-looking cases
@@ -181,6 +187,8 @@ Last updated: 2026-03-17 16:08 Australia/Sydney
   threshold-tuned confusion matrix `[[97, 0], [0, 15]]`
 - deployment status:
   `evaluation_only`
+- app integration status:
+  integrated on the Mac in `anterior_screening_eval_v4`
 - intended use:
   optional follow-on specialist after `surface_abnormal` for a more specific
   evaluation-only label such as `Possible pterygium pattern detected`
@@ -218,6 +226,8 @@ Last updated: 2026-03-17 16:08 Australia/Sydney
   threshold-tuned confusion matrix `[[74, 5], [8, 89]]`
 - deployment status:
   `evaluation_only`
+- app integration status:
+  not integrated; optional-use only
 - intended use:
   optional separate specialist only if eyelid findings remain in product scope
 - known failure modes:
@@ -227,10 +237,9 @@ Last updated: 2026-03-17 16:08 Australia/Sydney
 
 ## Best next Mac review order
 
-1. keep the current integrated four-stage anterior pipeline stable
-2. review `anterior_uveitis_vs_normal_v1_simplecnn` as the next surface-positive
-   candidate after conjunctivitis
-3. review `anterior_pterygium_vs_normal_v1_simplecnn` next, but keep it
+1. keep the current integrated six-stage anterior pipeline stable
+2. externally validate the integrated `uveitis` branch on broader holdout data
+3. externally validate the integrated `pterygium` branch and keep it
    explicitly cautious because of tiny local support
 4. only pull `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` into the app
    if eyelid findings are intentionally in scope
