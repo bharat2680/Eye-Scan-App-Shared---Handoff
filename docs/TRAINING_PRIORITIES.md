@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-17 15:13 Australia/Sydney
+Last updated: 2026-03-17 16:08 Australia/Sydney
 
 ## Product truth
 
@@ -26,6 +26,8 @@ Do next:
 3. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
    belongs in the same app branch or stays optional
 4. gather cleaner external validation data for the new surface specialists
+5. start the better fundus-data wave using the prepared external staging paths
+   and configs below
 
 Why this order is best:
 
@@ -49,6 +51,57 @@ Why this order is best:
 - the two head-only MobileNet transfer-learning runs also collapsed to the
   disease class, so the next useful fundus progress probably requires cleaner
   specialist data or a larger recipe change, not another local baseline rerun
+
+## Prepared external fundus path
+
+Staging roots expected on the dataset drive:
+
+- `F:\datasets\External Fundus\IDRiD_DR_vs_Healthy`
+- `F:\datasets\External Fundus\REFUGE_Glaucoma_vs_Healthy`
+- `F:\datasets\External Fundus\PAPILA_Glaucoma_vs_Healthy`
+
+Prepared manifest tooling:
+
+- `C:\Users\HP\OneDrive\Documents\Playground\scripts\build_directory_manifest.py`
+- `C:\Users\HP\OneDrive\Documents\Playground\scripts\prepare_external_manifests.py`
+
+Prepared configs:
+
+- `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_dr_idrid_v1_simplecnn.json`
+- `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_glaucoma_refuge_v1_simplecnn.json`
+- `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_glaucoma_papila_v1_simplecnn.json`
+
+Exact next sequence once those staged folders exist:
+
+1. build manifests:
+
+```powershell
+python scripts/prepare_external_manifests.py
+```
+
+2. train DR on IDRiD:
+
+```powershell
+python training/fundus/train.py --config configs/fundus_dr_idrid_v1_simplecnn.json
+```
+
+3. train glaucoma on REFUGE:
+
+```powershell
+python training/fundus/train.py --config configs/fundus_glaucoma_refuge_v1_simplecnn.json
+```
+
+4. train glaucoma on PAPILA as a second specialist check:
+
+```powershell
+python training/fundus/train.py --config configs/fundus_glaucoma_papila_v1_simplecnn.json
+```
+
+Current status of this path:
+
+- manifests are scaffolded but not built yet because the staged dataset
+  folders do not exist on `F:\datasets`
+- deployment status for these external runs is `pending_dataset`
 
 ## Current local training status
 

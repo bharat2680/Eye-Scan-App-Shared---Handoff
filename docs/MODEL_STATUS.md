@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-17 15:13 Australia/Sydney
+Last updated: 2026-03-17 16:08 Australia/Sydney
 
 ## Current integrated anterior app pipeline
 
@@ -296,3 +296,33 @@ Last updated: 2026-03-17 15:13 Australia/Sydney
 - no new local fundus disease specialist is recommended for Mac integration
   from this pass; the next likely fundus gain needs better specialist data
   rather than another small local rerun
+
+## Prepared but not yet trained external fundus runs
+
+- `fundus_dr_idrid_v1_simplecnn`
+  manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\fundus_dr_idrid_v1.jsonl`
+  config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_dr_idrid_v1_simplecnn.json`
+  expected dataset path:
+  `F:\datasets\External Fundus\IDRiD_DR_vs_Healthy`
+  deployment status:
+  `pending_dataset`
+- `fundus_glaucoma_refuge_v1_simplecnn`
+  manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\fundus_glaucoma_refuge_v1.jsonl`
+  config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_glaucoma_refuge_v1_simplecnn.json`
+  expected dataset path:
+  `F:\datasets\External Fundus\REFUGE_Glaucoma_vs_Healthy`
+  deployment status:
+  `pending_dataset`
+- `fundus_glaucoma_papila_v1_simplecnn`
+  manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\fundus_glaucoma_papila_v1.jsonl`
+  config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_glaucoma_papila_v1_simplecnn.json`
+  expected dataset path:
+  `F:\datasets\External Fundus\PAPILA_Glaucoma_vs_Healthy`
+  deployment status:
+  `pending_dataset`

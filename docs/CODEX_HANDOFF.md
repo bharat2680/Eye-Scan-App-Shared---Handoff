@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-17 15:13 Australia/Sydney
+Last updated: 2026-03-17 16:08 Australia/Sydney
 
 ## Shared goal
 
@@ -119,3 +119,24 @@ specific evaluation-only outputs.
 - practical recommendation:
   pause local fundus disease-specialist promotion until we have better
   specialist datasets or a more substantial recipe change
+
+## Prepared next fundus path
+
+- the Dell workspace now supports folder-backed manifests, not just zip-backed
+  manifests
+- verified by smoke test artifact:
+  `C:\Users\HP\OneDrive\Documents\Playground\_scratch\artifacts\smoke_directory_manifest`
+- prepared manifest tools:
+  - `C:\Users\HP\OneDrive\Documents\Playground\scripts\build_directory_manifest.py`
+  - `C:\Users\HP\OneDrive\Documents\Playground\scripts\prepare_external_manifests.py`
+- prepared staged dataset roots:
+  - `F:\datasets\External Fundus\IDRiD_DR_vs_Healthy`
+  - `F:\datasets\External Fundus\REFUGE_Glaucoma_vs_Healthy`
+  - `F:\datasets\External Fundus\PAPILA_Glaucoma_vs_Healthy`
+- prepared next configs:
+  - `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_dr_idrid_v1_simplecnn.json`
+  - `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_glaucoma_refuge_v1_simplecnn.json`
+  - `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_glaucoma_papila_v1_simplecnn.json`
+- current blocker:
+  the staged external fundus folders do not exist on `F:\datasets` yet, so
+  these runs are `pending_dataset` rather than ready-to-train

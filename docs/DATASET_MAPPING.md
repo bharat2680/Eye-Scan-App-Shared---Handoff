@@ -1,6 +1,6 @@
 # Dataset Mapping
 
-Last updated: 2026-03-17 08:58 Australia/Sydney
+Last updated: 2026-03-17 16:08 Australia/Sydney
 
 ## Current local source for anterior specialists
 
@@ -139,3 +139,74 @@ building another all-anterior classifier.
 - local fundus manifests and artifacts still exist in this workspace
 - they are not the current app-facing priority while the surface-positive
   anterior branch is being made more specific
+
+## Prepared external fundus staging paths
+
+These are the exact curated folder roots now expected by the external manifest
+prep script:
+
+### `fundus_dr_idrid_v1`
+
+- exact dataset path:
+  `F:\datasets\External Fundus\IDRiD_DR_vs_Healthy`
+- expected raw folders under that path:
+  `Diabetic Retinopathy`, `Healthy`
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\fundus_dr_idrid_v1.jsonl`
+- exact config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_dr_idrid_v1_simplecnn.json`
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\fundus\fundus_dr_idrid_v1_simplecnn`
+- label map:
+  `Diabetic Retinopathy -> diabetic_retinopathy`, `Healthy -> healthy`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on `p(diabetic_retinopathy)`
+- deployment status:
+  `pending_dataset`
+
+### `fundus_glaucoma_refuge_v1`
+
+- exact dataset path:
+  `F:\datasets\External Fundus\REFUGE_Glaucoma_vs_Healthy`
+- expected raw folders under that path:
+  `Glaucoma`, `Healthy`
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\fundus_glaucoma_refuge_v1.jsonl`
+- exact config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_glaucoma_refuge_v1_simplecnn.json`
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\fundus\fundus_glaucoma_refuge_v1_simplecnn`
+- label map:
+  `Glaucoma -> glaucoma`, `Healthy -> healthy`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on `p(glaucoma)`
+- deployment status:
+  `pending_dataset`
+
+### `fundus_glaucoma_papila_v1`
+
+- exact dataset path:
+  `F:\datasets\External Fundus\PAPILA_Glaucoma_vs_Healthy`
+- expected raw folders under that path:
+  `Glaucoma`, `Healthy`
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\fundus_glaucoma_papila_v1.jsonl`
+- exact config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\fundus_glaucoma_papila_v1_simplecnn.json`
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\fundus\fundus_glaucoma_papila_v1_simplecnn`
+- label map:
+  `Glaucoma -> glaucoma`, `Healthy -> healthy`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on `p(glaucoma)`
+- deployment status:
+  `pending_dataset`
