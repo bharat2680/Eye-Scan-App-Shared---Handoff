@@ -100,3 +100,15 @@ specific evaluation-only outputs.
 
 - glaucoma work unless it is already mid-run
 - fundus cleanup ahead of the anterior surface-specificity gap
+
+## Latest fundus experiment note
+
+- no new Mac-ready fundus package was promoted from this pass
+- `fundus_glaucoma_vs_healthy_v2_balanced_simplecnn` was rejected because it
+  did not improve over `v1`
+- `fundus_dr_vs_healthy_v2_balanced_simplecnn` was rejected because it did not
+  improve over `v1`
+- `fundus_glaucoma_vs_healthy_v3_mobilenet` was rejected because it performed
+  materially worse than the local baseline
+- the best current local fundus-side artifact still remains
+  `fundus_router_v1_simplecnn`

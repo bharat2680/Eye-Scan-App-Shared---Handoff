@@ -34,6 +34,17 @@ Why this order is best:
 - `eyelid_abnormality_vs_normal` is usable, but it is not a clean replacement
   for the current surface-positive branch
 
+## Fundus note from the latest Dell pass
+
+- `fundus_router_v1_simplecnn` remains the strongest local fundus-side artifact
+  with `test_accuracy=0.9819`
+- simple reruns did not improve the disease specialists:
+  - `fundus_glaucoma_vs_healthy_v2_balanced_simplecnn` rejected
+  - `fundus_dr_vs_healthy_v2_balanced_simplecnn` rejected
+  - `fundus_glaucoma_vs_healthy_v3_mobilenet` rejected
+- the next useful fundus progress probably requires cleaner specialist data or a
+  more substantial training recipe shift, not another minor SimpleCNN rerun
+
 ## Current local training status
 
 - completed:

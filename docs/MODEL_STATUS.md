@@ -235,6 +235,53 @@ Last updated: 2026-03-17 08:58 Australia/Sydney
 4. only pull `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` into the app
    if eyelid findings are intentionally in scope
 
+## Current local fundus baseline note
+
+### `fundus_router_v1_simplecnn`
+
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\router\fundus_router_v1_simplecnn`
+- test metrics:
+  `test_accuracy=0.9819`
+  confusion matrix `[[343, 17], [4, 794]]`
+- deployment status:
+  `evaluation_only`
+- intended use:
+  image-type routing between anterior and fundus inputs
+
+### `fundus_dr_vs_healthy_v1_simplecnn`
+
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\fundus\fundus_dr_vs_healthy_v1_simplecnn`
+- test metrics:
+  `test_accuracy=0.7842`
+  threshold-tuned `balanced_accuracy=0.7652`
+- deployment status:
+  `evaluation_only`
+- intended use:
+  local fundus DR baseline only, not yet strong enough for integration
+
+### `fundus_glaucoma_vs_healthy_v1_simplecnn`
+
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\fundus\fundus_glaucoma_vs_healthy_v1_simplecnn`
+- test metrics:
+  `test_accuracy=0.6798`
+  threshold-tuned `balanced_accuracy=0.7001`
+- deployment status:
+  `evaluation_only`
+- intended use:
+  local glaucoma baseline only, not integration-ready
+
+## Rejected fundus reruns from this pass
+
+- `fundus_glaucoma_vs_healthy_v2_balanced_simplecnn`
+  matched the weak `v1` baseline instead of improving it
+- `fundus_dr_vs_healthy_v2_balanced_simplecnn`
+  finished slightly worse than `v1`
+- `fundus_glaucoma_vs_healthy_v3_mobilenet`
+  performed materially worse with `test_accuracy=0.5674`
+
 ## Deprioritized for this pass
 
 - glaucoma-specific work is parked unless it is already mid-run
