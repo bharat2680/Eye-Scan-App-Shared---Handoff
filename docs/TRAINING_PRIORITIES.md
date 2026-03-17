@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-17 21:10 Australia/Sydney
+Last updated: 2026-03-17 22:52 Australia/Sydney
 
 ## Product truth
 
@@ -24,17 +24,24 @@ Last updated: 2026-03-17 21:10 Australia/Sydney
 
 Do next:
 
-1. gather broader validation data for the already-integrated
+1. keep app release and version-code work untouched from this Dell lane
+2. stage the official foundation-model weights to the exact expected paths in
+   `docs/FOUNDATION_MODEL_DOWNLOADS.md`
+3. rerun the staging checker after download; the current verified result is
+   `0 / 4` present with `F:\datasets\FoundationModels` missing
+4. only after the weights exist, add the PyTorch or `timm` transfer-learning
+   path and start with `VisionFM External Eye`
+5. gather broader validation data for the already-integrated
    `anterior_uveitis_vs_normal_v1_simplecnn`
-2. gather broader validation data for the already-integrated
+6. gather broader validation data for the already-integrated
    `anterior_pterygium_vs_normal_v1_simplecnn` with explicit caution on low
    support
-3. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+7. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
    belongs in the same app branch or stays optional
-4. gather cleaner external validation data for the new surface specialists
-5. start the better fundus-data wave using the prepared external staging paths
+8. gather cleaner external validation data for the new surface specialists
+9. start the better fundus-data wave using the prepared external staging paths
    and configs below
-6. review the new TEyeDS-backed quality-gate candidate before changing the live
+10. review the new TEyeDS-backed quality-gate candidate before changing the live
    front gate
 
 Why this order is best:
@@ -185,6 +192,15 @@ Current blocker on this path:
 - the current Dell training stack is TensorFlow-only, so once those weights
   arrive the next implementation step is a PyTorch or `timm`-backed fine-tune
   path for comparison against the local SimpleCNN baselines
+
+Latest verifier result:
+
+- ran:
+  `python scripts/check_foundation_model_staging.py`
+- result:
+  `0 / 4` present
+- exact blocker:
+  `F:\datasets\FoundationModels` does not exist yet
 
 ## Exact rerun sequence
 

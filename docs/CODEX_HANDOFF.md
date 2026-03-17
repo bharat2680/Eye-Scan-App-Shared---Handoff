@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-17 21:10 Australia/Sydney
+Last updated: 2026-03-17 22:52 Australia/Sydney
 
 ## Shared goal
 
@@ -133,6 +133,7 @@ specific evaluation-only outputs.
 
 ## Not the priority right now
 
+- app release or version-code work from the Dell model lane
 - glaucoma work unless it is already mid-run
 - fundus cleanup ahead of the anterior surface-specificity gap
 
@@ -167,6 +168,18 @@ Current blocker:
 - those official weight files are not on `F:\datasets` yet
 - the local trainer is still TensorFlow-only, so Dell-side implementation will
   add a PyTorch or `timm`-based transfer-learning path once the files arrive
+
+Latest staging verification:
+
+- ran:
+  `python scripts/check_foundation_model_staging.py`
+- result:
+  `0 / 4` present
+- exact blocker:
+  `F:\datasets\FoundationModels` does not exist yet
+- status:
+  no transfer-learning artifact has been started from this lane because the
+  weights are still missing
 
 ## Latest fundus experiment note
 

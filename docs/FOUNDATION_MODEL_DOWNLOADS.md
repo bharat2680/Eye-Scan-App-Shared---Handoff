@@ -1,6 +1,6 @@
 # Foundation Model Downloads
 
-Last updated: 2026-03-17 21:10 Australia/Sydney
+Last updated: 2026-03-17 22:52 Australia/Sydney
 
 ## Why this exists
 
@@ -93,6 +93,18 @@ Run after downloads are staged:
 ```powershell
 python scripts/check_foundation_model_staging.py
 ```
+
+## Latest staging verification
+
+- checker run:
+  `python scripts/check_foundation_model_staging.py`
+- result:
+  `0 / 4` present
+- exact blocker:
+  `F:\datasets\FoundationModels` does not exist yet
+- interpretation:
+  no VisionFM or RETFound transfer-learning run has started yet, and that is
+  intentional because the required weights are still missing
 
 ## Expected next Dell implementation step after download
 

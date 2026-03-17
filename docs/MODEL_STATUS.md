@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-17 21:10 Australia/Sydney
+Last updated: 2026-03-17 22:52 Australia/Sydney
 
 ## Current integrated anterior app pipeline
 
@@ -377,3 +377,17 @@ Last updated: 2026-03-17 21:10 Australia/Sydney
   `F:\datasets\External Fundus\PAPILA_Glaucoma_vs_Healthy`
   deployment status:
   `pending_dataset`
+
+## Foundation-model prep status
+
+- checker path:
+  `C:\Users\HP\OneDrive\Documents\Playground\Eye-Scan-App-Shared---Handoff\scripts\check_foundation_model_staging.py`
+- latest verifier result:
+  `0 / 4` staged weight files present
+- exact blocker:
+  `F:\datasets\FoundationModels` does not exist yet
+- current status:
+  `pending_download`
+- note:
+  no VisionFM or RETFound transfer-learning artifact exists yet in this lane
+  because the required official weights are still missing

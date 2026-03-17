@@ -1,6 +1,6 @@
 # Dataset Mapping
 
-Last updated: 2026-03-17 21:10 Australia/Sydney
+Last updated: 2026-03-17 22:52 Australia/Sydney
 
 ## Current local source for anterior specialists
 
@@ -237,6 +237,15 @@ prep script:
 These are not manifests yet. They are the exact weight files now recommended
 for download so the next training wave can compare official pretrained
 ophthalmic backbones against the local baselines.
+
+Latest verifier result:
+
+- ran:
+  `python scripts/check_foundation_model_staging.py`
+- result:
+  `0 / 4` present
+- exact blocker:
+  `F:\datasets\FoundationModels` does not exist yet
 
 ### `visionfm_external_eye`
 
