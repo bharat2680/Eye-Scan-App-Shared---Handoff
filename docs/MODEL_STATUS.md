@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-17 19:27 AEDT
+Last updated: 2026-03-17 21:10 Australia/Sydney
 
 ## Current integrated anterior app pipeline
 
@@ -117,6 +117,44 @@ Last updated: 2026-03-17 19:27 AEDT
   causes not labeled separately here
 
 ## Newer anterior specialist artifacts
+
+### `anterior_quality_gate_v2_teyeds_simplecnn`
+
+- exact dataset path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\teyeds_quality_gate_v1`
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\anterior_quality_gate_v2_teyeds.jsonl`
+- exact config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\anterior_quality_gate_v2_teyeds_simplecnn.json`
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_quality_gate_v2_teyeds_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_quality_gate_packages\anterior_quality_gate_v2_teyeds_simplecnn_package`
+- label map:
+  `good_capture -> 0`, `needs_recapture -> 1`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on the `needs_recapture` score with
+  `selected_threshold=0.35`
+- validation metrics:
+  best checkpoint `val_accuracy=0.8413`, `val_loss=0.4544`
+  threshold-tuned `balanced_accuracy=0.8100`
+- test metrics:
+  default `test_accuracy=0.8256`
+  default confusion matrix `[[111, 9], [25, 50]]`
+  threshold-tuned `test_accuracy=0.8103`
+  threshold-tuned confusion matrix `[[102, 18], [19, 56]]`
+- deployment status:
+  `evaluation_only`
+- intended use:
+  candidate replacement for the current anterior quality gate before
+  downstream routing
+- known failure modes:
+  trained from TEyeDS validity-derived labels rather than your app's own
+  recapture decisions, and the negative class is mostly visibility failure
+  rather than every possible smartphone capture problem
 
 ### `anterior_uveitis_vs_normal_v1_simplecnn`
 
@@ -237,11 +275,15 @@ Last updated: 2026-03-17 19:27 AEDT
 
 ## Best next Mac review order
 
-1. keep the current integrated six-stage anterior pipeline stable
-2. externally validate the integrated `uveitis` branch on broader holdout data
-3. externally validate the integrated `pterygium` branch and keep it
+1. compare `anterior_quality_gate_v2_teyeds_simplecnn` against the current
+   `anterior_quality_gate_v1` on real app captures before changing the front
+   gate
+2. keep the current integrated six-stage anterior pipeline stable behind that
+   quality-gate review
+3. externally validate the integrated `uveitis` branch on broader holdout data
+4. externally validate the integrated `pterygium` branch and keep it
    explicitly cautious because of tiny local support
-4. only pull `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` into the app
+5. only pull `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` into the app
    if eyelid findings are intentionally in scope
 
 ## Current local fundus baseline note

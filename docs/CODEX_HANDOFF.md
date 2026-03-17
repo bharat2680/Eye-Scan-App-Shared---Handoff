@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-17 19:27 AEDT
+Last updated: 2026-03-17 21:10 Australia/Sydney
 
 ## Shared goal
 
@@ -31,6 +31,8 @@ specific evaluation-only outputs.
   - `anterior_uveitis_vs_normal_v1_simplecnn`
   - `anterior_pterygium_vs_normal_v1_simplecnn`
   - `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+- trained and packaged a new Dell-side quality-gate candidate:
+  - `anterior_quality_gate_v2_teyeds_simplecnn`
 - packaged Mac-ready artifact folders for those runs under:
   `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages`
 - refreshed the workspace and shared handoff docs with the new metrics and
@@ -44,6 +46,26 @@ specific evaluation-only outputs.
   conjunctivitis and uveitis stay negative
 - live backend version is now:
   `anterior_screening_eval_v4`
+
+## New packaged quality-gate candidate
+
+### `anterior_quality_gate_v2_teyeds_simplecnn`
+
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_quality_gate_v2_teyeds_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_quality_gate_packages\anterior_quality_gate_v2_teyeds_simplecnn_package`
+- threshold:
+  `0.35` on `p(needs_recapture)`
+- test summary:
+  default `test_accuracy=0.8256`
+  threshold-tuned `test_accuracy=0.8103`
+  threshold-tuned confusion matrix `[[102, 18], [19, 56]]`
+- deployment status:
+  `evaluation_only`
+- caution:
+  useful as a real-data-backed review candidate, but not ready to replace the
+  live gate until it is checked against actual EyeScan captures
 
 ## New packaged candidate artifacts
 
@@ -113,6 +135,38 @@ specific evaluation-only outputs.
 
 - glaucoma work unless it is already mid-run
 - fundus cleanup ahead of the anterior surface-specificity gap
+
+## Official foundation-model downloads now recommended
+
+The next meaningful accuracy jump is more likely to come from official
+ophthalmic pretrained backbones than from another small local rerun. The
+current Dell recommendation is to stage these exact files on `F:\datasets`:
+
+1. `F:\datasets\FoundationModels\VisionFM\ExternalEye\visionfm_external_eye.pth`
+2. `F:\datasets\FoundationModels\VisionFM\SlitLamp\visionfm_slit_lamp.pth`
+3. `F:\datasets\FoundationModels\RETFound\Fundus\retfound_dinov2_meh.pth`
+4. `F:\datasets\FoundationModels\VisionFM\Fundus\visionfm_fundus.pth`
+
+Prepared validator:
+
+- `C:\Users\HP\OneDrive\Documents\Playground\scripts\check_foundation_model_staging.py`
+- mirrored in the shared repo as:
+  `scripts/check_foundation_model_staging.py`
+
+Practical recommendation:
+
+- start with `VisionFM External Eye` for the quality gate and surface-positive
+  specialists because it is the closest modality match to the current app
+- use `VisionFM Slit Lamp` as a secondary anterior comparison, not the first
+  choice
+- use `RETFound` and `VisionFM Fundus` only after the curated external fundus
+  folders are staged
+
+Current blocker:
+
+- those official weight files are not on `F:\datasets` yet
+- the local trainer is still TensorFlow-only, so Dell-side implementation will
+  add a PyTorch or `timm`-based transfer-learning path once the files arrive
 
 ## Latest fundus experiment note
 

@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-17 19:27 AEDT
+Last updated: 2026-03-17 21:10 Australia/Sydney
 
 ## Product truth
 
@@ -34,6 +34,8 @@ Do next:
 4. gather cleaner external validation data for the new surface specialists
 5. start the better fundus-data wave using the prepared external staging paths
    and configs below
+6. review the new TEyeDS-backed quality-gate candidate before changing the live
+   front gate
 
 Why this order is best:
 
@@ -112,13 +114,77 @@ Current status of this path:
 ## Current local training status
 
 - completed:
+  - `anterior_quality_gate_v2_teyeds_simplecnn`
   - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
   - `anterior_uveitis_vs_normal_v1_simplecnn`
   - `anterior_pterygium_vs_normal_v1_simplecnn`
   - `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
-- all four remain `evaluation_only`
+- all five remain `evaluation_only`
 - packaged Mac-ready folders now exist under:
   `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages`
+
+## Quality-gate note from the latest Dell pass
+
+- `anterior_quality_gate_v2_teyeds_simplecnn` is now the best new gate
+  candidate produced in this pass
+- dataset root:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\teyeds_quality_gate_v1`
+- manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\anterior_quality_gate_v2_teyeds.jsonl`
+- config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\anterior_quality_gate_v2_teyeds_simplecnn.json`
+- artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\anterior\anterior_quality_gate_v2_teyeds_simplecnn`
+- package path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_quality_gate_packages\anterior_quality_gate_v2_teyeds_simplecnn_package`
+- default test accuracy:
+  `0.8256`
+- threshold-tuned test balanced accuracy:
+  `0.7984`
+- threshold-tuned `needs_recapture` recall:
+  `0.7467`
+- recommendation:
+  review against real EyeScan captures before replacing `anterior_quality_gate_v1`
+
+## Official foundation-model downloads to stage next
+
+These are the best next internet-sourced model weights to stage on the dataset
+drive before the next recipe change:
+
+1. `VisionFM External Eye`
+2. `VisionFM Slit Lamp`
+3. `RETFound_dinov2_meh`
+4. `VisionFM Fundus`
+
+Why this order is best:
+
+- `VisionFM External Eye` is the closest modality match to EyeScan's
+  smartphone-style anterior captures, so it is the best first bet for the
+  quality gate and the surface-abnormal specialists
+- `VisionFM Slit Lamp` is still relevant for anterior pathology, but it has
+  more capture mismatch than the external-eye branch
+- `RETFound_dinov2_meh` and `VisionFM Fundus` are better saved for the staged
+  external fundus wave once those curated folder datasets exist
+
+Exact staging targets:
+
+- `F:\datasets\FoundationModels\VisionFM\ExternalEye\visionfm_external_eye.pth`
+- `F:\datasets\FoundationModels\VisionFM\SlitLamp\visionfm_slit_lamp.pth`
+- `F:\datasets\FoundationModels\RETFound\Fundus\retfound_dinov2_meh.pth`
+- `F:\datasets\FoundationModels\VisionFM\Fundus\visionfm_fundus.pth`
+
+Prepared validation helper:
+
+- `C:\Users\HP\OneDrive\Documents\Playground\scripts\check_foundation_model_staging.py`
+- mirrored in the shared repo as:
+  `scripts/check_foundation_model_staging.py`
+
+Current blocker on this path:
+
+- the weights are not staged on `F:\datasets` yet
+- the current Dell training stack is TensorFlow-only, so once those weights
+  arrive the next implementation step is a PyTorch or `timm`-backed fine-tune
+  path for comparison against the local SimpleCNN baselines
 
 ## Exact rerun sequence
 

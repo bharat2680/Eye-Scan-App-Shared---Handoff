@@ -1,6 +1,6 @@
 # Dataset Mapping
 
-Last updated: 2026-03-17 16:08 Australia/Sydney
+Last updated: 2026-03-17 21:10 Australia/Sydney
 
 ## Current local source for anterior specialists
 
@@ -30,6 +30,27 @@ Raw labels available:
 This means the current local dataset should now be used to split the
 `surface_abnormal` bucket into narrower evaluation-only specialists instead of
 building another all-anterior classifier.
+
+## Additional local source now prepared for quality-gate work
+
+### `anterior_quality_gate_v2_teyeds`
+
+- source root:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\teyeds_quality_gate_v1`
+- derived labels:
+  `good_capture`, `needs_recapture`
+- split counts:
+  train `561 / 350`
+  val `120 / 75`
+  test `120 / 75`
+- current role:
+  Dell-side replacement candidate for the current Mac quality gate
+- current artifact status:
+  `evaluation_only`, packaged for Mac review
+- caution:
+  labels are derived from TEyeDS visibility-validity annotations, so this is a
+  recapture proxy rather than a perfect match for real EyeScan smartphone
+  capture failures
 
 ## Derived task-specific views now available
 
@@ -210,3 +231,47 @@ prep script:
   threshold-tuned binary decision on `p(glaucoma)`
 - deployment status:
   `pending_dataset`
+
+## Prepared foundation-model staging paths
+
+These are not manifests yet. They are the exact weight files now recommended
+for download so the next training wave can compare official pretrained
+ophthalmic backbones against the local baselines.
+
+### `visionfm_external_eye`
+
+- exact staged weight path:
+  `F:\datasets\FoundationModels\VisionFM\ExternalEye\visionfm_external_eye.pth`
+- intended use:
+  next best pretrained backbone candidate for `anterior_quality_gate`,
+  `anterior_surface_binary`, `conjunctivitis`, `uveitis`, and `pterygium`
+- deployment status:
+  `pending_download`
+
+### `visionfm_slit_lamp`
+
+- exact staged weight path:
+  `F:\datasets\FoundationModels\VisionFM\SlitLamp\visionfm_slit_lamp.pth`
+- intended use:
+  comparison backbone for cataract and surface-specialist refinement
+- deployment status:
+  `pending_download`
+
+### `retfound_dinov2_meh`
+
+- exact staged weight path:
+  `F:\datasets\FoundationModels\RETFound\Fundus\retfound_dinov2_meh.pth`
+- intended use:
+  official pretrained fundus backbone for the next external-data DR and
+  glaucoma wave
+- deployment status:
+  `pending_download`
+
+### `visionfm_fundus`
+
+- exact staged weight path:
+  `F:\datasets\FoundationModels\VisionFM\Fundus\visionfm_fundus.pth`
+- intended use:
+  second official fundus backbone to compare against `RETFound`
+- deployment status:
+  `pending_download`
