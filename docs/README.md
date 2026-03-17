@@ -45,3 +45,6 @@ This is why some PDFs looked useful and others looked vague or generic.
    - eyelid abnormality vs normal
 5. Keep glaucoma work separate for now, because it belongs to the fundus branch rather than the current anterior app flow.
 
+## Related docs
+
+- `PLAY_MONETIZATION_PLAN.md`
