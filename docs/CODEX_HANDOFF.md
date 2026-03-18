@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-18 14:32 Australia/Sydney
+Last updated: 2026-03-18 14:54 AEDT
 
 ## Shared goal
 
@@ -53,16 +53,20 @@ specific evaluation-only outputs.
   `in_app_purchase`
 - Android manifest now includes:
   `com.android.vending.BILLING`
-- the app now has a premium screen plus settings and about-screen entry points
+- the app now has a clinic access screen plus settings and about-screen entry
+  points
 - default product IDs currently compiled into the app are:
-  - subscription: `eyescan_plus`
-  - one-time unlock: `pdf_export_lifetime`
-- premium gating for PDF exports exists but currently defaults to off through:
+  - subscription: `eyescan_clinic`
+- PDF gating for exports exists but currently defaults to off through:
   `EYESCAN_PREMIUM_GATING_ENABLED=false`
+- recommended commercial model is now:
+  `one clinic trial -> one clinic subscription`, not `one user -> one premium unlock`
+- target trial design is:
+  `14 days + 100 scans + up to 2 authorised users`
 - latest billing-enabled Android bundle built on the Mac is:
-  `1.1.4+13`
-- practical next step is Play Console product setup and internal-test upload,
-  not more Dell-side release/versioning work
+  `1.1.5+14`
+- practical next step is Play Console product setup plus backend clinic-trial
+  enforcement design, not more Dell-side release/versioning work
 
 ## New packaged quality-gate candidate
 

@@ -1,6 +1,6 @@
 # App Integration Status
 
-Last updated: 2026-03-18 13:18 AEDT
+Last updated: 2026-03-18 14:54 AEDT
 
 ## Current app-side behavior
 
@@ -64,18 +64,22 @@ Current backend sequence:
 
 - Android Play Billing support is now integrated using Flutter
   `in_app_purchase`
-- the app now exposes a premium screen from settings and the about screen
+- the app now exposes a clinic access screen from settings and the about screen
 - default Play product IDs currently compiled into the app are:
-  - subscription: `eyescan_plus`
-  - one-time unlock: `pdf_export_lifetime`
-- PDF export and multi-result PDF export can be premium-gated, but premium
-  gating is currently disabled by default through:
+  - subscription: `eyescan_clinic`
+- PDF export and multi-result PDF export can be access-gated, but gating is
+  currently disabled by default through:
   `EYESCAN_PREMIUM_GATING_ENABLED=false`
+- trial defaults currently compiled into the app are:
+  - `14` days
+  - `100` scans
+  - `2` authorised users
 - latest billing-enabled Android bundle built locally:
-  `1.1.4+13`
+  `1.1.5+14`
 - current limitation:
-  entitlement handling is local-device based for first release/testing and
-  does not yet include server-side receipt validation
+  entitlement handling is still local-device based for first release/testing
+  and does not yet include backend clinic-trial enforcement or server-side
+  receipt validation
 
 ## Remaining optional Dell-side package not yet integrated
 

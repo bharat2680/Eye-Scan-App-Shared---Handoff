@@ -1,6 +1,6 @@
 # Google Play Monetization Plan
 
-Last updated: 2026-03-18 13:18 AEDT
+Last updated: 2026-03-18 14:54 AEDT
 
 ## Goal
 
@@ -19,17 +19,20 @@ From the current shared app status:
 
 These existing features are the cleanest premium surfaces to sell first.
 
+This plan now assumes EyeScan is being positioned as a clinic workflow product,
+not a casual consumer wellness app.
+
 ## Recommended model
 
-### Primary offer: subscription
+### Primary offer: clinic subscription
 
-Create one subscription for premium workflow features rather than charging per
-scan.
+Create one clinic subscription for workflow access rather than charging per
+scan or per individual user.
 
 Suggested subscription:
 
-- product ID: `eyescan_plus`
-- name: `EyeScan Plus`
+- product ID: `eyescan_clinic`
+- name: `EyeScan Clinic`
 
 Suggested base plans:
 
@@ -38,22 +41,10 @@ Suggested base plans:
 
 Suggested paid benefits:
 
-- unlimited saved history
-- PDF export
-- multi-result PDF export
-- future premium report templates or clinic workflow tools
-
-### Optional secondary offer: one-time unlock
-
-If you want a non-recurring option, add one non-consumable one-time product:
-
-- product ID: `pdf_export_lifetime`
-- title: `PDF Export Lifetime`
-
-This should unlock:
-
-- individual PDF export
-- multi-result PDF export
+- clinic-level access beyond the trial
+- PDF export and multi-result PDF export
+- future clinic workflow tools
+- future multi-user clinic features
 
 ## Why this is the best first monetization path
 
@@ -68,20 +59,33 @@ This is the safest fit for the current EyeScan product because:
   on the first USD 1M of other revenue
 - this keeps the scan experience accessible while monetizing reporting and
   record-keeping value
+- it matches how clinics actually evaluate software: by testing a workflow
+  across a small team and then subscribing at the organisation level
 
-## Free vs paid structure
+## Recommended trial model
+
+Use a backend-managed hybrid trial:
+
+- `14` days
+- `100` scans
+- up to `2` authorised users
+- one trial per clinic or organisation
+- optionally tied to one registered device or installation later
+
+This should be enforced per clinic or workspace, not per username.
+
+## Trial vs paid structure
 
 Recommended launch split:
 
-- free:
-  - run scans
-  - view current result
-  - save only the most recent limited history
+- trial:
+  - full workflow evaluation for one clinic
+  - limited by time, scan count, and user count
+  - enough access to test exports and reporting in realistic usage
 - paid:
-  - unlimited history
-  - individual PDF export
-  - batch or multi-result PDF export
-  - future premium workflow features
+  - ongoing clinic access after trial expiry
+  - PDF export and batch or multi-result PDF export
+  - future multi-user and clinic workflow features
 
 ## What not to launch first
 
@@ -89,6 +93,8 @@ Avoid these at first launch:
 
 - per-scan consumable credits
 - charging just to reveal a health-related screen result
+- one free trial per email address
+- a one-time lifetime export unlock as the default path
 - multiple subscriptions or complex tiering
 
 Reason:
@@ -126,15 +132,15 @@ From the screen in your screenshot:
 
 Then create:
 
-- product ID: `eyescan_plus`
-- name: `EyeScan Plus`
+- product ID: `eyescan_clinic`
+- name: `EyeScan Clinic`
 
 Suggested benefit text for Play Console:
 
-- `Unlimited saved history`
+- `Clinic workflow access`
 - `PDF report export`
 - `Batch PDF reports`
-- `Premium workflow tools`
+- `Evaluation trial and clinic tools`
 
 Then add base plans:
 
@@ -146,25 +152,15 @@ Suggested first pricing:
 - monthly: keep simple and accessible
 - yearly: 15% to 25% cheaper than 12 monthly payments
 
-You can add a free trial later, but it is better to launch without one until
-purchase flow and entitlement handling are stable.
-
-### 3. Create the optional one-time unlock
-
-From `Monetize with Play > Products > One-time products`, create:
-
-- product ID: `pdf_export_lifetime`
-- title: `PDF Export Lifetime`
-
-Use this only if you want a non-subscription option for users who mainly want
-reports.
+The clinic trial itself should be controlled by your backend, not by Play's
+subscription configuration alone.
 
 ## In-app entitlement design
 
 Gate these features behind Play Billing entitlements:
 
-- unlimited history
-- single PDF export
+- ongoing clinic access after trial expiry
+- PDF export
 - multi-result PDF export
 
 Keep these free:
@@ -172,6 +168,32 @@ Keep these free:
 - taking a scan
 - viewing the immediate screening summary
 - viewing the current quality feedback
+
+## Backend trial enforcement design
+
+The app alone should not decide whether a clinic still has a free trial.
+
+The backend should track at least:
+
+- clinic or organisation ID
+- clinic name
+- email domain
+- trial start date
+- trial end date
+- scan limit
+- scans used
+- max authorised users
+- optional registered device or installation ID
+- paid status
+
+Recommended rule before each scan:
+
+1. if clinic is paid, allow
+2. else if trial is active and both time and scan limits remain, allow
+3. else require subscription or activation
+
+This is the main anti-abuse control. It prevents the same clinic from creating
+fresh free trials under new usernames.
 
 ## Android implementation checklist
 
@@ -191,30 +213,32 @@ As of the latest Mac-side billing pass:
 
 - Flutter Play Billing integration has been added using `in_app_purchase`
 - Android now declares `com.android.vending.BILLING`
-- the app includes a premium screen and purchase restore flow
-- the app includes a settings entry and about-screen entry for premium
+- the app includes a clinic access screen and purchase restore flow
+- the app includes a settings entry and about-screen entry for clinic access
 - the default product IDs compiled into the app are:
-  - subscription: `eyescan_plus`
-  - one-time product: `pdf_export_lifetime`
-- PDF export and multi-result PDF export can now be premium-gated, but the
+  - subscription: `eyescan_clinic`
+- PDF export and multi-result PDF export can now be access-gated, but the
   gating switch currently defaults to off via:
   `EYESCAN_PREMIUM_GATING_ENABLED=false`
-- current purchase entitlement handling is local-device based and suitable for
-  first-party testing, but server-side receipt validation is not implemented
-  yet
+- current purchase entitlement handling is still local-device based and
+  suitable for first-party testing only
+- a true clinic-level trial and multi-user entitlement model still requires
+  backend implementation
 - latest billing-enabled Android bundle built on the Mac:
-  - version: `1.1.4+13`
+  - version: `1.1.5+14`
   - local output:
     `/Users/bharatsharma/FlutterProjects/eye_scan_app/build/app/outputs/bundle/release/app-release.aab`
 
 ## Immediate next operational steps
 
-1. create the Play Console products using the IDs in this file
-2. upload the billing-enabled bundle `1.1.4+13`
+1. create the Play Console subscription product using the ID in this file
+2. upload the billing-enabled clinic-access bundle
 3. publish that build to internal testing
 4. return to `Monetize with Play > Products > Subscriptions`
 5. verify the subscription page now unlocks with the billing-enabled build
-6. only turn premium gating on in release builds after the billing flow is
+6. keep trial enforcement backend-controlled instead of trusting local device
+   state alone
+7. only turn premium gating on in release builds after the billing flow is
    confirmed stable with testers
 
 ## Policy guardrails for EyeScan
@@ -244,11 +268,12 @@ Recommended listing-safe positioning:
 ## Recommended launch order
 
 1. Set up payments profile and merchant payout details.
-2. Launch one subscription only: `eyescan_plus`.
-3. Gate unlimited history and PDF exports behind that subscription.
-4. Test with Google Play license testers.
-5. Publish the monetization update.
-6. Add `pdf_export_lifetime` only if recurring conversion is weak.
+2. Launch one subscription only: `eyescan_clinic`.
+3. Run the free trial at the clinic level in your backend.
+4. Gate ongoing PDF/report workflow access behind that subscription.
+5. Test with Google Play license testers and at least one real clinic workflow.
+6. Add other product types only after the clinic trial and conversion path are
+   stable.
 
 ## Assumption
 
