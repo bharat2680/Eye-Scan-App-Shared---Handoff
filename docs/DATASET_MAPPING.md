@@ -1,6 +1,6 @@
 # Dataset Mapping
 
-Last updated: 2026-03-18 14:32 Australia/Sydney
+Last updated: 2026-03-18 16:57 Australia/Sydney
 
 ## Current local source for anterior specialists
 
@@ -263,9 +263,13 @@ prep script:
 - likely identity:
   RFMiD original image payload
 - deployment status:
-  `usable_image_payload_pending_labels`
-- blocker:
-  images only; still missing the matching label or ground-truth file
+  `trainable_multilabel_package`
+- matching ground-truth files:
+  `F:\Datasets\External Fundus\a. RFMiD_Training_Labels.csv`
+  `F:\Datasets\External Fundus\b. RFMiD_Validation_Labels.csv`
+  `F:\Datasets\External Fundus\c. RFMiD_Testing_Labels.csv`
+- label shape:
+  `47` columns total with `45` disease label columns plus `Disease_Risk`
 
 ### `archive (1).zip`
 

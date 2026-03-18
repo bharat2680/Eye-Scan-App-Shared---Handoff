@@ -1,6 +1,6 @@
 # Foundation Model Downloads
 
-Last updated: 2026-03-18 14:32 Australia/Sydney
+Last updated: 2026-03-18 16:57 Australia/Sydney
 
 ## Why this exists
 
@@ -108,7 +108,9 @@ python scripts/check_foundation_model_staging.py
 - related note:
   newly inspected external fundus archives do not change this blocker because
   `Eye-Fundus.zip` is only a fallback dataset, `RFMiD2_0.zip` is missing
-  labels, and the newer `1. Original Images.zip` is still image payload only
+  labels, and even though `1. Original Images.zip` is now paired with the
+  RFMiD ground-truth CSVs, the immediate transfer-learning blocker is still the
+  missing official VisionFM and RETFound weights
 
 ## Expected next Dell implementation step after download
 

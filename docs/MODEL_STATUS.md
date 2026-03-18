@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-18 14:32 Australia/Sydney
+Last updated: 2026-03-18 16:57 Australia/Sydney
 
 ## Current integrated anterior app pipeline
 
@@ -442,12 +442,16 @@ Last updated: 2026-03-18 14:32 Australia/Sydney
 - sample image size:
   `2144 x 1424`
 - status:
-  `usable_image_payload_pending_labels`
+  `trainable_multilabel_package`
 - recommended future use:
-  likely the correct RFMiD original image payload once paired with the matching
-  label or ground-truth file
-- blocker:
-  images only; the label file is still missing
+  fundus multi-label screening experiments and derived binary fundus tasks once
+  the training recipe for this package is chosen
+- matching label files:
+  `F:\Datasets\External Fundus\a. RFMiD_Training_Labels.csv`
+  `F:\Datasets\External Fundus\b. RFMiD_Validation_Labels.csv`
+  `F:\Datasets\External Fundus\c. RFMiD_Testing_Labels.csv`
+- label shape:
+  `47` columns total with `45` disease label columns plus `Disease_Risk`
 
 ### `archive (1).zip`
 

@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-18 14:54 AEDT
+Last updated: 2026-03-18 16:57 Australia/Sydney
 
 ## Shared goal
 
@@ -267,8 +267,8 @@ Latest staging verification:
 - blocker:
   no label CSV or annotation file was present in the downloaded archive, so a
   separate official label file or fuller package is still required
-- `F:\Datasets\External Fundus\1. Original Images.zip` is a much better
-  RFMiD-style image payload than the small split archive
+- `F:\Datasets\External Fundus\1. Original Images.zip` is now paired with the
+  three RFMiD ground-truth CSVs and forms a complete trainable RFMiD package
 - inspected structure:
   `3,200` PNG images under `a. Training Set`, `b. Validation Set`, and
   `c. Testing Set`
@@ -277,10 +277,12 @@ Latest staging verification:
 - sample image size:
   `2144 x 1424`
 - status:
-  useful image payload, but still `pending_labels`
-- blocker:
-  the archive contains images only and still does not include the matching
-  label or ground-truth file
+  complete RFMiD image payload with matching labels
+- matching ground-truth files:
+  `a. RFMiD_Training_Labels.csv`, `b. RFMiD_Validation_Labels.csv`,
+  `c. RFMiD_Testing_Labels.csv`
+- label shape:
+  `47` columns total with `45` disease label columns plus `Disease_Risk`
 - `F:\Datasets\External Fundus\archive (1).zip` is not the missing RFMiD label
   package
 - inspected structure:
