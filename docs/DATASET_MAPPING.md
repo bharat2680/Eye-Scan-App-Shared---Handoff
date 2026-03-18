@@ -1,6 +1,6 @@
 # Dataset Mapping
 
-Last updated: 2026-03-18 13:19 Australia/Sydney
+Last updated: 2026-03-18 14:32 Australia/Sydney
 
 ## Current local source for anterior specialists
 
@@ -249,6 +249,38 @@ prep script:
   `incomplete_download`
 - blocker:
   the current archive does not include a label CSV or annotation file
+
+### `1. Original Images.zip`
+
+- exact dataset path:
+  `F:\Datasets\External Fundus\1. Original Images.zip`
+- inspected structure:
+  `a. Training Set`, `b. Validation Set`, `c. Testing Set`
+- inspected split counts:
+  train `1,920`, val `640`, test `640`
+- sample image size:
+  `2144 x 1424`
+- likely identity:
+  RFMiD original image payload
+- deployment status:
+  `usable_image_payload_pending_labels`
+- blocker:
+  images only; still missing the matching label or ground-truth file
+
+### `archive (1).zip`
+
+- exact dataset path:
+  `F:\Datasets\External Fundus\archive (1).zip`
+- inspected structure:
+  contains only `All ARMD images`
+- inspected scale:
+  `511` PNG images
+- sample image size:
+  `300 x 300`
+- deployment status:
+  `separate_armd_archive`
+- blocker:
+  not the missing RFMiD labels and not a broad multi-disease metadata file
 
 ### `fundus_glaucoma_papila_v1`
 

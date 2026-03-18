@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-18 13:19 Australia/Sydney
+Last updated: 2026-03-18 14:32 Australia/Sydney
 
 ## Shared goal
 
@@ -263,3 +263,27 @@ Latest staging verification:
 - blocker:
   no label CSV or annotation file was present in the downloaded archive, so a
   separate official label file or fuller package is still required
+- `F:\Datasets\External Fundus\1. Original Images.zip` is a much better
+  RFMiD-style image payload than the small split archive
+- inspected structure:
+  `3,200` PNG images under `a. Training Set`, `b. Validation Set`, and
+  `c. Testing Set`
+- inspected split counts:
+  train `1,920`, val `640`, test `640`
+- sample image size:
+  `2144 x 1424`
+- status:
+  useful image payload, but still `pending_labels`
+- blocker:
+  the archive contains images only and still does not include the matching
+  label or ground-truth file
+- `F:\Datasets\External Fundus\archive (1).zip` is not the missing RFMiD label
+  package
+- inspected structure:
+  contains only `All ARMD images`
+- inspected scale:
+  `511` PNG images
+- sample image size:
+  `300 x 300`
+- status:
+  separate ARMD-only image archive, not the missing annotation bundle

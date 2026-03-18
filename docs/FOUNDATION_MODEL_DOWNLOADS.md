@@ -1,6 +1,6 @@
 # Foundation Model Downloads
 
-Last updated: 2026-03-18 13:19 Australia/Sydney
+Last updated: 2026-03-18 14:32 Australia/Sydney
 
 ## Why this exists
 
@@ -107,8 +107,8 @@ python scripts/check_foundation_model_staging.py
   intentional because the required weights are still missing
 - related note:
   newly inspected external fundus archives do not change this blocker because
-  `Eye-Fundus.zip` is only a fallback dataset and the current `RFMiD2_0.zip`
-  download is missing labels
+  `Eye-Fundus.zip` is only a fallback dataset, `RFMiD2_0.zip` is missing
+  labels, and the newer `1. Original Images.zip` is still image payload only
 
 ## Expected next Dell implementation step after download
 

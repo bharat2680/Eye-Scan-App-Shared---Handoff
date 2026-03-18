@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-18 13:19 Australia/Sydney
+Last updated: 2026-03-18 14:32 Australia/Sydney
 
 ## Product truth
 
@@ -78,8 +78,17 @@ Why this order is best:
   and some trailing spaces in internal label-folder names
 - `RFMiD2_0.zip` is not trainable yet from the current download because the
   archive contains split image zips but no label CSV or annotation file
+- `1. Original Images.zip` is likely the correct RFMiD image payload and is
+  materially better than the smaller split archive
+- inspected shape:
+  `3,200` PNG images with train `1,920`, val `640`, and test `640`
+- caveat:
+  it is still images only, so the label or ground-truth file is still required
+- `archive (1).zip` is a separate ARMD-only image archive, not the missing
+  RFMiD annotations
 - this means the fundus side now has one usable fallback archive and one still
-  incomplete archive, but neither unblocks the immediate `VisionFM External Eye`
+  incomplete archive, plus one high-quality image payload still waiting on
+  labels, but none of them unblocks the immediate `VisionFM External Eye`
   transfer-learning lane
 
 ## Prepared external fundus path

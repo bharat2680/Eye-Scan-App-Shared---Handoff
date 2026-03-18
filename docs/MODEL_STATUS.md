@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-18 13:19 Australia/Sydney
+Last updated: 2026-03-18 14:32 Australia/Sydney
 
 ## Current integrated anterior app pipeline
 
@@ -429,3 +429,38 @@ Last updated: 2026-03-18 13:19 Australia/Sydney
 - blocker:
   no label CSV or annotation file was present in the downloaded archive, so
   the current file alone is not trainable
+
+### `1. Original Images.zip`
+
+- exact dataset path:
+  `F:\Datasets\External Fundus\1. Original Images.zip`
+- inspected structure:
+  `3,200` PNG images under `a. Training Set`, `b. Validation Set`, and
+  `c. Testing Set`
+- inspected split counts:
+  train `1,920`, val `640`, test `640`
+- sample image size:
+  `2144 x 1424`
+- status:
+  `usable_image_payload_pending_labels`
+- recommended future use:
+  likely the correct RFMiD original image payload once paired with the matching
+  label or ground-truth file
+- blocker:
+  images only; the label file is still missing
+
+### `archive (1).zip`
+
+- exact dataset path:
+  `F:\Datasets\External Fundus\archive (1).zip`
+- inspected structure:
+  contains only `All ARMD images`
+- inspected scale:
+  `511` PNG images
+- sample image size:
+  `300 x 300`
+- status:
+  `separate_armd_archive`
+- known failure modes:
+  not the missing RFMiD annotation package and not a broad multi-disease label
+  file
