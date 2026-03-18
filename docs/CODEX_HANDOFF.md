@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-18 13:18 AEDT
+Last updated: 2026-03-18 13:19 Australia/Sydney
 
 ## Shared goal
 
@@ -237,3 +237,29 @@ Latest staging verification:
 - current blocker:
   the staged external fundus folders do not exist on `F:\datasets` yet, so
   these runs are `pending_dataset` rather than ready-to-train
+
+## External fundus archive inspection note
+
+- `F:\Datasets\External Fundus\Eye-Fundus.zip` is usable as a fallback local
+  fundus source
+- inspected structure:
+  zip-backed `train`, `valid`, and `test` splits with class folders already
+  encoded in the paths
+- inspected scale:
+  `16,242` images across `10` labels
+- strongest immediate future uses:
+  `diabetic_retinopathy_vs_healthy` and `glaucoma_vs_healthy`
+- caveats:
+  appears to be a rehosted single-label dataset, sample images are already
+  `224 x 224`, and some label folder names inside the zip contain trailing
+  spaces, so it is useful but not as clean as an official specialist source
+- `F:\Datasets\External Fundus\RFMiD2_0.zip` is not yet trainable from the
+  current download alone
+- inspected structure:
+  outer archive contains only `Training_set.zip`, `Validation_set.zip`, and
+  `Test_set.zip`
+- inspected image counts:
+  train `509`, val `177`, test `174`
+- blocker:
+  no label CSV or annotation file was present in the downloaded archive, so a
+  separate official label file or fuller package is still required

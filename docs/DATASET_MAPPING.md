@@ -1,6 +1,6 @@
 # Dataset Mapping
 
-Last updated: 2026-03-17 22:52 Australia/Sydney
+Last updated: 2026-03-18 13:19 Australia/Sydney
 
 ## Current local source for anterior specialists
 
@@ -209,6 +209,46 @@ prep script:
   threshold-tuned binary decision on `p(glaucoma)`
 - deployment status:
   `pending_dataset`
+
+## Newly inspected external fundus archives
+
+### `Eye-Fundus.zip`
+
+- exact dataset path:
+  `F:\Datasets\External Fundus\Eye-Fundus.zip`
+- inspected structure:
+  `train`, `valid`, and `test` class folders already encoded inside the zip
+- inspected labels:
+  `Central Serous Chorioretinopathy`, `Diabetic Retinopathy`, `Disc Edema`,
+  `Glaucoma`, `Healthy`, `Macular Scar`, `Myopia`, `Pterygium`,
+  `Retinal Detachment`, `Retinitis Pigmentosa`
+- inspected scale:
+  `16,242` total images
+- sample image size:
+  `224 x 224`
+- recommended derived tasks:
+  `diabetic_retinopathy_vs_healthy`, `glaucoma_vs_healthy`
+- deployment status:
+  `usable_fallback_dataset`
+- caution:
+  some internal label-folder names include trailing spaces, so label cleanup is
+  required during manifest prep
+
+### `RFMiD2_0.zip`
+
+- exact dataset path:
+  `F:\Datasets\External Fundus\RFMiD2_0.zip`
+- inspected structure:
+  outer archive contains only `Training_set.zip`, `Validation_set.zip`, and
+  `Test_set.zip`
+- inspected image counts:
+  train `509`, val `177`, test `174`
+- sample image size:
+  `512 x 512`
+- deployment status:
+  `incomplete_download`
+- blocker:
+  the current archive does not include a label CSV or annotation file
 
 ### `fundus_glaucoma_papila_v1`
 

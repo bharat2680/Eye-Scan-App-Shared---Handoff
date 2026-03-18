@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-17 22:52 Australia/Sydney
+Last updated: 2026-03-18 13:19 Australia/Sydney
 
 ## Current integrated anterior app pipeline
 
@@ -391,3 +391,41 @@ Last updated: 2026-03-17 22:52 Australia/Sydney
 - note:
   no VisionFM or RETFound transfer-learning artifact exists yet in this lane
   because the required official weights are still missing
+
+## External fundus inspection status
+
+### `Eye-Fundus.zip`
+
+- exact dataset path:
+  `F:\Datasets\External Fundus\Eye-Fundus.zip`
+- inspected structure:
+  zip-backed `train`, `valid`, and `test` class folders
+- inspected scale:
+  `16,242` images across `10` labels
+- sample image size:
+  `224 x 224`
+- status:
+  `usable_fallback_dataset`
+- recommended future use:
+  fallback `diabetic_retinopathy_vs_healthy` and `glaucoma_vs_healthy`
+  experiments if better official fundus data is still unavailable
+- known failure modes:
+  rehosted provenance, pre-resized images, and trailing spaces in some label
+  folder names inside the zip
+
+### `RFMiD2_0.zip`
+
+- exact dataset path:
+  `F:\Datasets\External Fundus\RFMiD2_0.zip`
+- inspected structure:
+  outer archive contains `Training_set.zip`, `Validation_set.zip`, and
+  `Test_set.zip`
+- inspected image counts:
+  train `509`, val `177`, test `174`
+- sample image size:
+  `512 x 512`
+- status:
+  `incomplete_download`
+- blocker:
+  no label CSV or annotation file was present in the downloaded archive, so
+  the current file alone is not trainable

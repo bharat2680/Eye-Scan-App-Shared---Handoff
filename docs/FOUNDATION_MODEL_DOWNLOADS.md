@@ -1,6 +1,6 @@
 # Foundation Model Downloads
 
-Last updated: 2026-03-17 22:52 Australia/Sydney
+Last updated: 2026-03-18 13:19 Australia/Sydney
 
 ## Why this exists
 
@@ -105,6 +105,10 @@ python scripts/check_foundation_model_staging.py
 - interpretation:
   no VisionFM or RETFound transfer-learning run has started yet, and that is
   intentional because the required weights are still missing
+- related note:
+  newly inspected external fundus archives do not change this blocker because
+  `Eye-Fundus.zip` is only a fallback dataset and the current `RFMiD2_0.zip`
+  download is missing labels
 
 ## Expected next Dell implementation step after download
 

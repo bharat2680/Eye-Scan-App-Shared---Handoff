@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-17 22:52 Australia/Sydney
+Last updated: 2026-03-18 13:19 Australia/Sydney
 
 ## Product truth
 
@@ -66,6 +66,21 @@ Why this order is best:
 - the two head-only MobileNet transfer-learning runs also collapsed to the
   disease class, so the next useful fundus progress probably requires cleaner
   specialist data or a larger recipe change, not another local baseline rerun
+
+## External fundus inspection note from this pass
+
+- `Eye-Fundus.zip` is usable as a fallback local fundus source while the
+  official foundation-model lane is still blocked
+- best immediate future derivations from that archive are
+  `diabetic_retinopathy_vs_healthy` and `glaucoma_vs_healthy`
+- caveat:
+  it is a rehosted single-label archive with pre-resized `224 x 224` images
+  and some trailing spaces in internal label-folder names
+- `RFMiD2_0.zip` is not trainable yet from the current download because the
+  archive contains split image zips but no label CSV or annotation file
+- this means the fundus side now has one usable fallback archive and one still
+  incomplete archive, but neither unblocks the immediate `VisionFM External Eye`
+  transfer-learning lane
 
 ## Prepared external fundus path
 
