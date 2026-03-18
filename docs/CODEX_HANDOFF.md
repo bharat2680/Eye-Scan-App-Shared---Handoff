@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-18 16:57 Australia/Sydney
+Last updated: 2026-03-18 17:33 AEDT
 
 ## Shared goal
 
@@ -56,7 +56,7 @@ specific evaluation-only outputs.
 - the app now has a clinic access screen plus settings and about-screen entry
   points
 - default product IDs currently compiled into the app are:
-  - subscription: `eyescan_clinic`
+  - subscription: `eyescan_plus`
 - PDF gating for exports exists but currently defaults to off through:
   `EYESCAN_PREMIUM_GATING_ENABLED=false`
 - recommended commercial model is now:
@@ -64,7 +64,11 @@ specific evaluation-only outputs.
 - target trial design is:
   `14 days + 100 scans + up to 2 authorised users`
 - latest billing-enabled Android bundle built on the Mac is:
-  `1.1.5+14`
+  `1.1.6+15`
+- current Play Console alignment note:
+  the clinic-access strategy is mapped onto the existing live subscription
+  product ID `eyescan_plus` so store testing can proceed without creating a
+  second subscription
 - practical next step is Play Console product setup plus backend clinic-trial
   enforcement design, not more Dell-side release/versioning work
 

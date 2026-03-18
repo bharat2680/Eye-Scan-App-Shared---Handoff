@@ -1,6 +1,6 @@
 # App Integration Status
 
-Last updated: 2026-03-18 14:54 AEDT
+Last updated: 2026-03-18 17:33 AEDT
 
 ## Current app-side behavior
 
@@ -66,7 +66,7 @@ Current backend sequence:
   `in_app_purchase`
 - the app now exposes a clinic access screen from settings and the about screen
 - default Play product IDs currently compiled into the app are:
-  - subscription: `eyescan_clinic`
+  - subscription: `eyescan_plus`
 - PDF export and multi-result PDF export can be access-gated, but gating is
   currently disabled by default through:
   `EYESCAN_PREMIUM_GATING_ENABLED=false`
@@ -75,7 +75,7 @@ Current backend sequence:
   - `100` scans
   - `2` authorised users
 - latest billing-enabled Android bundle built locally:
-  `1.1.5+14`
+  `1.1.6+15`
 - current limitation:
   entitlement handling is still local-device based for first release/testing
   and does not yet include backend clinic-trial enforcement or server-side

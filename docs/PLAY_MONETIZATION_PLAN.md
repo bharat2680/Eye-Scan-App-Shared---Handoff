@@ -1,6 +1,6 @@
 # Google Play Monetization Plan
 
-Last updated: 2026-03-18 14:54 AEDT
+Last updated: 2026-03-18 17:33 AEDT
 
 ## Goal
 
@@ -31,8 +31,8 @@ scan or per individual user.
 
 Suggested subscription:
 
-- product ID: `eyescan_clinic`
-- name: `EyeScan Clinic`
+- product ID: `eyescan_plus`
+- name: `EyeScan Plus`
 
 Suggested base plans:
 
@@ -132,8 +132,8 @@ From the screen in your screenshot:
 
 Then create:
 
-- product ID: `eyescan_clinic`
-- name: `EyeScan Clinic`
+- product ID: `eyescan_plus`
+- name: `EyeScan Plus`
 
 Suggested benefit text for Play Console:
 
@@ -216,7 +216,9 @@ As of the latest Mac-side billing pass:
 - the app includes a clinic access screen and purchase restore flow
 - the app includes a settings entry and about-screen entry for clinic access
 - the default product IDs compiled into the app are:
-  - subscription: `eyescan_clinic`
+  - subscription: `eyescan_plus`
+- this product ID currently maps to the clinic-access strategy so the app can
+  match the live Play Console setup without creating a second subscription
 - PDF export and multi-result PDF export can now be access-gated, but the
   gating switch currently defaults to off via:
   `EYESCAN_PREMIUM_GATING_ENABLED=false`
@@ -225,7 +227,7 @@ As of the latest Mac-side billing pass:
 - a true clinic-level trial and multi-user entitlement model still requires
   backend implementation
 - latest billing-enabled Android bundle built on the Mac:
-  - version: `1.1.5+14`
+  - version: `1.1.6+15`
   - local output:
     `/Users/bharatsharma/FlutterProjects/eye_scan_app/build/app/outputs/bundle/release/app-release.aab`
 
@@ -268,7 +270,7 @@ Recommended listing-safe positioning:
 ## Recommended launch order
 
 1. Set up payments profile and merchant payout details.
-2. Launch one subscription only: `eyescan_clinic`.
+2. Launch one subscription only: `eyescan_plus`.
 3. Run the free trial at the clinic level in your backend.
 4. Gate ongoing PDF/report workflow access behind that subscription.
 5. Test with Google Play license testers and at least one real clinic workflow.
