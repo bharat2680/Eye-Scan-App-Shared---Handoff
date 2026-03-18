@@ -1,6 +1,6 @@
 # App Integration Status
 
-Last updated: 2026-03-17 19:27 AEDT
+Last updated: 2026-03-18 13:18 AEDT
 
 ## Current app-side behavior
 
@@ -59,6 +59,23 @@ Current backend sequence:
 - current app role:
   they run only after `surface_abnormal` to narrow some broad surface-positive
   cases before the app falls back to `Surface abnormality pattern detected`
+
+## Current monetization scaffold
+
+- Android Play Billing support is now integrated using Flutter
+  `in_app_purchase`
+- the app now exposes a premium screen from settings and the about screen
+- default Play product IDs currently compiled into the app are:
+  - subscription: `eyescan_plus`
+  - one-time unlock: `pdf_export_lifetime`
+- PDF export and multi-result PDF export can be premium-gated, but premium
+  gating is currently disabled by default through:
+  `EYESCAN_PREMIUM_GATING_ENABLED=false`
+- latest billing-enabled Android bundle built locally:
+  `1.1.4+13`
+- current limitation:
+  entitlement handling is local-device based for first release/testing and
+  does not yet include server-side receipt validation
 
 ## Remaining optional Dell-side package not yet integrated
 

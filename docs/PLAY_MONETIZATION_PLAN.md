@@ -1,6 +1,6 @@
 # Google Play Monetization Plan
 
-Last updated: 2026-03-17 21:33 AEDT
+Last updated: 2026-03-18 13:18 AEDT
 
 ## Goal
 
@@ -184,6 +184,38 @@ The Android app will need:
 - purchase acknowledgement
 - a paywall screen that clearly explains what is free and what is paid
 - a subscription management link or settings entry
+
+## Current implementation status on the Mac app
+
+As of the latest Mac-side billing pass:
+
+- Flutter Play Billing integration has been added using `in_app_purchase`
+- Android now declares `com.android.vending.BILLING`
+- the app includes a premium screen and purchase restore flow
+- the app includes a settings entry and about-screen entry for premium
+- the default product IDs compiled into the app are:
+  - subscription: `eyescan_plus`
+  - one-time product: `pdf_export_lifetime`
+- PDF export and multi-result PDF export can now be premium-gated, but the
+  gating switch currently defaults to off via:
+  `EYESCAN_PREMIUM_GATING_ENABLED=false`
+- current purchase entitlement handling is local-device based and suitable for
+  first-party testing, but server-side receipt validation is not implemented
+  yet
+- latest billing-enabled Android bundle built on the Mac:
+  - version: `1.1.4+13`
+  - local output:
+    `/Users/bharatsharma/FlutterProjects/eye_scan_app/build/app/outputs/bundle/release/app-release.aab`
+
+## Immediate next operational steps
+
+1. create the Play Console products using the IDs in this file
+2. upload the billing-enabled bundle `1.1.4+13`
+3. publish that build to internal testing
+4. return to `Monetize with Play > Products > Subscriptions`
+5. verify the subscription page now unlocks with the billing-enabled build
+6. only turn premium gating on in release builds after the billing flow is
+   confirmed stable with testers
 
 ## Policy guardrails for EyeScan
 

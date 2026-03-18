@@ -32,7 +32,8 @@ This folder is the shared coordination layer for the Mac Codex app and the Dell 
 - `docs/CODEX_HANDOFF.md`
 - `docs/DATASET_MAPPING.md`
 - `docs/EXPORT_REVIEW_NOTES.md`
+- `docs/FOUNDATION_MODEL_DOWNLOADS.md`
 - `docs/MODEL_STATUS.md`
+- `docs/PLAY_MONETIZATION_PLAN.md`
 - `docs/TRAINING_PRIORITIES.md`
 - `SYNC_INSTRUCTIONS.md`
-

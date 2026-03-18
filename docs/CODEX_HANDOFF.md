@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-17 22:52 Australia/Sydney
+Last updated: 2026-03-18 13:18 AEDT
 
 ## Shared goal
 
@@ -46,6 +46,23 @@ specific evaluation-only outputs.
   conjunctivitis and uveitis stay negative
 - live backend version is now:
   `anterior_screening_eval_v4`
+
+## Latest Mac monetization note
+
+- Android Play Billing scaffold is now integrated into the Flutter app using
+  `in_app_purchase`
+- Android manifest now includes:
+  `com.android.vending.BILLING`
+- the app now has a premium screen plus settings and about-screen entry points
+- default product IDs currently compiled into the app are:
+  - subscription: `eyescan_plus`
+  - one-time unlock: `pdf_export_lifetime`
+- premium gating for PDF exports exists but currently defaults to off through:
+  `EYESCAN_PREMIUM_GATING_ENABLED=false`
+- latest billing-enabled Android bundle built on the Mac is:
+  `1.1.4+13`
+- practical next step is Play Console product setup and internal-test upload,
+  not more Dell-side release/versioning work
 
 ## New packaged quality-gate candidate
 
