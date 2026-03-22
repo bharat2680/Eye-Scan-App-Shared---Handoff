@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-22 18:45 AEDT
+Last updated: 2026-03-22 21:31 AEDT
 
 ## Shared goal
 
@@ -45,7 +45,21 @@ specific evaluation-only outputs.
 - `anterior_pterygium_vs_normal_v1_simplecnn` is now integrated after both
   conjunctivitis and uveitis stay negative
 - live backend version is now:
-  `anterior_screening_eval_v4`
+  `anterior_screening_eval_v5`
+- latest backend hardening:
+  if `eye_detected == false`, specialist screening is blocked and the quality
+  result falls back to `No clear eye detected`
+- recent regression that triggered this fix:
+  a laptop image was able to reach the screening pipeline under `eval_v4`
+- `TEST_MODE` is now deliberately obvious across:
+  - capture flow
+  - result screen
+  - single PDF export
+  - multi-result PDF export
+- PDF exports now include a faint EyeScan watermark
+- branding assets were refreshed so:
+  - the app icon uses the symbol-only EyeScan mark
+  - the white launch screen uses the full `EyeScan / Eye Health AI` artwork
 
 ## Latest Mac monetization note
 
@@ -109,6 +123,11 @@ specific evaluation-only outputs.
 - be conservative with message budget in future model-training threads
 - prefer short progress updates, a single source-of-truth doc update, and one
   consolidated handoff message instead of many small chat turns
+- when ChatGPT/Colab is used for pilot training, always preserve:
+  - the `.ipynb`
+  - the checkpoint path
+  - exported artifacts
+  - one short handoff summary pointing at the canonical notebook
 
 ## New packaged quality-gate candidate
 
