@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-18 16:57 Australia/Sydney
+Last updated: 2026-03-22 18:45 AEDT
 
 ## Product truth
 
@@ -43,6 +43,8 @@ Do next:
    and configs below
 10. review the new TEyeDS-backed quality-gate candidate before changing the live
    front gate
+11. review the new VisionFM-based quality-gate pilot as a separate two-stage
+    candidate, but do not treat it as production-ready or integrated
 
 Why this order is best:
 
@@ -52,6 +54,9 @@ Why this order is best:
   support to trust without caution
 - `eyelid_abnormality_vs_normal` is usable, but it is not a clean replacement
   for the current surface-positive branch
+- the new VisionFM pilot is promising as a transfer-learning direction, but it
+  is still a Colab/Drive-side pilot artifact rather than a verified packaged
+  deployment candidate
 
 ## Fundus note from the latest Dell pass
 
@@ -179,6 +184,39 @@ Current status of this path:
 - recommendation:
   review against real EyeScan captures before replacing `anterior_quality_gate_v1`
 
+## VisionFM quality-gate pilot note
+
+- a new VisionFM-based pilot quality gate now exists as a two-stage artifact:
+  1. VisionFM backbone checkpoint
+  2. refined sklearn LogisticRegression classifier
+- reproducible notebook path on the Mac:
+  `/Users/bharatsharma/Desktop/Google Console/Vision FM Files/VisionFM_Pilot.ipynb`
+- provided handoff paths:
+  - `/content/drive/MyDrive/Datasets/VFM Datasets/VFM_External_weights.pth`
+  - `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_classifier_refined.pkl`
+  - `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_label_map_refined.json`
+  - `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_metadata_labeled.csv`
+  - `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_handoff_summary.json`
+- refined classes:
+  - `bad`
+  - `glare_lighting`
+  - `good_centered`
+  - `off_angle`
+- purpose:
+  pilot quality gate built on VisionFM embeddings plus LogisticRegression from
+  TEyeD extracted images
+- strict instruction:
+  do not integrate into `erica_server.py` or the live backend yet unless
+  explicitly approved later
+- practical next step:
+  first reconcile the base `.pth` checkpoint with the shared
+  `FoundationModels/VisionFM/ExternalEye` staging lane, then repackage this as
+  a reproducible evaluation candidate before considering backend integration
+- notebook-confirmed structure:
+  the notebook both extracts embeddings and trains the refined classifier, so
+  future reruns should prefer the notebook as the canonical recipe instead of
+  reconstructing the steps from chat
+
 ## Official foundation-model downloads to stage next
 
 These are the best next internet-sourced model weights to stage on the dataset
@@ -218,6 +256,10 @@ Current blocker on this path:
 - the current Dell training stack is TensorFlow-only, so once those weights
   arrive the next implementation step is a PyTorch or `timm`-backed fine-tune
   path for comparison against the local SimpleCNN baselines
+- note:
+  the new VisionFM pilot artifacts do not remove this blocker on their own
+  because the shared staging lane still requires a verified underlying `.pth`
+  checkpoint in the expected path
 
 Latest verifier result:
 

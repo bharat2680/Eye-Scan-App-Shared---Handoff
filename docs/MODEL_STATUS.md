@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-18 16:57 Australia/Sydney
+Last updated: 2026-03-22 18:45 AEDT
 
 ## Current integrated anterior app pipeline
 
@@ -155,6 +155,45 @@ Last updated: 2026-03-18 16:57 Australia/Sydney
   trained from TEyeDS validity-derived labels rather than your app's own
   recapture decisions, and the negative class is mostly visibility failure
   rather than every possible smartphone capture problem
+
+### `visionfm_quality_gate_pilot_refined`
+
+- reproducible notebook path on the Mac:
+  `/Users/bharatsharma/Desktop/Google Console/Vision FM Files/VisionFM_Pilot.ipynb`
+- base checkpoint path:
+  `/content/drive/MyDrive/Datasets/VFM Datasets/VFM_External_weights.pth`
+- refined classifier path:
+  `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_classifier_refined.pkl`
+- refined label map path:
+  `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_label_map_refined.json`
+- labeled metadata path:
+  `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_metadata_labeled.csv`
+- handoff summary path:
+  `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_handoff_summary.json`
+- optional reference outputs:
+  `/content/drive/MyDrive/EyeScan_Models/outputs/visionfm_teyed_smoke_test/`
+- pipeline type:
+  `two_stage_pilot`
+- label map:
+  `bad`, `glare_lighting`, `good_centered`, `off_angle`
+- intended use:
+  VisionFM-based anterior quality-gate pilot built from TEyeD extracted images
+  using VisionFM embeddings plus a LogisticRegression classifier
+- deployment status:
+  `pilot_review_only`
+- integration status:
+  do not integrate into `erica_server.py` or the live Mac backend yet
+- known caveats:
+  this is not a single standalone `.keras` drop-in model, it depends on the
+  VisionFM backbone checkpoint plus the refined sklearn classifier, and it
+  should use only the refined label map
+- notebook-confirmed pipeline:
+  TEyeD image embedding extraction -> unsupervised cluster review ->
+  refined label assignment -> LogisticRegression classifier export
+- shared-lane caveat:
+  this does not by itself clear the Dell-side foundation-model staging blocker
+  until the underlying `.pth` checkpoint is staged and verified in the
+  expected shared path
 
 ### `anterior_uveitis_vs_normal_v1_simplecnn`
 

@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-18 17:33 AEDT
+Last updated: 2026-03-22 18:45 AEDT
 
 ## Shared goal
 
@@ -71,6 +71,44 @@ specific evaluation-only outputs.
   second subscription
 - practical next step is Play Console product setup plus backend clinic-trial
   enforcement design, not more Dell-side release/versioning work
+
+## New VisionFM pilot note
+
+- a new ChatGPT-assisted VisionFM quality-gate pilot is ready for review
+- reproducible notebook path on the Mac:
+  `/Users/bharatsharma/Desktop/Google Console/Vision FM Files/VisionFM_Pilot.ipynb`
+- treat it as a two-stage pipeline, not a single model:
+  1. VisionFM backbone checkpoint `.pth`
+  2. refined sklearn classifier `.pkl`
+- provided Colab or Drive handoff paths:
+  - `/content/drive/MyDrive/Datasets/VFM Datasets/VFM_External_weights.pth`
+  - `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_classifier_refined.pkl`
+  - `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_label_map_refined.json`
+  - `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_metadata_labeled.csv`
+  - `/content/drive/MyDrive/EyeScan_Models/visionfm_quality_handoff_summary.json`
+- refined classes are:
+  - `bad`
+  - `glare_lighting`
+  - `good_centered`
+  - `off_angle`
+- strict instruction:
+  use the refined label map only, ignore older non-refined quality artifacts,
+  and do not integrate this into `erica_server.py` yet
+- notebook flow confirmed:
+  mount Drive, extract VisionFM embeddings from TEyeD images, cluster and
+  inspect embeddings, relabel to `label_refined`, fit LogisticRegression, then
+  export the refined classifier, refined label map, labeled metadata, and
+  handoff summary
+- shared-path caveat:
+  this pilot does not yet replace the Dell-side `FoundationModels` staging
+  requirement until the underlying `.pth` checkpoint is staged and verified in
+  the expected shared location
+
+## Coordination note
+
+- be conservative with message budget in future model-training threads
+- prefer short progress updates, a single source-of-truth doc update, and one
+  consolidated handoff message instead of many small chat turns
 
 ## New packaged quality-gate candidate
 
