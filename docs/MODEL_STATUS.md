@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-22 22:39 AEDT
+Last updated: 2026-03-23 02:08 AEDT
 
 ## Current integrated anterior app pipeline
 
@@ -117,6 +117,48 @@ Last updated: 2026-03-22 22:39 AEDT
   causes not labeled separately here
 
 ## Newer anterior specialist artifacts
+
+### `eye_vs_non_eye_gate_v1_simplecnn`
+
+- exact dataset path:
+  `F:\datasets\Image Dataset on Eye Diseases Classification.zip` plus sampled
+  non-eye images from the `2017` through `2025`, `Google Photos`, and
+  `Old Pics` folders on the F drive
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\eye_vs_non_eye_v1.jsonl`
+- exact config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\eye_vs_non_eye_gate_v1_simplecnn.json`
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\router\eye_vs_non_eye_gate_v1_simplecnn`
+- packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_eye_presence_packages\eye_vs_non_eye_gate_v1_simplecnn_package`
+- F-drive package copy:
+  `F:\EyeScan App\Datasets\eye_vs_non_eye_gate_v1_simplecnn_package.zip`
+- label map:
+  `eye -> 0`, `non_eye -> 1`
+- preprocessing contract:
+  RGB, `224 x 224`, direct resize, `float32`, model contains internal
+  `Rescaling(1.0 / 255.0)`
+- threshold strategy:
+  threshold-tuned binary decision on the `eye` score with
+  `selected_threshold=0.35`
+- validation metrics:
+  threshold-tuned `val_accuracy=0.9858`
+  threshold-tuned `balanced_accuracy=0.9856`
+- test metrics:
+  default `test_accuracy=0.9830`
+  default confusion matrix `[[354, 6], [6, 339]]`
+  threshold-tuned `test_accuracy=0.9844`
+  threshold-tuned confusion matrix `[[358, 2], [9, 336]]`
+- deployment status:
+  `evaluation_only`
+- intended use:
+  pre-pipeline blocker model to keep obvious non-eye images from entering the
+  EyeScan anterior pipeline
+- known failure modes:
+  non-eye negatives come from weakly curated personal-photo folders rather than
+  a dedicated benchmark, and the final checkpoint evaluation excluded one
+  corrupt JPEG from the test split
 
 ### `anterior_quality_gate_v2_teyeds_simplecnn`
 
@@ -238,24 +280,6 @@ Last updated: 2026-03-22 22:39 AEDT
   this does not by itself clear the Dell-side foundation-model staging blocker
   until the underlying `.pth` checkpoint is staged and verified in the
   expected shared path
-
-## Requested next artifact
-
-### `anterior_eye_presence_gate_v1`
-
-- status:
-  `requested_next`
-- intended use:
-  hard-reject obvious non-eye captures before the live quality gate
-- preferred labels:
-  `eye_present`, `non_eye`
-- preferred negative set:
-  laptops, monitors, keyboards, screens, phones, tablets, circular toys,
-  balls, planets, stars, moon-like imagery, water reflections, printed eyes,
-  and on-screen eye photos
-- practical reason:
-  the Mac-side heuristic hardening improved the false-positive issue, but a
-  dedicated learned eye-presence rejector is the cleaner next defense
 
 ### `anterior_uveitis_vs_normal_v1_simplecnn`
 

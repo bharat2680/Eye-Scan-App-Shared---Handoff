@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-22 22:39 AEDT
+Last updated: 2026-03-23 02:08 AEDT
 
 ## Shared goal
 
@@ -158,26 +158,35 @@ specific evaluation-only outputs.
   the slim handoff keeps `best_model.pth` plus the contract JSON files and
   excludes the redundant `final_model.pth`
 
-## Requested next Dell artifact
+## New eye-vs-non-eye gate candidate
 
-- requested model name:
-  `anterior_eye_presence_gate_v1`
-- goal:
-  reject obvious non-eye captures before they reach the quality gate or the
-  surface specialists
-- preferred positive class:
-  clear anterior eye captures that should be allowed into the screening
-  pipeline
-- preferred negative examples:
-  laptops, monitors, keyboards, phones, tablets, circular toys, balls,
-  planets, stars, moon-like imagery, water reflections, printed eyes, and
-  on-screen eye photos
-- intended Mac-side role:
-  run before `anterior_quality_gate_v1` as a hard rejector, or be fused into
-  the current eye-feature heuristic only after clean evaluation
-- deployment target:
-  keep it `evaluation_only` first, then compare against real EyeScan false
-  positives before promoting it
+- a new pre-pipeline blocker candidate is now packaged from the Dell side:
+  `eye_vs_non_eye_gate_v1_simplecnn`
+- exact manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\eye_vs_non_eye_v1.jsonl`
+- exact config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\eye_vs_non_eye_gate_v1_simplecnn.json`
+- exact artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\router\eye_vs_non_eye_gate_v1_simplecnn`
+- preferred packaged handoff path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_eye_presence_packages\eye_vs_non_eye_gate_v1_simplecnn_package.zip`
+- convenience copy on the F drive:
+  `F:\EyeScan App\Datasets\eye_vs_non_eye_gate_v1_simplecnn_package.zip`
+- test summary:
+  default `test_accuracy=0.9830`
+  threshold-tuned `test_accuracy=0.9844`
+  selected threshold `0.35` on `p(eye)`
+  threshold-tuned eye recall `0.9944`
+  threshold-tuned non-eye recall `0.9739`
+- deployment status:
+  `evaluation_only`
+- intended role:
+  run before the current anterior quality gate so obvious non-eye images do not
+  enter the rest of the pipeline
+- important caveat:
+  the non-eye class is sampled from personal-photo folders on the F drive, and
+  one corrupt JPEG in the `2021 / Mercedes A170 accident` folder was removed
+  from the test split before final checkpoint evaluation
 
 ## Coordination note
 
@@ -269,9 +278,12 @@ specific evaluation-only outputs.
    especially the tiny-support `pterygium` head
 3. keep monitoring the broad fallback rate for
    `Surface abnormality pattern detected`
-4. only add `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` if eyelid
+4. compare `eye_vs_non_eye_gate_v1_simplecnn` against real false-entry cases
+   like laptops, scenes, dashboards, and family photos before any app-side
+   integration
+5. only add `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` if eyelid
    findings remain intentionally in scope
-5. if no narrower specialist clears threshold, keep the fallback wording:
+6. if no narrower specialist clears threshold, keep the fallback wording:
    `Surface abnormality pattern detected`
 
 ## Not the priority right now

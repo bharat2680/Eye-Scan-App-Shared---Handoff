@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-22 22:39 AEDT
+Last updated: 2026-03-23 02:08 AEDT
 
 ## Product truth
 
@@ -25,8 +25,9 @@ Last updated: 2026-03-22 22:39 AEDT
 Do next:
 
 1. keep app release and version-code work untouched from this Dell lane
-2. train a dedicated `anterior_eye_presence_gate_v1` so obvious non-eye
-   captures are rejected before the quality gate and specialist routing
+2. compare the new `eye_vs_non_eye_gate_v1_simplecnn` blocker candidate
+   against real false-entry cases like laptops, scenes, dashboards, and family
+   photos before any app-side integration
 3. compare the new VisionFM external-eye quality-gate candidate against
    `anterior_quality_gate_v1` and `anterior_quality_gate_v2_teyeds_simplecnn`
    on real EyeScan captures
@@ -58,29 +59,13 @@ Why this order is best:
   support to trust without caution
 - `eyelid_abnormality_vs_normal` is usable, but it is not a clean replacement
   for the current surface-positive branch
+- the new eye-vs-non-eye gate addresses a different failure mode: blocking
+  obvious non-eye inputs before they ever reach the app's quality and disease
+  branches
 - the new VisionFM external-eye run is now a real packaged evaluation
   candidate, but it still needs app-side comparison on real captures
 - the older VisionFM refined pilot remains useful as a research direction, but
   it is still a Colab/Drive-side artifact rather than a backend-ready package
-
-## Requested dedicated eye-presence gate
-
-- requested artifact name:
-  `anterior_eye_presence_gate_v1`
-- purpose:
-  hard-reject obvious non-eye captures before the quality gate
-- preferred labels:
-  - `eye_present`
-  - `non_eye`
-- preferred negative examples:
-  laptops, monitors, keyboards, phones, tablets, circular toys, balls,
-  planets, stars, moon-like imagery, water reflections, glossy household
-  objects, printed eyes, and on-screen eye photos
-- practical Mac-side reason:
-  the current heuristic hardening improved things, but it is still a rules
-  patch; a dedicated learned rejector is the cleaner long-term fix
-- deployment target:
-  package it for Mac review first and keep it `evaluation_only`
 
 ## Fundus note from the latest Dell pass
 
@@ -177,14 +162,43 @@ Current status of this path:
 ## Current local training status
 
 - completed:
+  - `eye_vs_non_eye_gate_v1_simplecnn`
   - `anterior_quality_gate_v2_teyeds_simplecnn`
   - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
   - `anterior_uveitis_vs_normal_v1_simplecnn`
   - `anterior_pterygium_vs_normal_v1_simplecnn`
   - `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
-- all five remain `evaluation_only`
+- all six remain `evaluation_only`
 - packaged Mac-ready folders now exist under:
-  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages`
+  - `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_next_specialist_packages`
+  - `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_quality_gate_packages`
+  - `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_eye_presence_packages`
+
+## Eye-presence gate note from the latest Dell pass
+
+- `eye_vs_non_eye_gate_v1_simplecnn` is now the best local blocker candidate
+  for stopping obvious non-eye images before the anterior pipeline
+- manifest path:
+  `C:\Users\HP\OneDrive\Documents\Playground\datasets\manifests\eye_vs_non_eye_v1.jsonl`
+- config path:
+  `C:\Users\HP\OneDrive\Documents\Playground\configs\eye_vs_non_eye_gate_v1_simplecnn.json`
+- artifact path:
+  `C:\Users\HP\OneDrive\Documents\Playground\artifacts\router\eye_vs_non_eye_gate_v1_simplecnn`
+- package path:
+  `C:\Users\HP\OneDrive\Documents\Playground\handoff\macbook_eye_presence_packages\eye_vs_non_eye_gate_v1_simplecnn_package`
+- F-drive package copy:
+  `F:\EyeScan App\Datasets\eye_vs_non_eye_gate_v1_simplecnn_package.zip`
+- default test accuracy:
+  `0.9830`
+- threshold-tuned test accuracy:
+  `0.9844`
+- threshold-tuned eye recall:
+  `0.9944`
+- threshold-tuned non-eye recall:
+  `0.9739`
+- recommendation:
+  keep it `evaluation_only` and compare against real false-entry cases before
+  inserting it ahead of `anterior_quality_gate_v1`
 
 ## Quality-gate note from the latest Dell pass
 

@@ -1,6 +1,6 @@
 # Dataset Mapping
 
-Last updated: 2026-03-18 16:57 Australia/Sydney
+Last updated: 2026-03-23 02:08 AEDT
 
 ## Current local source for anterior specialists
 
@@ -51,6 +51,28 @@ building another all-anterior classifier.
   labels are derived from TEyeDS visibility-validity annotations, so this is a
   recapture proxy rather than a perfect match for real EyeScan smartphone
   capture failures
+
+### `eye_vs_non_eye_v1`
+
+- source mix:
+  existing anterior image archive for `eye` plus sampled personal-photo
+  negatives from the F-drive `2017` through `2025`, `Google Photos`, and
+  `Old Pics` folders for `non_eye`
+- derived labels:
+  `eye`, `non_eye`
+- split counts:
+  train `1680 / 1609`
+  val `360 / 345`
+  test `360 / 345`
+- current role:
+  Dell-side pre-pipeline blocker candidate to stop obvious non-eye images
+  before the anterior screening flow
+- current artifact status:
+  `evaluation_only`, packaged for Mac review
+- caution:
+  non-eye negatives come from weakly curated personal-photo folders rather than
+  a dedicated benchmark, and one corrupt JPEG was removed from the test split
+  before final checkpoint evaluation
 
 ## Derived task-specific views now available
 
