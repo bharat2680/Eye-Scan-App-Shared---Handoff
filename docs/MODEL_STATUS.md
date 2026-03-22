@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-22 22:06 AEDT
+Last updated: 2026-03-22 22:39 AEDT
 
 ## Current integrated anterior app pipeline
 
@@ -238,6 +238,24 @@ Last updated: 2026-03-22 22:06 AEDT
   this does not by itself clear the Dell-side foundation-model staging blocker
   until the underlying `.pth` checkpoint is staged and verified in the
   expected shared path
+
+## Requested next artifact
+
+### `anterior_eye_presence_gate_v1`
+
+- status:
+  `requested_next`
+- intended use:
+  hard-reject obvious non-eye captures before the live quality gate
+- preferred labels:
+  `eye_present`, `non_eye`
+- preferred negative set:
+  laptops, monitors, keyboards, screens, phones, tablets, circular toys,
+  balls, planets, stars, moon-like imagery, water reflections, printed eyes,
+  and on-screen eye photos
+- practical reason:
+  the Mac-side heuristic hardening improved the false-positive issue, but a
+  dedicated learned eye-presence rejector is the cleaner next defense
 
 ### `anterior_uveitis_vs_normal_v1_simplecnn`
 

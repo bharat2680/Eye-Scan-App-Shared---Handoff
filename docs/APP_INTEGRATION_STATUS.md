@@ -1,6 +1,6 @@
 # App Integration Status
 
-Last updated: 2026-03-22 21:31 AEDT
+Last updated: 2026-03-22 22:39 AEDT
 
 ## Current app-side behavior
 
@@ -22,7 +22,7 @@ Current backend sequence:
 
 Live backend version:
 
-- `anterior_screening_eval_v5`
+- `anterior_screening_eval_v6`
 
 ## Current backend result modes
 
@@ -37,8 +37,12 @@ Recent app-side hardening:
   the learned quality probability is high
 - the eye-feature gate was relaxed enough to keep some angled real-eye photos
   while still rejecting clearly non-eye images more aggressively
+- backend now also applies a dark-band rejection check to better stop laptop
+  and screen captures from leaking into the surface-specialist branch
 - simulated outputs are now labeled as `Simulated demo result` in the app,
   saved results, and exported PDFs
+- the yellow in-app demo banner now uses dark text for readability on the dark
+  theme
 
 ## App-side output now supported
 
@@ -46,7 +50,9 @@ Recent app-side hardening:
 - saved history stores screening metadata
 - individual PDF export includes screening result when present
 - multi-result PDF export includes screening result when present
-- single-result and multi-result PDFs now include a faint EyeScan watermark
+- single-result and multi-result PDFs now include:
+  - a centered `EyeScan / EYE HEALTH AI` text watermark
+  - symbol-logo marks on both sides of the image row near the top
 - app/backend can now narrow some surface-positive cases to
   `Possible conjunctivitis pattern detected`
 - app/backend can now narrow some surface-positive cases to
@@ -123,5 +129,8 @@ Recent app-side hardening:
    if eyelid findings are intentionally in scope
 5. if no narrower specialist clears threshold, keep the fallback wording:
    `Surface abnormality pattern detected`
-6. rerun the current non-eye regression check on-device against the `eval_v5`
+6. rerun the current non-eye regression check on-device against the `eval_v6`
    backend before making more model changes
+7. ask the Dell training lane for a dedicated `anterior_eye_presence_gate_v1`
+   so obvious non-eye captures are rejected before the quality gate instead of
+   relying only on heuristic hardening

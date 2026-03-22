@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-22 22:06 AEDT
+Last updated: 2026-03-22 22:39 AEDT
 
 ## Product truth
 
@@ -25,28 +25,33 @@ Last updated: 2026-03-22 22:06 AEDT
 Do next:
 
 1. keep app release and version-code work untouched from this Dell lane
-2. compare the new VisionFM external-eye quality-gate candidate against
+2. train a dedicated `anterior_eye_presence_gate_v1` so obvious non-eye
+   captures are rejected before the quality gate and specialist routing
+3. compare the new VisionFM external-eye quality-gate candidate against
    `anterior_quality_gate_v1` and `anterior_quality_gate_v2_teyeds_simplecnn`
    on real EyeScan captures
-3. keep the Colab notebook and Dell-side training lane aligned now that the
+4. keep the Colab notebook and Dell-side training lane aligned now that the
    first VisionFM transfer-learning run has succeeded
-4. gather broader validation data for the already-integrated
-   `anterior_uveitis_vs_normal_v1_simplecnn`
 5. gather broader validation data for the already-integrated
+   `anterior_uveitis_vs_normal_v1_simplecnn`
+6. gather broader validation data for the already-integrated
    `anterior_pterygium_vs_normal_v1_simplecnn` with explicit caution on low
    support
-6. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+7. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
    belongs in the same app branch or stays optional
-7. gather cleaner external validation data for the new surface specialists
-8. start the better fundus-data wave using the prepared external staging paths
+8. gather cleaner external validation data for the new surface specialists
+9. start the better fundus-data wave using the prepared external staging paths
    and configs below
-9. review the new TEyeDS-backed quality-gate candidate before changing the live
+10. review the new TEyeDS-backed quality-gate candidate before changing the live
    front gate
-10. keep the older VisionFM refined-classifier pilot separate from the new
+11. keep the older VisionFM refined-classifier pilot separate from the new
     single-task quality-gate linear-probe candidate
 
 Why this order is best:
 
+- the app still sees occasional non-eye or weak-eye edge cases, so a dedicated
+  eye-presence gate is a cleaner next fix than forcing the quality gate to
+  absorb every possible hard negative
 - `uveitis_vs_normal` has the strongest new local result after conjunctivitis
   while still having materially better support than `pterygium`
 - `pterygium_vs_normal` looks excellent locally but has too little positive
@@ -57,6 +62,25 @@ Why this order is best:
   candidate, but it still needs app-side comparison on real captures
 - the older VisionFM refined pilot remains useful as a research direction, but
   it is still a Colab/Drive-side artifact rather than a backend-ready package
+
+## Requested dedicated eye-presence gate
+
+- requested artifact name:
+  `anterior_eye_presence_gate_v1`
+- purpose:
+  hard-reject obvious non-eye captures before the quality gate
+- preferred labels:
+  - `eye_present`
+  - `non_eye`
+- preferred negative examples:
+  laptops, monitors, keyboards, phones, tablets, circular toys, balls,
+  planets, stars, moon-like imagery, water reflections, glossy household
+  objects, printed eyes, and on-screen eye photos
+- practical Mac-side reason:
+  the current heuristic hardening improved things, but it is still a rules
+  patch; a dedicated learned rejector is the cleaner long-term fix
+- deployment target:
+  package it for Mac review first and keep it `evaluation_only`
 
 ## Fundus note from the latest Dell pass
 

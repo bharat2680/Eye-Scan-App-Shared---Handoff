@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-22 22:06 AEDT
+Last updated: 2026-03-22 22:39 AEDT
 
 ## Shared goal
 
@@ -45,10 +45,13 @@ specific evaluation-only outputs.
 - `anterior_pterygium_vs_normal_v1_simplecnn` is now integrated after both
   conjunctivitis and uveitis stay negative
 - live backend version is now:
-  `anterior_screening_eval_v5`
+  `anterior_screening_eval_v6`
 - latest backend hardening:
   if `eye_detected == false`, specialist screening is blocked and the quality
   result falls back to `No clear eye detected`
+- latest eye-feature hardening also adds a dark-band rejection check so laptop
+  and screen captures are more likely to stop at `No clear eye detected`
+  instead of leaking into a surface-positive specialist
 - recent regression that triggered this fix:
   a laptop image was able to reach the screening pipeline under `eval_v4`
 - `TEST_MODE` is now deliberately obvious across:
@@ -56,7 +59,11 @@ specific evaluation-only outputs.
   - result screen
   - single PDF export
   - multi-result PDF export
-- PDF exports now include a faint EyeScan watermark
+- the in-app yellow `TEST_MODE` banner text was darkened for readability on
+  the dark theme
+- PDF exports now use:
+  - a centered `EyeScan / EYE HEALTH AI` text watermark
+  - symbol-logo marks on both sides of the image row near the top
 - branding assets were refreshed so:
   - the app icon uses the symbol-only EyeScan mark
   - the white launch screen uses the full `EyeScan / Eye Health AI` artwork
@@ -145,6 +152,27 @@ specific evaluation-only outputs.
 - package note:
   the slim handoff keeps `best_model.pth` plus the contract JSON files and
   excludes the redundant `final_model.pth`
+
+## Requested next Dell artifact
+
+- requested model name:
+  `anterior_eye_presence_gate_v1`
+- goal:
+  reject obvious non-eye captures before they reach the quality gate or the
+  surface specialists
+- preferred positive class:
+  clear anterior eye captures that should be allowed into the screening
+  pipeline
+- preferred negative examples:
+  laptops, monitors, keyboards, phones, tablets, circular toys, balls,
+  planets, stars, moon-like imagery, water reflections, printed eyes, and
+  on-screen eye photos
+- intended Mac-side role:
+  run before `anterior_quality_gate_v1` as a hard rejector, or be fused into
+  the current eye-feature heuristic only after clean evaluation
+- deployment target:
+  keep it `evaluation_only` first, then compare against real EyeScan false
+  positives before promoting it
 
 ## Coordination note
 
