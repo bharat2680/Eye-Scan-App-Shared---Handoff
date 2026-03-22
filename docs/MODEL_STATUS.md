@@ -1,6 +1,6 @@
 # Model Status
 
-Last updated: 2026-03-22 18:45 AEDT
+Last updated: 2026-03-22 22:06 AEDT
 
 ## Current integrated anterior app pipeline
 
@@ -155,6 +155,50 @@ Last updated: 2026-03-22 18:45 AEDT
   trained from TEyeDS validity-derived labels rather than your app's own
   recapture decisions, and the negative class is mostly visibility failure
   rather than every possible smartphone capture problem
+
+### `anterior_quality_gate_v3_visionfm_external_linearprobe`
+
+- exact dataset path:
+  `/content/drive/MyDrive/Datasets/teyeds_quality_gate_v1.zip`
+- exact runtime dataset root:
+  `/content/eyescan_colab/datasets/teyeds_quality_gate_v1`
+- exact notebook path:
+  `Google Colab/Quality Gate/anterior_quality_gate_v3_visionfm_external_linearprobe.ipynb`
+- exact backbone path:
+  `/content/drive/MyDrive/Datasets/VFM Datasets/VFM_External_weights.pth`
+- exact artifact path:
+  `/content/drive/MyDrive/EyeScan_Models/VisionFM_Quality_Gate_V3`
+- preferred Mac handoff path:
+  `F:\EyeScan App\Datasets\VisionFM_Quality_Gate_V3_mac_handoff.zip`
+- full package path:
+  `F:\EyeScan App\Datasets\VisionFM_Quality_Gate_V3_package.zip`
+- label map:
+  `good_capture -> 0`, `needs_recapture -> 1`
+- preprocessing contract:
+  RGB, `224 x 224`, VisionFM external-eye normalization mean
+  `[0.4936253, 0.36324808, 0.25956994]`, std
+  `[0.32001, 0.27109432, 0.21991591]`
+- threshold strategy:
+  threshold-tuned binary decision on the `needs_recapture` score with
+  `selected_threshold=0.25`
+- validation metrics:
+  best checkpoint `val_loss=0.1930`
+  default `val_accuracy=0.9179`
+  threshold-tuned `balanced_accuracy=0.9533`
+- test metrics:
+  default `test_accuracy=0.9133`
+  default confusion matrix `[[110, 11], [6, 69]]`
+  threshold-tuned `test_accuracy=0.9337`
+  threshold-tuned confusion matrix `[[108, 13], [0, 75]]`
+- deployment status:
+  `evaluation_only`
+- intended use:
+  first VisionFM-backed comparison candidate against the current anterior
+  quality gate
+- known failure modes:
+  this Colab run used a fresh local train/val/test split of the TEyeDS-derived
+  quality folder, so it is not a strict apples-to-apples replacement study
+  against `anterior_quality_gate_v2_teyeds_simplecnn`
 
 ### `visionfm_quality_gate_pilot_refined`
 

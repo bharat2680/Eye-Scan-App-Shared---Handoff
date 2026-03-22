@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-22 21:31 AEDT
+Last updated: 2026-03-22 22:06 AEDT
 
 ## Shared goal
 
@@ -117,6 +117,34 @@ specific evaluation-only outputs.
   this pilot does not yet replace the Dell-side `FoundationModels` staging
   requirement until the underlying `.pth` checkpoint is staged and verified in
   the expected shared location
+
+## New VisionFM quality-gate training result
+
+- a first Colab-based VisionFM external-eye linear-probe run is now complete
+- exact notebook path in the shared repo:
+  `Google Colab/Quality Gate/anterior_quality_gate_v3_visionfm_external_linearprobe.ipynb`
+- exact Drive output folder:
+  `/content/drive/MyDrive/EyeScan_Models/VisionFM_Quality_Gate_V3`
+- exact backbone used:
+  `/content/drive/MyDrive/Datasets/VFM Datasets/VFM_External_weights.pth`
+- test summary:
+  default `test_accuracy=0.9133`
+  threshold-tuned `test_accuracy=0.9337`
+  selected threshold `0.25` on `p(needs_recapture)`
+  threshold-tuned confusion matrix `[[108, 13], [0, 75]]`
+- deployment status:
+  `evaluation_only`
+- practical interpretation:
+  promising first VisionFM transfer-learning candidate, but still a
+  comparison/evaluation artifact rather than a live-gate replacement
+- package paths for Mac inspection:
+  - preferred slim handoff:
+    `F:\EyeScan App\Datasets\VisionFM_Quality_Gate_V3_mac_handoff.zip`
+  - full package if deeper inspection is needed:
+    `F:\EyeScan App\Datasets\VisionFM_Quality_Gate_V3_package.zip`
+- package note:
+  the slim handoff keeps `best_model.pth` plus the contract JSON files and
+  excludes the redundant `final_model.pth`
 
 ## Coordination note
 
@@ -245,23 +273,22 @@ Practical recommendation:
 - use `RETFound` and `VisionFM Fundus` only after the curated external fundus
   folders are staged
 
-Current blocker:
+Current foundation-model state:
 
-- those official weight files are not on `F:\datasets` yet
-- the local trainer is still TensorFlow-only, so Dell-side implementation will
-  add a PyTorch or `timm`-based transfer-learning path once the files arrive
-
-Latest staging verification:
-
-- ran:
-  `python scripts/check_foundation_model_staging.py`
-- result:
-  `0 / 4` present
-- exact blocker:
-  `F:\datasets\FoundationModels` does not exist yet
-- status:
-  no transfer-learning artifact has been started from this lane because the
-  weights are still missing
+- the canonical `F:\datasets\FoundationModels` staging root still does not
+  exist
+- however, the actual downloaded files are now present in the alternate
+  EyeScan dataset location:
+  - `F:\Datasets\External Fundus\VFM Datasets\VFM_External_weights.pth`
+  - `F:\Datasets\External Fundus\VFM Datasets\VFM_SiltLamp_weights.pth`
+  - `F:\Datasets\External Fundus\VFM Datasets\RET Found Dino V2\RETFound_dinov2_meh.pth`
+  - `F:\Datasets\External Fundus\VFM Datasets\VFM_Fundus_weights.pth`
+- latest staging verification from the updated checker:
+  `4 / 4` present
+- current status:
+  the foundation-model lane is no longer blocked on missing weights; the next
+  honest work is notebook cleanup, real-capture comparison, and Mac-side
+  review of the new VisionFM quality-gate package
 
 ## Latest fundus experiment note
 

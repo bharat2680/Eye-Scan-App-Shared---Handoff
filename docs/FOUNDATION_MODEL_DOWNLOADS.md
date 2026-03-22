@@ -1,6 +1,6 @@
 # Foundation Model Downloads
 
-Last updated: 2026-03-18 16:57 Australia/Sydney
+Last updated: 2026-03-22 22:06 AEDT
 
 ## Why this exists
 
@@ -99,18 +99,19 @@ python scripts/check_foundation_model_staging.py
 - checker run:
   `python scripts/check_foundation_model_staging.py`
 - result:
-  `0 / 4` present
-- exact blocker:
-  `F:\datasets\FoundationModels` does not exist yet
+  `4 / 4` present
+- caveat:
+  the canonical `F:\datasets\FoundationModels` root still does not exist, but
+  the updated checker resolves all four files from the alternate EyeScan
+  dataset location
+- resolved alternate paths:
+  - `F:\Datasets\External Fundus\VFM Datasets\VFM_External_weights.pth`
+  - `F:\Datasets\External Fundus\VFM Datasets\VFM_SiltLamp_weights.pth`
+  - `F:\Datasets\External Fundus\VFM Datasets\RET Found Dino V2\RETFound_dinov2_meh.pth`
+  - `F:\Datasets\External Fundus\VFM Datasets\VFM_Fundus_weights.pth`
 - interpretation:
-  no VisionFM or RETFound transfer-learning run has started yet, and that is
-  intentional because the required weights are still missing
-- related note:
-  newly inspected external fundus archives do not change this blocker because
-  `Eye-Fundus.zip` is only a fallback dataset, `RFMiD2_0.zip` is missing
-  labels, and even though `1. Original Images.zip` is now paired with the
-  RFMiD ground-truth CSVs, the immediate transfer-learning blocker is still the
-  missing official VisionFM and RETFound weights
+  the transfer-learning lane is no longer blocked on missing official weights
+  and the first VisionFM external-eye quality-gate run has already completed
 
 ## Expected next Dell implementation step after download
 

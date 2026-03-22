@@ -1,6 +1,6 @@
 # Training Priorities
 
-Last updated: 2026-03-22 18:45 AEDT
+Last updated: 2026-03-22 22:06 AEDT
 
 ## Product truth
 
@@ -25,26 +25,25 @@ Last updated: 2026-03-22 18:45 AEDT
 Do next:
 
 1. keep app release and version-code work untouched from this Dell lane
-2. stage the official foundation-model weights to the exact expected paths in
-   `docs/FOUNDATION_MODEL_DOWNLOADS.md`
-3. rerun the staging checker after download; the current verified result is
-   `0 / 4` present with `F:\datasets\FoundationModels` missing
-4. only after the weights exist, add the PyTorch or `timm` transfer-learning
-   path and start with `VisionFM External Eye`
-5. gather broader validation data for the already-integrated
+2. compare the new VisionFM external-eye quality-gate candidate against
+   `anterior_quality_gate_v1` and `anterior_quality_gate_v2_teyeds_simplecnn`
+   on real EyeScan captures
+3. keep the Colab notebook and Dell-side training lane aligned now that the
+   first VisionFM transfer-learning run has succeeded
+4. gather broader validation data for the already-integrated
    `anterior_uveitis_vs_normal_v1_simplecnn`
-6. gather broader validation data for the already-integrated
+5. gather broader validation data for the already-integrated
    `anterior_pterygium_vs_normal_v1_simplecnn` with explicit caution on low
    support
-7. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
+6. decide whether `anterior_eyelid_abnormality_vs_normal_v1_simplecnn`
    belongs in the same app branch or stays optional
-8. gather cleaner external validation data for the new surface specialists
-9. start the better fundus-data wave using the prepared external staging paths
+7. gather cleaner external validation data for the new surface specialists
+8. start the better fundus-data wave using the prepared external staging paths
    and configs below
-10. review the new TEyeDS-backed quality-gate candidate before changing the live
+9. review the new TEyeDS-backed quality-gate candidate before changing the live
    front gate
-11. review the new VisionFM-based quality-gate pilot as a separate two-stage
-    candidate, but do not treat it as production-ready or integrated
+10. keep the older VisionFM refined-classifier pilot separate from the new
+    single-task quality-gate linear-probe candidate
 
 Why this order is best:
 
@@ -54,9 +53,10 @@ Why this order is best:
   support to trust without caution
 - `eyelid_abnormality_vs_normal` is usable, but it is not a clean replacement
   for the current surface-positive branch
-- the new VisionFM pilot is promising as a transfer-learning direction, but it
-  is still a Colab/Drive-side pilot artifact rather than a verified packaged
-  deployment candidate
+- the new VisionFM external-eye run is now a real packaged evaluation
+  candidate, but it still needs app-side comparison on real captures
+- the older VisionFM refined pilot remains useful as a research direction, but
+  it is still a Colab/Drive-side artifact rather than a backend-ready package
 
 ## Fundus note from the latest Dell pass
 
@@ -95,8 +95,9 @@ Why this order is best:
 - `archive (1).zip` is a separate ARMD-only image archive, not the missing
   RFMiD annotations
 - this means the fundus side now has one usable fallback archive and one still
-  incomplete archive, plus one now-complete RFMiD package, but none of them
-  unblocks the immediate `VisionFM External Eye` transfer-learning lane
+  incomplete archive, plus one now-complete RFMiD package, but fundus still is
+  not the immediate priority while the new VisionFM anterior gate is under
+  review
 
 ## Prepared external fundus path
 
@@ -217,6 +218,31 @@ Current status of this path:
   future reruns should prefer the notebook as the canonical recipe instead of
   reconstructing the steps from chat
 
+## VisionFM external-eye quality-gate candidate
+
+- a first Colab-based VisionFM external-eye linear-probe run is now complete
+- exact notebook path:
+  `Google Colab/Quality Gate/anterior_quality_gate_v3_visionfm_external_linearprobe.ipynb`
+- exact Drive output folder:
+  `/content/drive/MyDrive/EyeScan_Models/VisionFM_Quality_Gate_V3`
+- exact backbone path:
+  `/content/drive/MyDrive/Datasets/VFM Datasets/VFM_External_weights.pth`
+- preferred Mac handoff package:
+  `F:\EyeScan App\Datasets\VisionFM_Quality_Gate_V3_mac_handoff.zip`
+- full package for deeper inspection:
+  `F:\EyeScan App\Datasets\VisionFM_Quality_Gate_V3_package.zip`
+- default test accuracy:
+  `0.9133`
+- threshold-tuned test accuracy:
+  `0.9337`
+- selected threshold:
+  `0.25` on `p(needs_recapture)`
+- threshold-tuned `needs_recapture` recall:
+  `1.0000`
+- recommendation:
+  keep it `evaluation_only` and compare against real EyeScan captures before
+  any app-side gate replacement decision
+
 ## Official foundation-model downloads to stage next
 
 These are the best next internet-sourced model weights to stage on the dataset
@@ -250,25 +276,28 @@ Prepared validation helper:
 - mirrored in the shared repo as:
   `scripts/check_foundation_model_staging.py`
 
-Current blocker on this path:
+Current status on this path:
 
-- the weights are not staged on `F:\datasets` yet
-- the current Dell training stack is TensorFlow-only, so once those weights
-  arrive the next implementation step is a PyTorch or `timm`-backed fine-tune
-  path for comparison against the local SimpleCNN baselines
-- note:
-  the new VisionFM pilot artifacts do not remove this blocker on their own
-  because the shared staging lane still requires a verified underlying `.pth`
-  checkpoint in the expected path
+- the canonical `F:\datasets\FoundationModels` root is still absent
+- but the updated Dell-side checker now resolves all four official weights in
+  the alternate EyeScan dataset location
+- latest verifier result:
+  `4 / 4` present
+- current practical state:
+  the VisionFM transfer-learning lane is no longer blocked on missing weights
+  and already has its first real anterior quality-gate candidate
 
 Latest verifier result:
 
 - ran:
   `python scripts/check_foundation_model_staging.py`
 - result:
-  `0 / 4` present
-- exact blocker:
-  `F:\datasets\FoundationModels` does not exist yet
+  `4 / 4` present
+- resolved alternate paths:
+  - `F:\Datasets\External Fundus\VFM Datasets\VFM_External_weights.pth`
+  - `F:\Datasets\External Fundus\VFM Datasets\VFM_SiltLamp_weights.pth`
+  - `F:\Datasets\External Fundus\VFM Datasets\RET Found Dino V2\RETFound_dinov2_meh.pth`
+  - `F:\Datasets\External Fundus\VFM Datasets\VFM_Fundus_weights.pth`
 
 ## Exact rerun sequence
 
