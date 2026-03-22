@@ -92,6 +92,11 @@ specific evaluation-only outputs.
   second subscription
 - practical next step is Play Console product setup plus backend clinic-trial
   enforcement design, not more Dell-side release/versioning work
+- Android beta caveat:
+  a release build uploaded without a reachable `EYESCAN_BACKEND_URL` falls
+  back to `Image saved for later screening review` with `0%` quality and does
+  not reach screening at all; future Play beta builds must either bake in a
+  reachable backend URL or enable internal tools for tester-side backend entry
 
 ## New VisionFM pilot note
 
