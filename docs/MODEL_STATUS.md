@@ -1,17 +1,18 @@
 # Model Status
 
-Last updated: 2026-03-23 02:08 AEDT
+Last updated: 2026-03-23 21:36 AEDT
 
 ## Current integrated anterior app pipeline
 
-1. `anterior_quality_gate_v1`
-2. `anterior_surface_binary_v2_simplecnn`
-3. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only after `surface_abnormal`
-4. `anterior_uveitis_vs_normal_v1_simplecnn` only after `surface_abnormal`
+1. `eye_vs_non_eye_gate_v1_simplecnn`
+2. `anterior_quality_gate_v1`
+3. `anterior_surface_binary_v2_simplecnn`
+4. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only after `surface_abnormal`
+5. `anterior_uveitis_vs_normal_v1_simplecnn` only after `surface_abnormal`
    and only when conjunctivitis stays negative
-5. `anterior_pterygium_vs_normal_v1_simplecnn` only after `surface_abnormal`
+6. `anterior_pterygium_vs_normal_v1_simplecnn` only after `surface_abnormal`
    and only when both conjunctivitis and uveitis stay negative
-6. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
+7. `anterior_cataract_vs_normal_v1_simplecnn` only after `normal_surface`
 
 ## Current integrated anterior artifacts
 
@@ -155,6 +156,9 @@ Last updated: 2026-03-23 02:08 AEDT
 - intended use:
   pre-pipeline blocker model to keep obvious non-eye images from entering the
   EyeScan anterior pipeline
+- Mac integration status:
+  integrated ahead of `anterior_quality_gate_v1` in the local backend as of
+  `anterior_screening_eval_v7`
 - known failure modes:
   non-eye negatives come from weakly curated personal-photo folders rather than
   a dedicated benchmark, and the final checkpoint evaluation excluded one

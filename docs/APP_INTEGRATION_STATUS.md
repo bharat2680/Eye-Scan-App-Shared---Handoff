@@ -1,6 +1,6 @@
 # App Integration Status
 
-Last updated: 2026-03-22 22:39 AEDT
+Last updated: 2026-03-23 21:36 AEDT
 
 ## Current app-side behavior
 
@@ -9,20 +9,21 @@ pipeline instead of the old quality-only stub.
 
 Current backend sequence:
 
-1. `anterior_quality_gate_v1`
-2. `anterior_surface_binary_v2_simplecnn`
-3. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only when the surface
+1. `eye_vs_non_eye_gate_v1_simplecnn`
+2. `anterior_quality_gate_v1`
+3. `anterior_surface_binary_v2_simplecnn`
+4. `anterior_conjunctivitis_vs_normal_v1_simplecnn` only when the surface
    model predicts `surface_abnormal`
-4. `anterior_uveitis_vs_normal_v1_simplecnn` only when the surface model
+5. `anterior_uveitis_vs_normal_v1_simplecnn` only when the surface model
    predicts `surface_abnormal` and conjunctivitis stays negative
-5. `anterior_pterygium_vs_normal_v1_simplecnn` only when the surface model
+6. `anterior_pterygium_vs_normal_v1_simplecnn` only when the surface model
    predicts `surface_abnormal` and both earlier surface specialists stay negative
-6. `anterior_cataract_vs_normal_v1_simplecnn` only when the surface model
+7. `anterior_cataract_vs_normal_v1_simplecnn` only when the surface model
    predicts `normal_surface`
 
 Live backend version:
 
-- `anterior_screening_eval_v6`
+- `anterior_screening_eval_v7`
 
 ## Current backend result modes
 
@@ -33,6 +34,12 @@ Live backend version:
 
 Recent app-side hardening:
 
+- a dedicated eye-vs-non-eye blocker now runs before the quality gate so
+  obvious laptop, family-photo, and other non-eye captures can be stopped
+  before they reach the anterior routing stack
+- the old heuristic eye detector is still kept as a secondary signal, but the
+  new blocker can now rescue some real-eye captures that the heuristic would
+  have rejected
 - backend now blocks specialist screening if no clear eye is detected, even if
   the learned quality probability is high
 - the eye-feature gate was relaxed enough to keep some angled real-eye photos
@@ -134,3 +141,5 @@ Recent app-side hardening:
 7. ask the Dell training lane for a dedicated `anterior_eye_presence_gate_v1`
    so obvious non-eye captures are rejected before the quality gate instead of
    relying only on heuristic hardening
+8. keep the new eye-vs-non-eye blocker in `evaluation_only` status until it
+   has been exercised on more real tester photos and public-backend beta runs

@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-23 02:08 AEDT
+Last updated: 2026-03-23 21:36 AEDT
 
 ## Shared goal
 
@@ -10,6 +10,7 @@ specific evaluation-only outputs.
 ## What the Mac side already has
 
 - integrated:
+  - `eye_vs_non_eye_gate_v1_simplecnn`
   - `anterior_quality_gate_v1`
   - `anterior_surface_binary_v2_simplecnn`
   - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
@@ -40,12 +41,19 @@ specific evaluation-only outputs.
 
 ## Latest Mac integration note
 
+- `eye_vs_non_eye_gate_v1_simplecnn` is now integrated as a pre-pipeline
+  blocker ahead of the anterior quality gate
+- the blocker is still `evaluation_only`, but it is now live in the Mac
+  backend so obvious non-eye images can be stopped before they enter the
+  screening router
+- the blocker can also rescue some real-eye captures that the older heuristic
+  detector would have rejected
 - `anterior_uveitis_vs_normal_v1_simplecnn` is now integrated after
   conjunctivitis in the `surface_abnormal` branch
 - `anterior_pterygium_vs_normal_v1_simplecnn` is now integrated after both
   conjunctivitis and uveitis stay negative
 - live backend version is now:
-  `anterior_screening_eval_v6`
+  `anterior_screening_eval_v7`
 - latest backend hardening:
   if `eye_detected == false`, specialist screening is blocked and the quality
   result falls back to `No clear eye detected`
@@ -54,6 +62,10 @@ specific evaluation-only outputs.
   instead of leaking into a surface-positive specialist
 - recent regression that triggered this fix:
   a laptop image was able to reach the screening pipeline under `eval_v4`
+- backend regression tests now explicitly cover:
+  - eye-presence gate blocking a non-eye image before surface screening
+  - eye-presence gate rescuing a real-eye image when the legacy heuristic is a
+    false negative
 - `TEST_MODE` is now deliberately obvious across:
   - capture flow
   - result screen
