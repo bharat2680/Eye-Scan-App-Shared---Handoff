@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-24 11:30 AEDT
+Last updated: 2026-03-24 13:35 AEDT
 
 ## Shared goal
 
@@ -89,7 +89,15 @@ specific evaluation-only outputs.
   - bundled quality model inside the backend runtime
   - Cloud Run Dockerfile added locally
   - Gunicorn + TensorFlow deployment dependencies added locally
-  - next real step is Google Cloud auth plus a first beta deploy
+  - Google Cloud auth, API enablement, and first beta deploy are now complete
+- public backend is now live at:
+  `https://eyescan-backend-beta-66791987039.australia-southeast2.run.app`
+- Google Cloud beta host project is:
+  `fine-elf-443312-d0`
+- low-cost guardrail is now active:
+  `EyeScan Beta Budget`
+  `A$10/month`
+  alerts at `50%`, `90%`, `100%`
 
 ## Latest Mac monetization note
 
@@ -108,18 +116,23 @@ specific evaluation-only outputs.
 - target trial design is:
   `14 days + 100 scans + up to 2 authorised users`
 - latest billing-enabled Android bundle built on the Mac is:
-  `1.1.6+15`
+  `1.1.7+16`
 - current Play Console alignment note:
   the clinic-access strategy is mapped onto the existing live subscription
   product ID `eyescan_plus` so store testing can proceed without creating a
   second subscription
-- practical next step is Play Console product setup plus backend clinic-trial
-  enforcement design, not more Dell-side release/versioning work
+- practical next step is upload the new public-backend Android beta build,
+  verify purchase flow still matches `eyescan_plus`, and then move to backend
+  clinic-trial enforcement design, not more Dell-side release/versioning work
 - Android beta caveat:
   a release build uploaded without a reachable `EYESCAN_BACKEND_URL` falls
   back to `Image saved for later screening review` with `0%` quality and does
   not reach screening at all; future Play beta builds must either bake in a
   reachable backend URL or enable internal tools for tester-side backend entry
+- current Mac-side fix:
+  release-hardened builds now fall back to the public Cloud Run backend URL
+  when no explicit backend URL is compiled in, so future beta bundles should
+  no longer silently save local placeholder results
 
 ## New VisionFM pilot note
 

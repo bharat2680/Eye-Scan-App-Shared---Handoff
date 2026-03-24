@@ -1,6 +1,6 @@
 # App Integration Status
 
-Last updated: 2026-03-23 21:36 AEDT
+Last updated: 2026-03-24 13:35 AEDT
 
 ## Current app-side behavior
 
@@ -76,6 +76,17 @@ Recent app-side hardening:
 - routed evaluation endpoint:
   `POST /v1/predict`
 
+## Current public beta backend
+
+- Cloud Run service:
+  `eyescan-backend-beta`
+- public backend URL:
+  `https://eyescan-backend-beta-66791987039.australia-southeast2.run.app`
+- public health endpoint:
+  `https://eyescan-backend-beta-66791987039.australia-southeast2.run.app/health`
+- current beta deployment role:
+  public tester screening outside the local Wi-Fi network
+
 ## Current integrated surface-specific specialists
 
 - `anterior_conjunctivitis_vs_normal_v1_simplecnn`
@@ -102,7 +113,11 @@ Recent app-side hardening:
   - `100` scans
   - `2` authorised users
 - latest billing-enabled Android bundle built locally:
-  `1.1.6+15`
+  `1.1.7+16`
+- current public-backend fix:
+  release-hardened builds now fall back to the public Cloud Run backend URL
+  so Android testers without a manually entered LAN backend should reach real
+  screening instead of saving fake `0%` placeholder results
 - current limitation:
   entitlement handling is still local-device based for first release/testing
   and does not yet include backend clinic-trial enforcement or server-side
@@ -136,10 +151,9 @@ Recent app-side hardening:
    if eyelid findings are intentionally in scope
 5. if no narrower specialist clears threshold, keep the fallback wording:
    `Surface abnormality pattern detected`
-6. rerun the current non-eye regression check on-device against the `eval_v6`
-   backend before making more model changes
-7. ask the Dell training lane for a dedicated `anterior_eye_presence_gate_v1`
-   so obvious non-eye captures are rejected before the quality gate instead of
-   relying only on heuristic hardening
+6. publish the new `1.1.7+16` Android beta bundle so public testers use the
+   Cloud Run backend instead of a missing local backend path
+7. rerun the current non-eye regression check on-device against the public
+   `eval_v7` backend before making more model changes
 8. keep the new eye-vs-non-eye blocker in `evaluation_only` status until it
    has been exercised on more real tester photos and public-backend beta runs
