@@ -1,6 +1,6 @@
 # EyeScan Codex Handoff
 
-Last updated: 2026-03-23 21:36 AEDT
+Last updated: 2026-03-24 11:30 AEDT
 
 ## Shared goal
 
@@ -41,6 +41,12 @@ specific evaluation-only outputs.
 
 ## Latest Mac integration note
 
+- Android/internal beta builds without a compiled backend URL no longer save
+  misleading `0%` placeholder screening results as if they were real reviews
+- those builds now expose the backend URL field in Settings even under release
+  hardening, so testers can point the app at a real screening backend
+- the missing-backend flow now sends the tester to Settings instead of creating
+  fake saved results
 - `eye_vs_non_eye_gate_v1_simplecnn` is now integrated as a pre-pipeline
   blocker ahead of the anterior quality gate
 - the blocker is still `evaluation_only`, but it is now live in the Mac
@@ -79,6 +85,11 @@ specific evaluation-only outputs.
 - branding assets were refreshed so:
   - the app icon uses the symbol-only EyeScan mark
   - the white launch screen uses the full `EyeScan / Eye Health AI` artwork
+- local backend is now also prepared for Google Cloud Run:
+  - bundled quality model inside the backend runtime
+  - Cloud Run Dockerfile added locally
+  - Gunicorn + TensorFlow deployment dependencies added locally
+  - next real step is Google Cloud auth plus a first beta deploy
 
 ## Latest Mac monetization note
 
