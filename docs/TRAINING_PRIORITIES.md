@@ -85,6 +85,27 @@ Why this order is best:
 
 - `Eye-Fundus.zip` is usable as a fallback local fundus source while the
   official foundation-model lane is still blocked
+- a Mac local fallback glaucoma pass has now been completed from that archive
+  using the preserved `train` / `valid` / `test` split structure
+- best local CPU fallback artifact from this archive:
+  `fundus_glaucoma_eyefundus_v1_simplecnn`
+  at `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/artifacts/fundus/fundus_glaucoma_eyefundus_v1_simplecnn`
+- best test result from that fallback pass:
+  tuned-threshold accuracy `0.6373`, balanced accuracy `0.6363`
+- second local rerun:
+  `fundus_glaucoma_eyefundus_v2_augmented_simplecnn` underperformed the first
+  run and is not the preferred fallback artifact
+- Colab GPU fallback pass completed on March 26, 2026 using
+  `fundus_glaucoma_eyefundus_v3_efficientnetb0_colab`
+- best current fallback artifact from this archive:
+  `MyDrive/EyeScan_Models/Fundus_Glaucoma_EyeFundus_V3`
+- best GPU result from that pass:
+  tuned-threshold accuracy `0.7720`, balanced accuracy `0.7730`,
+  threshold `0.4`
+- quality note:
+  this clearly beats the Mac CPU fallback and is the current preferred
+  `Eye-Fundus` glaucoma fallback candidate, though official specialist data
+  remains preferable long term
 - best immediate future derivations from that archive are
   `diabetic_retinopathy_vs_healthy` and `glaucoma_vs_healthy`
 - caveat:
@@ -115,6 +136,18 @@ Staging roots expected on the dataset drive:
 - `F:\datasets\External Fundus\IDRiD_DR_vs_Healthy`
 - `F:\datasets\External Fundus\REFUGE_Glaucoma_vs_Healthy`
 - `F:\datasets\External Fundus\PAPILA_Glaucoma_vs_Healthy`
+
+Current Mac/Desktop staging roots now prepared from the newly downloaded zips:
+
+- `/Users/bharatsharma/Desktop/Eye Scan App Handoff/Datasets 2026/External Fundus/IDRiD_DR_vs_Healthy`
+- `/Users/bharatsharma/Desktop/Eye Scan App Handoff/Datasets 2026/External Fundus/PAPILA_Glaucoma_vs_Healthy`
+- staging summary:
+  `/Users/bharatsharma/Desktop/Eye Scan App Handoff/Datasets 2026/External Fundus/PREP_SUMMARY.json`
+- current extracted counts:
+  - `IDRiD_DR_vs_Healthy`: `348` diabetic retinopathy, `168` healthy
+  - `PAPILA_Glaucoma_vs_Healthy`: `87` glaucoma, `333` healthy
+- `REFUGE_Glaucoma_vs_Healthy` is still blocked because the official download is
+  access-gated and no unlocked archive has been staged yet
 
 Prepared manifest tooling:
 
@@ -157,7 +190,122 @@ Current status of this path:
 
 - manifests are scaffolded but not built yet because the staged dataset
   folders do not exist on `F:\datasets`
-- deployment status for these external runs is `pending_dataset`
+- a temporary Mac/Desktop handoff staging lane now exists for `IDRiD` and
+  `PAPILA`, but those folders are not yet mirrored to the Dell-side
+  `F:\datasets` location expected by the current manifest-prep script
+- `REFUGE` remains `pending_dataset`
+- local fallback glaucoma is no longer blocked, but the current preferred next
+  quality step is either packaging the new Colab artifact for backend review or
+  moving back to better specialist data, not more small CPU-side reruns of the
+  same archive
+- Colab GPU bundle now prepared at:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus Glaucoma Fallback`
+  with notebook `fundus_glaucoma_eyefundus_v3_efficientnetb0_colab.ipynb`,
+  launcher script `train_fundus_glaucoma_eyefundus_colab.py`, and a compact
+  upload-ready dataset `eye_fundus_glaucoma_vs_healthy.zip`
+- IDRiD DR Colab bundle now prepared at:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus DR IDRiD`
+  with notebook `fundus_dr_idrid_v2_efficientnetb0_colab.ipynb` and training
+  script `train_fundus_dr_idrid_colab.py`
+- IDRiD DR Colab run now completed at:
+  `MyDrive/EyeScan_Models/Fundus_DR_IDRiD_V2`
+  and the downloaded export zip is now staged at
+  `/Users/bharatsharma/Desktop/Eye Scan App Handoff/Models 2026/Fundus_DR_IDRiD_V2-20260326T034353Z-3-001.zip`
+- IDRiD Colab result summary:
+  validation balanced accuracy `0.8015`; test accuracy `0.7670`; test
+  balanced accuracy `0.7440`; threshold `0.5`
+- comparison note:
+  the new GPU `IDRiD` transfer-learning run completed successfully but still
+  underperforms the earlier local `fundus_dr_idrid_v1_simplecnn` result
+  (`0.7733` accuracy / `0.7900` balanced accuracy), so the Colab `v2` export
+  should be kept as a comparison candidate rather than the promoted default
+- stronger `IDRiD` rerun bundle now prepared at:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus DR IDRiD`
+  with notebook `fundus_dr_idrid_v3_efficientnetb2_balanced_colab.ipynb`
+  and training script `train_fundus_dr_idrid_v3_balanced_colab.py`
+- stronger `IDRiD` rerun now completed at:
+  `MyDrive/EyeScan_Models/Fundus_DR_IDRiD_V3`
+- `IDRiD v3` result summary:
+  validation balanced accuracy `0.9017`; test accuracy `0.7961`; test
+  balanced accuracy `0.8105`; threshold `0.5`
+- promotion note:
+  this `v3` run now beats both the earlier local `fundus_dr_idrid_v1_simplecnn`
+  result (`0.7733` / `0.7900`) and the earlier Colab `v2` run
+  (`0.7670` / `0.7440`), so it becomes the preferred current `IDRiD`
+  diabetic-retinopathy specialist candidate
+- packaging note:
+  the downloaded `Fundus_DR_IDRiD_V3` export is now staged locally and a
+  backend-style package zip is being tracked at
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/packages/fundus_dr_idrid_v3_efficientnetb2_balanced_colab_package.zip`
+- PAPILA Colab bundle now prepared at:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus Glaucoma PAPILA`
+  with notebook
+  `fundus_glaucoma_papila_v3_efficientnetb2_officialfold_colab.ipynb`
+  and training script
+  `train_fundus_glaucoma_papila_v3_officialfold_colab.py`
+- PAPILA bundle note:
+  this recipe prefers the raw `PAPILA.zip` archive on Google Drive, but can
+  also download the latest public Figshare `PAPILA` zip directly inside Colab;
+  it rebuilds the official paper `HelpCode/kfold/Test 2` binary
+  healthy-vs-glaucoma fold and then creates a patient-level validation split
+  inside the official training fold
+- PAPILA correction/version note:
+  the Nature article was updated by an author correction on `2024-04-17`, but
+  the current training recipe assumes no label or split semantics changed for
+  the binary image-only setup; the raw `PAPILA.zip` archive already on hand is
+  still usable
+- PAPILA Colab run now completed at:
+  `MyDrive/EyeScan_Models/Fundus_Glaucoma_PAPILA_V3`
+- PAPILA result summary:
+  validation balanced accuracy `0.7759`; tuned-threshold test accuracy
+  `0.8333`; tuned-threshold balanced accuracy `0.7619`; threshold `0.35`
+- glaucoma promotion note:
+  this PAPILA GPU run is much healthier than the old local baseline, but it
+  still does not cleanly beat the current `Eye-Fundus` fallback glaucoma model
+  (`0.7730` tuned balanced accuracy on a larger held-out test set), so it
+  should stay a comparison candidate rather than the promoted default for now
+- RIM-ONE DL Colab bundle now prepared at:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus Glaucoma RIM-ONE DL`
+  with notebook
+  `fundus_glaucoma_rimone_v1_vgg19_byhospital_colab.ipynb`
+  and training script
+  `train_fundus_glaucoma_rimone_v1_vgg19_byhospital_colab.py`
+- RIM-ONE bundle note:
+  this recipe can use a Drive copy of the official images zip if present, but
+  otherwise downloads the archive directly from the official repository link in
+  Colab; it defaults to the harder official `by_hospital` split rather than the
+  easier random split
+- RIM-ONE architecture note:
+  this bundle uses a `VGG19` transfer-learning recipe because the official
+  `RIM-ONE DL` README/paper reports strong published results for `VGG19`
+- RIM-ONE Colab run now completed at:
+  `MyDrive/EyeScan_Models/Fundus_Glaucoma_RIM_ONE_DL_V1`
+- RIM-ONE result summary:
+  validation balanced accuracy `0.7333`; tuned-threshold test accuracy
+  `0.6954`; tuned-threshold balanced accuracy `0.5972`; threshold `0.35`
+- RIM-ONE comparison note:
+  the run completed cleanly and the direct official download path works, but
+  this first-pass recipe underperforms both the current `Eye-Fundus` fallback
+  glaucoma model and the official published `RIM-ONE DL` `VGG19` by-hospital
+  benchmark, so it should stay a failed comparison run rather than a candidate
+  for packaging
+- Chaksu Colab bundle now prepared at:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus Glaucoma Chaksu`
+  with notebook `fundus_glaucoma_chaksu_v1_efficientnetb2_colab.ipynb`
+  and training script
+  `train_fundus_glaucoma_chaksu_v1_efficientnetb2_colab.py`
+- Chaksu bundle note:
+  this recipe can use a Drive copy of the public archive if present, but
+  otherwise downloads the latest public Figshare zip directly inside Colab; it
+  uses the official train/test split and attempts to rebuild binary
+  healthy-vs-glaucoma labels from the majority-vote glaucoma decision material
+- Chaksu architecture/data note:
+  the official paper describes `1345` fundus images across `3` devices with
+  expert OD/OC annotations and majority-vote glaucoma decisions; this first
+  bundle uses an `EfficientNetB2` full-image transfer-learning recipe
+- storage note:
+  this IDRiD Colab path is intentionally built around the existing raw
+  `B. Disease Grading.zip` archive so no extra local Mac dataset zip is needed
 
 ## Current local training status
 
@@ -408,3 +556,25 @@ python scripts/evaluate_checkpoint.py --config <config-path>
 - exposing diagnosis language without routed gating
 - glaucoma work ahead of the surface-specific anterior cleanup unless it is
   already mid-run
+
+## March 31, 2026 anterior router update
+
+- the first clean trained `2`-class anterior view router is now complete:
+  `anterior_view_router_v1_mobilenetv2_binary_colab_20260330_125330`
+- trainable classes are currently:
+  `eyelid_dominant`, `iris_visible`
+- `unclear` remains a review/runtime fallback concept only and is not part of
+  the current training label set
+- current package zip:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/packages/anterior_view_router_v1_mobilenetv2_binary_colab_20260330_125330_package.zip`
+- best next priority is no longer dataset review or Colab training prep
+- best next priority is:
+  1. local backend-only regression testing of the trained router against known
+     eyelid-heavy, conjunctivitis, uveitis, and recapture samples
+  2. threshold/behavior review of the `low_confidence_fallback` lane on those
+     real examples
+  3. only after that, optional local backend integration behind a controlled
+     staging path
+- not recommended next:
+  retraining the same `2`-class router immediately without first exercising the
+  completed package on real EyeScan examples

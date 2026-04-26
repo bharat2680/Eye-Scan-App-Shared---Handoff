@@ -1,6 +1,6 @@
 # App Integration Status
 
-Last updated: 2026-03-24 13:35 AEDT
+Last updated: 2026-04-03 23:34 AEDT
 
 ## Current app-side behavior
 
@@ -18,12 +18,24 @@ Current backend sequence:
    predicts `surface_abnormal` and conjunctivitis stays negative
 6. `anterior_pterygium_vs_normal_v1_simplecnn` only when the surface model
    predicts `surface_abnormal` and both earlier surface specialists stay negative
-7. `anterior_cataract_vs_normal_v1_simplecnn` only when the surface model
+7. `anterior_eyelid_abnormality_vs_normal_v1_simplecnn` only when the surface
+   model predicts `surface_abnormal` and all earlier surface specialists stay negative
+8. `anterior_cataract_vs_normal_v1_simplecnn` only when the surface model
    predicts `normal_surface`
 
 Live backend version:
 
-- `anterior_screening_eval_v7`
+- `anterior_screening_eval_v9`
+- separate multi-specialist fundus route now available when
+  `requested_modality=fundus` is sent to `POST /v1/predict`
+- current fundus DR specialist:
+  `fundus_dr_idrid_v3_efficientnetb2_balanced_colab`
+- current fundus glaucoma fallback model:
+  `fundus_glaucoma_eyefundus_v3_efficientnetb0_colab`
+- current fundus DR package path:
+  `/Users/bharatsharma/FlutterProjects/eye_scan_app/backend/model_packages/fundus_dr_idrid_v3_efficientnetb2_balanced_colab_package`
+- current fundus glaucoma package path:
+  `/Users/bharatsharma/FlutterProjects/eye_scan_app/backend/model_packages/fundus_glaucoma_eyefundus_v3_efficientnetb0_colab_package`
 
 ## Current backend result modes
 
@@ -31,6 +43,8 @@ Live backend version:
   `SCREENING_PIPELINE`
 - simulated result mode:
   `TEST_MODE`
+- additional fundus legacy mode:
+  `FUNDUS_MULTI_SPECIALIST_SCREENING`
 
 Recent app-side hardening:
 
@@ -50,6 +64,19 @@ Recent app-side hardening:
   saved results, and exported PDFs
 - the yellow in-app demo banner now uses dark text for readability on the dark
   theme
+- backend now supports an evaluation-only multi-specialist fundus branch behind
+  `requested_modality=fundus`, and that branch currently runs both the
+  `IDRiD` diabetic-retinopathy specialist and the fallback glaucoma specialist
+- when both fundus specialists fire on the same image, the backend now keeps
+  diabetic retinopathy as the primary summary and leaves the fallback glaucoma
+  hit visible as secondary evidence in metadata instead of over-promoting a
+  combined diagnosis
+- public fundus arbitration is now stricter:
+  strong healthy confidence can override weaker glaucoma-only spikes, and
+  glaucoma positives now require both higher confidence and a healthier margin
+  over the healthy signal before they are exported as positive
+- the current mobile capture flow still defaults to anterior screening unless
+  the caller explicitly requests fundus
 
 ## App-side output now supported
 
@@ -75,6 +102,10 @@ Recent app-side hardening:
   `POST /inference/quality`
 - routed evaluation endpoint:
   `POST /v1/predict`
+- fundus fallback trigger:
+  send `requested_modality=fundus` to `POST /v1/predict`
+- optional fundus subtype hints:
+  `requested_modality=fundus_dr` or `requested_modality=fundus_glaucoma`
 
 ## Current public beta backend
 
@@ -86,6 +117,11 @@ Recent app-side hardening:
   `https://eyescan-backend-beta-66791987039.australia-southeast2.run.app/health`
 - current beta deployment role:
   public tester screening outside the local Wi-Fi network
+- latest backend refresh:
+  public Cloud Run backend was redeployed on `2026-04-03` with the newer
+  strict staged routing flow plus stricter fundus false-positive control
+- current public revision:
+  `eyescan-backend-beta-00006-pf6`
 
 ## Current integrated surface-specific specialists
 
@@ -113,7 +149,10 @@ Recent app-side hardening:
   - `100` scans
   - `2` authorised users
 - latest billing-enabled Android bundle built locally:
-  `1.1.7+16`
+  `1.1.7+17`
+- current Android release state:
+  production release `17 (1.1.7)` has been uploaded in Google Play Console and
+  sent for review
 - current public-backend fix:
   release-hardened builds now fall back to the public Cloud Run backend URL
   so Android testers without a manually entered LAN backend should reach real
@@ -151,9 +190,41 @@ Recent app-side hardening:
    if eyelid findings are intentionally in scope
 5. if no narrower specialist clears threshold, keep the fallback wording:
    `Surface abnormality pattern detected`
-6. publish the new `1.1.7+16` Android beta bundle so public testers use the
-   Cloud Run backend instead of a missing local backend path
-7. rerun the current non-eye regression check on-device against the public
-   `eval_v7` backend before making more model changes
-8. keep the new eye-vs-non-eye blocker in `evaluation_only` status until it
-   has been exercised on more real tester photos and public-backend beta runs
+6. wait for Google Play review on Android production build `17 (1.1.7)` to
+   complete, then confirm the live store artifact shows newest-first recent
+   scans ordering on device
+7. do one more healthy-fundus phone-capture spot check against the updated
+   public backend to confirm the stricter glaucoma margin behaves well on
+   obviously normal retina images
+8. rerun the current non-eye regression check on-device against the updated
+   public backend before making more model changes
+9. keep the new eye-vs-non-eye blocker in `evaluation_only` status until it
+   has been exercised on more real tester photos and public-backend runs
+
+## Staged but not integrated anterior view router
+
+- completed offline package:
+  `anterior_view_router_v1_mobilenetv2_binary_colab_20260330_125330`
+- shared package zip:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/packages/anterior_view_router_v1_mobilenetv2_binary_colab_20260330_125330_package.zip`
+- current live behavior:
+  the backend still uses the heuristic anterior view router
+  `anterior_view_rules_v1` inside `_evaluate_anterior_view_type`
+- trained router contract:
+  route `iris_visible` if `p(iris_visible) >= 0.65`, route
+  `eyelid_dominant` if `p(iris_visible) <= 0.35`, otherwise return
+  `low_confidence_fallback`
+- validation result:
+  accuracy `0.9398`, AUC `0.9784`
+- test result:
+  accuracy `0.9502`, AUC `0.9717`
+- eyelid-dominant class test result:
+  precision `0.7838`, recall `0.7838`, F1 `0.7838`
+- offline quick-check:
+  sampled `12 / 12` iris_visible cases routed correctly and
+  `11 / 12` sampled eyelid_dominant cases routed correctly, with `1 / 12`
+  eyelid sample dropping into the intended low-confidence fallback
+- current recommendation:
+  keep the trained router offline/staged for now, then test it first on the
+  local backend path against a small set of known eyelid, conjunctivitis,
+  uveitis, and recapture examples before replacing the heuristic live route

@@ -227,11 +227,13 @@ As of the latest Mac-side billing pass:
 - a true clinic-level trial and multi-user entitlement model still requires
   backend implementation
 - latest billing-enabled Android bundle built on the Mac:
-  - version: `1.1.7+16`
+  - version: `1.1.7+17`
   - local output:
     `/Users/bharatsharma/FlutterProjects/eye_scan_app/build/app/outputs/bundle/release/app-release.aab`
   - backend target:
     `https://eyescan-backend-beta-66791987039.australia-southeast2.run.app`
+  - current Play state:
+    production release `17 (1.1.7)` uploaded and sent for review
 
 ## Immediate next operational steps
 

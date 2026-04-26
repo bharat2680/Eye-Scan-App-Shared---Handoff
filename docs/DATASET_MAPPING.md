@@ -192,6 +192,8 @@ prep script:
 
 - exact dataset path:
   `F:\datasets\External Fundus\IDRiD_DR_vs_Healthy`
+- current Mac/Desktop staging path:
+  `/Users/bharatsharma/Desktop/Eye Scan App Handoff/Datasets 2026/External Fundus/IDRiD_DR_vs_Healthy`
 - expected raw folders under that path:
   `Diabetic Retinopathy`, `Healthy`
 - exact manifest path:
@@ -207,6 +209,8 @@ prep script:
   `Rescaling(1.0 / 255.0)`
 - threshold strategy:
   threshold-tuned binary decision on `p(diabetic_retinopathy)`
+- current staged counts on the Mac:
+  `348` diabetic retinopathy, `168` healthy
 - deployment status:
   `pending_dataset`
 
@@ -229,6 +233,9 @@ prep script:
   `Rescaling(1.0 / 255.0)`
 - threshold strategy:
   threshold-tuned binary decision on `p(glaucoma)`
+- current note:
+  official REFUGE download is still access-gated, so no matching staged folder
+  has been prepared on the Mac/Desktop handoff yet
 - deployment status:
   `pending_dataset`
 
@@ -312,6 +319,8 @@ prep script:
 
 - exact dataset path:
   `F:\datasets\External Fundus\PAPILA_Glaucoma_vs_Healthy`
+- current Mac/Desktop staging path:
+  `/Users/bharatsharma/Desktop/Eye Scan App Handoff/Datasets 2026/External Fundus/PAPILA_Glaucoma_vs_Healthy`
 - expected raw folders under that path:
   `Glaucoma`, `Healthy`
 - exact manifest path:
@@ -327,6 +336,9 @@ prep script:
   `Rescaling(1.0 / 255.0)`
 - threshold strategy:
   threshold-tuned binary decision on `p(glaucoma)`
+- current staged counts on the Mac:
+  `87` glaucoma, `333` healthy, with `68` suspicious cases excluded from the
+  binary folder prep
 - deployment status:
   `pending_dataset`
 
