@@ -1,0 +1,15 @@
+{
+  "dataset_name": "anterior_view_router_v1_binary_colab",
+  "dataset_root": "/Users/bharatsharma/Desktop/Image Dataset on Eye Diseases Classification (Uveitis, Conjunctivitis, Cataract, Eyelid) with Symptoms and SMOTE Validation",
+  "label_csv": "/Users/bharatsharma/Documents/Playground/EyeScan_Shared/datasets/anterior/view_router/labels_reviewed_final.csv",
+  "output_dir": "/Users/bharatsharma/Documents/Playground/EyeScan_Shared/datasets/anterior/view_router/colab_binary_v1/anterior_view_router_v1_binary_colab_dataset",
+  "allowed_labels": [
+    "eyelid_dominant",
+    "iris_visible"
+  ],
+  "exclude_filename_prefixes": [
+    "aug_"
+  ],
+  "train_percent": 70,
+  "val_percent": 15
+}

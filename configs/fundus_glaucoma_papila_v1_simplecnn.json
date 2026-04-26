@@ -1,0 +1,23 @@
+{
+  "run_name": "fundus_glaucoma_papila_v1_simplecnn",
+  "dataset_root": "/Users/bharatsharma/Desktop/Eye Scan App Handoff/Datasets 2026/External Fundus/PAPILA_Glaucoma_vs_Healthy",
+  "output_dir": "/Users/bharatsharma/Documents/Playground/EyeScan_Shared/artifacts/fundus/fundus_glaucoma_papila_v1_simplecnn",
+  "class_folders": [
+    "Healthy",
+    "Glaucoma"
+  ],
+  "positive_class_folder": "Glaucoma",
+  "negative_label": "healthy",
+  "positive_label": "glaucoma",
+  "image_size": [
+    224,
+    224
+  ],
+  "batch_size": 16,
+  "epochs": 8,
+  "learning_rate": 0.001,
+  "dropout_rate": 0.3,
+  "train_percent": 70,
+  "val_percent": 15,
+  "early_stopping_patience": 3
+}

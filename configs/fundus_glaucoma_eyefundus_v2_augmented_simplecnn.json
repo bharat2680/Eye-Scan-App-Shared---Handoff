@@ -1,0 +1,34 @@
+{
+  "run_name": "fundus_glaucoma_eyefundus_v2_augmented_simplecnn",
+  "dataset_root": "/Users/bharatsharma/Documents/Playground/EyeScan_Shared/datasets/fundus/Eye_Fundus_Glaucoma_vs_Healthy",
+  "output_dir": "/Users/bharatsharma/Documents/Playground/EyeScan_Shared/artifacts/fundus/fundus_glaucoma_eyefundus_v2_augmented_simplecnn",
+  "class_folders": [
+    "Healthy",
+    "Glaucoma"
+  ],
+  "positive_class_folder": "Glaucoma",
+  "positive_label": "glaucoma",
+  "negative_label": "healthy",
+  "use_predefined_splits": true,
+  "predefined_split_dirs": {
+    "train": "train",
+    "val": "valid",
+    "test": "test"
+  },
+  "image_size": [
+    192,
+    192
+  ],
+  "batch_size": 12,
+  "epochs": 12,
+  "learning_rate": 0.0007,
+  "dropout_rate": 0.35,
+  "early_stopping_patience": 3,
+  "augment_train": true,
+  "conv_filters": [
+    32,
+    64,
+    128,
+    192
+  ]
+}

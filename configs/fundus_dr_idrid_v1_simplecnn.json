@@ -1,0 +1,23 @@
+{
+  "run_name": "fundus_dr_idrid_v1_simplecnn",
+  "dataset_root": "/Users/bharatsharma/Desktop/Eye Scan App Handoff/Datasets 2026/External Fundus/IDRiD_DR_vs_Healthy",
+  "output_dir": "/Users/bharatsharma/Documents/Playground/EyeScan_Shared/artifacts/fundus/fundus_dr_idrid_v1_simplecnn",
+  "class_folders": [
+    "Healthy",
+    "Diabetic Retinopathy"
+  ],
+  "positive_class_folder": "Diabetic Retinopathy",
+  "negative_label": "healthy",
+  "positive_label": "diabetic_retinopathy",
+  "image_size": [
+    224,
+    224
+  ],
+  "batch_size": 16,
+  "epochs": 8,
+  "learning_rate": 0.001,
+  "dropout_rate": 0.3,
+  "train_percent": 70,
+  "val_percent": 15,
+  "early_stopping_patience": 3
+}
