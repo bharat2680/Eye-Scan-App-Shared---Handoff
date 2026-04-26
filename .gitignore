@@ -1,1 +1,68 @@
 .DS_Store
+
+# macOS / editor noise
+._*
+.Spotlight-V100
+.Trashes
+
+# Python caches / local envs
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Flutter / Dart build products
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub/
+build/
+
+# Android / Gradle
+android/.gradle/
+android/**/build/
+.gradle/
+
+# iOS / Xcode generated files
+ios/Pods/
+ios/Flutter/ephemeral/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+DerivedData/
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+
+# Logs / temp files
+*.log
+logs/
+log/
+tmp/
+temp/
+.tmp/
+
+# Local training / model outputs
+artifacts/
+_scratch/
+tmp_eyelid_pkg/
+checkpoints/
+*.ckpt
+*.weights.h5
+*.h5
+
+# Large local datasets and exports
+datasets/
+exports/
+
+# Package and Colab export archives
+packages/*.zip
+Google Colab/**/*.zip
+
+# Keep lightweight source-of-truth files trackable
+!packages/README.md
