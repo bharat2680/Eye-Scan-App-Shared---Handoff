@@ -119,24 +119,41 @@ the previously documented planning/review notes already in the repository.
 - `split_unset_rows = 50`
 - `challenge_only_true = 0`
 
+### 7. `batch_003_dr_pattern_dominant/chatgpt_visual_reviewed.csv`
+
+- File path:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus DR Hem Exudate Separation/review_batches/contact_sheets/batch_003_dr_pattern_dominant/chatgpt_visual_reviewed.csv`
+- `row_count = 50`
+- `accepted_rows = 39`
+- `needs_second_review_rows = 11`
+- Final-label counts:
+  - `normal_or_non_specific = 9`
+  - `dr_pattern_dominant = 8`
+  - `exudate_macular_pattern_dominant = 18`
+  - `mixed_hemorrhage_exudate_pattern = 4`
+  - `hemorrhage_pattern_dominant_non_dr = 0`
+- `train_val_test_rows = 0`
+- `split_unset_rows = 50`
+- `challenge_only_true = 0`
+
 ## Combined Totals Across Reviewed Artifacts
 
-- `total rows reviewed = 262`
-- `accepted rows = 192`
-- `needs_second_review rows = 70`
+- `total rows reviewed = 312`
+- `accepted rows = 231`
+- `needs_second_review rows = 81`
 
 Final-label totals:
 
-- `normal_or_non_specific = 66`
-- `dr_pattern_dominant = 0`
-- `exudate_macular_pattern_dominant = 38`
-- `mixed_hemorrhage_exudate_pattern = 45`
+- `normal_or_non_specific = 75`
+- `dr_pattern_dominant = 8`
+- `exudate_macular_pattern_dominant = 56`
+- `mixed_hemorrhage_exudate_pattern = 49`
 - `hemorrhage_pattern_dominant_non_dr = 43`
 
 Split-state totals:
 
 - `train_val_test_rows = 0`
-- `split_unset_rows = 262`
+- `split_unset_rows = 312`
 - `challenge_only_true = 0`
 
 ## Interpretation
@@ -167,41 +184,45 @@ The strongest remaining gap is `dr_pattern_dominant`.
 
 Accepted reviewed evidence currently shows:
 
-- `dr_pattern_dominant = 0`
+- `dr_pattern_dominant = 8`
 
-That does not mean the class is invalid.
-It means the current reviewed batches have mostly surfaced:
+Batch 003 finally added true `dr_pattern_dominant` evidence, but only at a
+small scale.
+
+The reviewed pool has still mostly surfaced:
 
 - exudate-dominant cases
 - mixed hemorrhage/exudate cases
 - hemorrhage-dominant vascular cases
 - normal/non-specific cases
 
-So the lane now has a better hemorrhage-vs-exudate-vs-mixed picture than it had
-before, but still lacks accepted reviewed examples that clearly stay inside the
-`dr_pattern_dominant` bucket.
+So the lane now has a much better hemorrhage-vs-exudate-vs-mixed picture than
+it had before, and it now has some real `dr_pattern_dominant` evidence, but
+true `dr_pattern_dominant` coverage is still the largest remaining gap.
 
 ## Recommendation
 
-Recommended next step: **pause and inspect class balance first**, rather than
-immediately starting RFMiD batch 003.
+Recommended next step: **create another DR-pattern candidate batch**, but keep
+it review-only and bundle it inside one dedicated folder under
+`review_batches/contact_sheets/`.
 
 Reason:
 
 - RFMiD has already materially strengthened the weak
   `hemorrhage_pattern_dominant_non_dr` class.
 - The bigger imbalance now is not hemorrhage scarcity.
-- The bigger issue is that accepted reviewed evidence for
-  `dr_pattern_dominant` is still missing.
+- Batch 003 helped, but accepted reviewed evidence for true
+  `dr_pattern_dominant` is still small.
 
-So before creating another RFMiD vascular batch, it would be safer to:
+So the safer next move is to keep sourcing DR-folder candidates that might
+actually survive review as:
 
-1. inspect the current accepted class balance,
-2. decide whether another RFMiD vascular batch is still needed,
-3. and likely open a new targeted DR-pattern sourcing/review pass to recover
-   genuine `dr_pattern_dominant` examples.
+1. broader DR-pattern-dominant examples,
+2. not just isolated exudate/macular cases,
+3. and not mainly vascular/RVO-style cases.
 
-If another RFMiD batch is created later, it should be because:
+Another RFMiD vascular batch should only happen later if we specifically decide
+we still need more:
 
 - we still want more hemorrhage-dominant vascular diversity, or
 - we want more mixed vascular examples,
