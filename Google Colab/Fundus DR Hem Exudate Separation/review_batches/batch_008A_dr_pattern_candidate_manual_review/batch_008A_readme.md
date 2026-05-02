@@ -10,6 +10,10 @@ It was derived from ChatGPT candidate triage for Batch 008 by selecting the top
 Candidate labels are not accepted labels. They are review-support hints only.
 Rows can only become accepted evidence after manual review.
 
+The `chatgpt_manual_review_findings/` files are review-support findings only.
+The 14 `accept_dr_pattern_dominant` rows are clean candidate rows for a future
+proposed evidence-addition patch, not automatically accepted manifest rows.
+
 ## Selection
 
 Selection rule:
@@ -37,6 +41,9 @@ Selected rows by source class:
 
 - `batch_008A_index.csv`: manual review index for the selected rows
 - `batch_008A_contact_sheets/`: 4x4 contact sheets, maximum 16 images per sheet
+- `chatgpt_manual_review_findings/`: ChatGPT conservative manual-review
+  findings handoff, accepted-candidates-only CSV, summary, prompt handoff, and
+  integration note
 - `batch_008A_readme.md`: this note
 
 The contact sheets show:
