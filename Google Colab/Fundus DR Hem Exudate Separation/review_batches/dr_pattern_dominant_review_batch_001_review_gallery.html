@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DR Pattern Review Batch 001 Gallery</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #18202a;
+      --muted: #5f6b7a;
+      --border: #d6dbe4;
+      --accent: #0f62fe;
+      --warn-bg: #fff7e8;
+      --warn-border: #f2c879;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    .hero,
+    .rules,
+    .summary,
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .hero,
+    .rules,
+    .summary {
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .rules {
+      background: var(--warn-bg);
+      border-color: var(--warn-border);
+    }
+
+    .summary-list,
+    .rules-list,
+    .allowed-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .summary-item {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .summary-item strong,
+    .field label,
+    .path,
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .row-tag {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .image-frame {
+      aspect-ratio: 1 / 1;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #eff3f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #111827;
+    }
+
+    .image-fallback {
+      color: var(--muted);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .meta {
+      display: grid;
+      gap: 8px;
+    }
+
+    .path {
+      word-break: break-all;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .proposed {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #eef4ff;
+      border: 1px solid #cddbff;
+      width: fit-content;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    select,
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font: inherit;
+      background: #fff;
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    .helper {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .open-link {
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .fields {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>DR Pattern Review Batch 001</h1>
+      <p>
+        This page is a manual review aid for the 50-row DR-pattern candidate
+        batch. It is not training-ready and it does not write labels back to the
+        CSV.
+      </p>
+    </section>
+
+    <section class="rules">
+      <h2>Safety Rules</h2>
+      <ul class="rules-list">
+        <li><strong>`proposed_label` is only a hint.</strong></li>
+        <li><strong>`final_label` must be assigned only after human image review.</strong></li>
+        <li><strong>This batch is not training-ready.</strong></li>
+        <li>Do not treat this page as a reviewed manifest.</li>
+        <li>Do not mark rows accepted here and assume they are ready for fitting.</li>
+      </ul>
+    </section>
+
+    <section class="summary">
+      <h2>Allowed Final Label Values</h2>
+      <ul class="allowed-list">
+        <li>`normal_or_non_specific`</li>
+        <li>`dr_pattern_dominant`</li>
+        <li>`hemorrhage_pattern_dominant_non_dr`</li>
+        <li>`exudate_macular_pattern_dominant`</li>
+        <li>`mixed_hemorrhage_exudate_pattern`</li>
+      </ul>
+      <div class="summary-grid" style="margin-top: 16px;">
+        <div class="summary-item"><strong>Batch size</strong><br>50 rows</div>
+        <div class="summary-item"><strong>Current `final_label`</strong><br>blank on every row</div>
+        <div class="summary-item"><strong>Current `review_status`</strong><br>`unreviewed` on every row</div>
+        <div class="summary-item"><strong>Current `split`</strong><br>`unset` on every row</div>
+      </div>
+    </section>
+
+    <section class="cards" id="cards"></section>
+  </main>
+
+  <script>
+    const allowedFinalLabels = [
+      "",
+      "normal_or_non_specific",
+      "dr_pattern_dominant",
+      "hemorrhage_pattern_dominant_non_dr",
+      "exudate_macular_pattern_dominant",
+      "mixed_hemorrhage_exudate_pattern"
+    ];
+
+    const rows = [
+      {"row_number": 1, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 2, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR10.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 3, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR100.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 4, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1000.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 5, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1001.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 6, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1002.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 7, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1003.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 8, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1004.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 9, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1005.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 10, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1006.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 11, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1007.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 12, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1008.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 13, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1009.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 14, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR101.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 15, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1010.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 16, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1011.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 17, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1012.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 18, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1013.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 19, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1014.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 20, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1015.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 21, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1016.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 22, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1017.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 23, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1018.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 24, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1019.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 25, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR102.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 26, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1020.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 27, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1021.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 28, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1022.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 29, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1023.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 30, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1024.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 31, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1025.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 32, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1026.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 33, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1027.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 34, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1028.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 35, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1029.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 36, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR103.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 37, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1030.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 38, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1031.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 39, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1032.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 40, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1033.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 41, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1034.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 42, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1035.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 43, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1036.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 44, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1037.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 45, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1038.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 46, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1039.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 47, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR104.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 48, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1040.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 49, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1041.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""},
+      {"row_number": 50, "image_path": "/Volumes/My Passport/EyeScan App/Datasets/Augmented Dataset-Kaggle/Eye Disease Image Dataset/Original Dataset/Diabetic Retinopathy/DR1042.jpg", "proposed_label": "dr_pattern_dominant", "final_label": "", "review_status": "unreviewed", "lesion_pattern_notes": "", "quality_notes": "", "exclude_reason": ""}
+    ];
+
+    function makeField(label, element) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "field";
+      const title = document.createElement("label");
+      title.textContent = label;
+      wrapper.appendChild(title);
+      wrapper.appendChild(element);
+      return wrapper;
+    }
+
+    function makeTextarea(placeholder) {
+      const area = document.createElement("textarea");
+      area.placeholder = placeholder;
+      return area;
+    }
+
+    function makeInput(placeholder) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = placeholder;
+      return input;
+    }
+
+    const cards = document.getElementById("cards");
+
+    rows.forEach((row) => {
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const header = document.createElement("div");
+      header.className = "card-header";
+
+      const heading = document.createElement("h3");
+      heading.textContent = `Row ${row.row_number}`;
+
+      const tag = document.createElement("div");
+      tag.className = "row-tag";
+      tag.textContent = "Review queue only";
+
+      header.appendChild(heading);
+      header.appendChild(tag);
+      card.appendChild(header);
+
+      const frame = document.createElement("div");
+      frame.className = "image-frame";
+
+      const img = document.createElement("img");
+      img.src = "file://" + encodeURI(row.image_path);
+      img.alt = `Row ${row.row_number} image`;
+
+      img.onerror = function () {
+        frame.innerHTML = '<div class="image-fallback">Image preview unavailable. Verify the mounted path and open the source file directly.</div>';
+      };
+
+      frame.appendChild(img);
+      card.appendChild(frame);
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+
+      const path = document.createElement("div");
+      path.className = "path";
+      path.textContent = row.image_path;
+      meta.appendChild(path);
+
+      const openLink = document.createElement("a");
+      openLink.className = "open-link";
+      openLink.href = "file://" + encodeURI(row.image_path);
+      openLink.textContent = "Open source image";
+      meta.appendChild(openLink);
+
+      const proposed = document.createElement("div");
+      proposed.className = "proposed";
+      proposed.innerHTML = "<strong>proposed_label</strong> " + row.proposed_label;
+      meta.appendChild(proposed);
+      card.appendChild(meta);
+
+      const fields = document.createElement("div");
+      fields.className = "fields";
+
+      const finalLabel = document.createElement("select");
+      allowedFinalLabels.forEach((value) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value || "-- leave blank until reviewed --";
+        finalLabel.appendChild(option);
+      });
+
+      const reviewStatus = document.createElement("input");
+      reviewStatus.type = "text";
+      reviewStatus.value = row.review_status;
+      reviewStatus.readOnly = true;
+
+      const lesionNotes = makeTextarea("Describe observed lesion pattern after human review.");
+      const qualityNotes = makeTextarea("Describe image quality concerns, if any.");
+      const excludeReason = makeTextarea("Fill only if a reviewer decides the row should be excluded later.");
+
+      const finalLabelField = makeField("final_label", finalLabel);
+      const reviewStatusField = makeField("review_status", reviewStatus);
+      const lesionField = makeField("lesion_pattern_notes", lesionNotes);
+      const qualityField = makeField("quality_notes", qualityNotes);
+      const excludeField = makeField("exclude_reason", excludeReason);
+      const reminderField = makeField("manual review reminder", makeInput("Do not copy these notes into training until the row is formally reviewed."));
+
+      lesionField.classList.add("full");
+      qualityField.classList.add("full");
+      excludeField.classList.add("full");
+      reminderField.classList.add("full");
+
+      const helper = document.createElement("div");
+      helper.className = "helper";
+      helper.textContent = "This page does not save changes. Copy reviewed decisions into a later reviewed manifest through the approved workflow.";
+      reminderField.appendChild(helper);
+
+      fields.appendChild(finalLabelField);
+      fields.appendChild(reviewStatusField);
+      fields.appendChild(lesionField);
+      fields.appendChild(qualityField);
+      fields.appendChild(excludeField);
+      fields.appendChild(reminderField);
+
+      card.appendChild(fields);
+      cards.appendChild(card);
+    });
+  </script>
+</body>
+</html>
