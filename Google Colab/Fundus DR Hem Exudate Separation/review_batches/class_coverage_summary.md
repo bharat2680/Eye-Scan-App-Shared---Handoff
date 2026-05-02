@@ -136,24 +136,92 @@ the previously documented planning/review notes already in the repository.
 - `split_unset_rows = 50`
 - `challenge_only_true = 0`
 
+### 8. `batch_004_dr_pattern_dominant/chatgpt_visual_reviewed.csv`
+
+- File path:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus DR Hem Exudate Separation/review_batches/contact_sheets/batch_004_dr_pattern_dominant/chatgpt_visual_reviewed.csv`
+- `row_count = 50`
+- `accepted_rows = 39`
+- `needs_second_review_rows = 11`
+- Final-label counts:
+  - `normal_or_non_specific = 15`
+  - `dr_pattern_dominant = 4`
+  - `exudate_macular_pattern_dominant = 18`
+  - `mixed_hemorrhage_exudate_pattern = 1`
+  - `hemorrhage_pattern_dominant_non_dr = 1`
+- `train_val_test_rows = 0`
+- `split_unset_rows = 50`
+- `challenge_only_true = 0`
+
+### 9. `batch_005_dr_pattern_dominant/chatgpt_visual_reviewed.csv`
+
+- File path:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus DR Hem Exudate Separation/review_batches/contact_sheets/batch_005_dr_pattern_dominant/chatgpt_visual_reviewed.csv`
+- `row_count = 50`
+- `accepted_rows = 41`
+- `needs_second_review_rows = 9`
+- Final-label counts:
+  - `normal_or_non_specific = 14`
+  - `dr_pattern_dominant = 9`
+  - `exudate_macular_pattern_dominant = 11`
+  - `mixed_hemorrhage_exudate_pattern = 5`
+  - `hemorrhage_pattern_dominant_non_dr = 2`
+- `train_val_test_rows = 0`
+- `split_unset_rows = 50`
+- `challenge_only_true = 0`
+
+### 10. `batch_006_dr_pattern_dominant/chatgpt_visual_reviewed.csv`
+
+- File path:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus DR Hem Exudate Separation/review_batches/contact_sheets/batch_006_dr_pattern_dominant/chatgpt_visual_reviewed.csv`
+- `row_count = 50`
+- `accepted_rows = 35`
+- `needs_second_review_rows = 15`
+- Final-label counts:
+  - `normal_or_non_specific = 14`
+  - `dr_pattern_dominant = 3`
+  - `exudate_macular_pattern_dominant = 16`
+  - `mixed_hemorrhage_exudate_pattern = 0`
+  - `hemorrhage_pattern_dominant_non_dr = 2`
+- `train_val_test_rows = 0`
+- `split_unset_rows = 50`
+- `challenge_only_true = 0`
+
+### 11. `batch_007_dr_pattern_dominant_curated_from_atlas/chatgpt_visual_reviewed.csv`
+
+- File path:
+  `/Users/bharatsharma/Documents/Playground/EyeScan_Shared/Google Colab/Fundus DR Hem Exudate Separation/review_batches/contact_sheets/batch_007_dr_pattern_dominant_curated_from_atlas/chatgpt_visual_reviewed.csv`
+- `row_count = 41`
+- `accepted_rows = 29`
+- `needs_second_review_rows = 12`
+- Final-label counts:
+  - `normal_or_non_specific = 4`
+  - `dr_pattern_dominant = 13`
+  - `exudate_macular_pattern_dominant = 5`
+  - `mixed_hemorrhage_exudate_pattern = 7`
+  - `hemorrhage_pattern_dominant_non_dr = 0`
+- `train_val_test_rows = 0`
+- `split_unset_rows = 41`
+- `challenge_only_true = 0`
+
 ## Combined Totals Across Reviewed Artifacts
 
-- `total rows reviewed = 312`
-- `accepted rows = 231`
-- `needs_second_review rows = 81`
+- `total rows reviewed = 503`
+- `accepted rows = 375`
+- `needs_second_review rows = 128`
 
 Final-label totals:
 
-- `normal_or_non_specific = 75`
-- `dr_pattern_dominant = 8`
-- `exudate_macular_pattern_dominant = 56`
-- `mixed_hemorrhage_exudate_pattern = 49`
-- `hemorrhage_pattern_dominant_non_dr = 43`
+- `normal_or_non_specific = 122`
+- `dr_pattern_dominant = 37`
+- `exudate_macular_pattern_dominant = 106`
+- `mixed_hemorrhage_exudate_pattern = 62`
+- `hemorrhage_pattern_dominant_non_dr = 48`
 
 Split-state totals:
 
 - `train_val_test_rows = 0`
-- `split_unset_rows = 312`
+- `split_unset_rows = 503`
 - `challenge_only_true = 0`
 
 ## Interpretation
@@ -178,16 +246,28 @@ The two RFMiD vascular batches contributed:
 
 That made the previously weakest class much more viable as a future review lane.
 
+### What changed with atlas curation
+
+Batch 007 was atlas-curated, not random.
+
+It improved `dr_pattern_dominant` yield compared with the earlier random DR
+batch slices, which were generally low-yield and mostly surfaced
+exudate-heavy, mixed, non-specific, or lower-confidence rows.
+
+The atlas screening step also made the source-folder behavior clearer: the DR
+directory is noisy and appears stronger for exudate/mixed abnormality mining
+than for clean, broad `dr_pattern_dominant` examples.
+
 ### What remains weak
 
 The strongest remaining gap is `dr_pattern_dominant`.
 
 Accepted reviewed evidence currently shows:
 
-- `dr_pattern_dominant = 8`
+- `dr_pattern_dominant = 21`
 
-Batch 003 finally added true `dr_pattern_dominant` evidence, but only at a
-small scale.
+Batch 007 helped materially, but clean `dr_pattern_dominant` coverage is still
+the hardest class to source reliably from this DR directory.
 
 The reviewed pool has still mostly surfaced:
 
@@ -202,20 +282,20 @@ true `dr_pattern_dominant` coverage is still the largest remaining gap.
 
 ## Recommendation
 
-Recommended next step: **create another DR-pattern candidate batch**, but keep
-it review-only and bundle it inside one dedicated folder under
-`review_batches/contact_sheets/`.
+Recommended next step: **only create future DR batches from atlas-flagged
+rows or from a better severity-labelled dataset**, and keep them review-only and
+bundled inside one dedicated folder under `review_batches/contact_sheets/`.
 
 Reason:
 
 - RFMiD has already materially strengthened the weak
   `hemorrhage_pattern_dominant_non_dr` class.
 - The bigger imbalance now is not hemorrhage scarcity.
-- Batch 003 helped, but accepted reviewed evidence for true
-  `dr_pattern_dominant` is still small.
+- Batch 007 improved yield, but accepted reviewed evidence for true
+  `dr_pattern_dominant` is still modest relative to the total review effort.
 
-So the safer next move is to keep sourcing DR-folder candidates that might
-actually survive review as:
+So the safer next move is to keep sourcing only higher-signal candidates that
+might actually survive review as:
 
 1. broader DR-pattern-dominant examples,
 2. not just isolated exudate/macular cases,
