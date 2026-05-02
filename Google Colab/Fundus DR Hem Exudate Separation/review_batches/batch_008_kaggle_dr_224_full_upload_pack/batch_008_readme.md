@@ -33,6 +33,9 @@ Excluded source classes:
 - `optional_contact_sheets/`: 4x4 navigation contact sheets
 - `chatgpt_handoff/`: ChatGPT-generated review-support files, including an
   enriched index, priority review order, and integration note
+- `chatgpt_candidate_findings/`: second ChatGPT handoff with AI-assisted
+  candidate triage, shortlist CSV, summary, prompt handoff, and candidate
+  contact sheets
 
 The individual image files are the primary review material. The optional contact sheets are for navigation only.
 
@@ -53,6 +56,10 @@ This pack must be visually reviewed before any training or integration lane is c
 The `chatgpt_handoff/` files are review-support material only. Any `auto_*`
 values are automated quality-triage helpers, not diagnostic labels, accepted
 evidence labels, or training labels.
+
+The `chatgpt_candidate_findings/` files are candidate triage only. The
+`chatgpt_candidate_review_bucket` values are not accepted labels and must be
+manually confirmed before any row can enter reviewed evidence.
 
 ## Safety Notes
 
