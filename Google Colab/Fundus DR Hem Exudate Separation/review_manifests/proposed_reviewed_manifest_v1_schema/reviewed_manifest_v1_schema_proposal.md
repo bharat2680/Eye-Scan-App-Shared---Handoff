@@ -5,21 +5,24 @@
 This document proposes a canonical schema for `reviewed_manifest_v1.csv` in the
 EyeScan fundus DR evidence lane.
 
-This is schema proposal only. It does not create the final
-`reviewed_manifest_v1.csv`, does not approve fitting, and does not approve
-training.
+This is a schema proposal and proposal-time record. It did not itself create
+the final `reviewed_manifest_v1.csv`, approve fitting, or approve training.
 
-## Why reviewed_manifest_v1.csv Does Not Currently Exist
+Current status: the canonical `reviewed_manifest_v1.csv` now exists at
+`Google Colab/Fundus DR Hem Exudate Separation/review_manifests/reviewed_manifest_v1.csv`
+and currently contains only the 98 Batch 008 accepted clean DR-pattern rows.
 
-The current lane has raw candidate manifests, review batches, ChatGPT visual
-review handoffs, and proposed evidence-addition files, but no canonical reviewed
-manifest has been created under:
+## Proposal-Time Context
+
+At the time this proposal was written, the lane had raw candidate manifests,
+review batches, ChatGPT visual review handoffs, and proposed evidence-addition
+files, but no canonical reviewed manifest had been created under:
 
 `Google Colab/Fundus DR Hem Exudate Separation/`
 
 Codex correctly blocked direct promotion because there was no existing reviewed
 manifest schema to inspect or append to. This proposal defines the schema before
-any canonical manifest is created.
+the canonical manifest was created.
 
 ## Purpose Of reviewed_manifest_v1.csv
 
@@ -161,8 +164,12 @@ For the dry-run rows:
 
 This is schema proposal only.
 
-No final `reviewed_manifest_v1.csv` was created.
+At the proposal stage, no final `reviewed_manifest_v1.csv` was created. The
+canonical manifest was later created from the approved Batch 008 dry run after
+explicit approval.
 No `fitting_manifest_v1.csv` was created or modified.
 No `challenge_manifest_v1.csv` was created or modified.
 No training, fitting, model, app, backend, runtime, or preserved-package changes
 are approved by this proposal.
+The 82GB `diabetic-retinopathy-detection.zip` dataset remains parked and was
+not inspected or processed in this lane.

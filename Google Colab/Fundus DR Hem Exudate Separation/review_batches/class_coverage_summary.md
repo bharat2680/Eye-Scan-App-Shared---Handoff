@@ -2,18 +2,32 @@
 
 ## Scope
 
-This document summarizes review evidence created so far for:
+This document summarizes review evidence and reviewed-manifest coverage created
+so far for:
 
 - `fundus_dr_hem_exudate_separation_v1`
 
-This is **review evidence only**.
+The canonical reviewed manifest now exists:
 
-It is **not** a `reviewed_manifest_v1.csv`.
-It is **not** a `fitting_manifest_v1.csv`.
+- `Google Colab/Fundus DR Hem Exudate Separation/review_manifests/reviewed_manifest_v1.csv`
+
+Current canonical reviewed manifest state:
+
+- total rows = 98
+- `dr_pattern_dominant = 98`
+- `accepted = 98`
+
+The manifest currently contains only Batch 008 accepted clean DR-pattern
+evidence. Batches 001-007 remain historical review/support material and are not
+yet backfilled into `reviewed_manifest_v1.csv`.
+
+This is **not** a `fitting_manifest_v1.csv`.
+It does **not** create a train/val/test split.
 It does **not** approve training.
 
-All counts below come from the currently available ChatGPT visual review CSVs and
-the previously documented planning/review notes already in the repository.
+The historical review-artifact counts below come from the currently available
+ChatGPT visual review CSVs and the previously documented planning/review notes
+already in the repository.
 
 ## Reviewed Artifacts
 
@@ -224,11 +238,31 @@ Split-state totals:
 - `split_unset_rows = 503`
 - `challenge_only_true = 0`
 
+## Canonical `reviewed_manifest_v1.csv` Status
+
+- `reviewed_manifest_v1.csv` now exists.
+- It currently contains only Batch 008 accepted clean DR-pattern evidence.
+- `total rows = 98`
+- `review_bucket = dr_pattern_dominant`: 98
+- `review_status = accepted`: 98
+- `source_batch = batch_008_kaggle_dr_224`: 98
+- Batches 001-007 remain historical review/support material and are not yet
+  backfilled into `reviewed_manifest_v1.csv`.
+- `fitting_manifest_v1.csv` does not exist.
+- `challenge_manifest_v1.csv` does not exist.
+- No training, fitting, model, app, backend, runtime, or preserved-package
+  changes have been made.
+- The 82GB `diabetic-retinopathy-detection.zip` dataset has been downloaded but
+  remains parked until a separate inspection-only lane is explicitly started.
+
 ## Interpretation
 
-This is still review evidence only.
-It is not a reviewed manifest and not a fitting manifest.
-No training is approved from this summary.
+The historical review artifacts above remain review/support material. The
+canonical `reviewed_manifest_v1.csv` currently includes only Batch 008 accepted
+clean DR-pattern evidence.
+
+This summary is not a fitting manifest. No training is approved from this
+summary.
 
 ### What improved
 
@@ -260,14 +294,21 @@ than for clean, broad `dr_pattern_dominant` examples.
 
 ### What remains weak
 
-The strongest remaining gap is `dr_pattern_dominant`.
+Before Batch 008, the historical review-batch pool above contained:
 
-Accepted reviewed evidence currently shows:
+- `dr_pattern_dominant = 37`
 
-- `dr_pattern_dominant = 21`
+The canonical `reviewed_manifest_v1.csv` now starts with Batch 008 accepted
+clean DR-pattern evidence only:
 
-Batch 007 helped materially, but clean `dr_pattern_dominant` coverage is still
-the hardest class to source reliably from this DR directory.
+- `dr_pattern_dominant = 98`
+
+If Batches 001-007 are backfilled later through a separate reviewed-manifest
+task, expected combined DR-pattern reviewed coverage would be 135, subject to
+that backfill verification.
+
+Clean `dr_pattern_dominant` coverage remains the hardest class to source
+reliably from noisy DR-derived candidate pools.
 
 The reviewed pool has still mostly surfaced:
 
@@ -277,8 +318,9 @@ The reviewed pool has still mostly surfaced:
 - normal/non-specific cases
 
 So the lane now has a much better hemorrhage-vs-exudate-vs-mixed picture than
-it had before, and it now has some real `dr_pattern_dominant` evidence, but
-true `dr_pattern_dominant` coverage is still the largest remaining gap.
+it had before, and Batch 008 materially improved canonical
+`dr_pattern_dominant` coverage. Future backfill and expansion should still stay
+review-first.
 
 ## Recommendation
 
@@ -311,11 +353,12 @@ not because the current lane is short on non-DR hemorrhage evidence overall.
 
 ## Full-Image Review Warning
 
-Full-image review is still recommended before creating any fitting manifest.
+Full-image review and explicit lane approval are still required before creating
+any fitting manifest.
 
-Current accepted labels were assigned from contact-sheet review assistance and
-should not be promoted directly into training export without a more careful
-image-level pass, especially for:
+Historical accepted labels and Batch 008 accepted evidence should not be
+promoted directly into training export without a more careful image-level pass,
+especially for:
 
 - subtle hemorrhage-vs-mixed calls,
 - exudate-vs-mixed calls,
@@ -325,11 +368,14 @@ image-level pass, especially for:
 
 ## Safety Validation
 
-- No `reviewed_manifest_v1.csv` was created.
+- `reviewed_manifest_v1.csv` now exists.
+- It currently contains only Batch 008 accepted clean DR-pattern evidence.
+- Batches 001-007 are not yet backfilled into `reviewed_manifest_v1.csv`.
 - No `fitting_manifest_v1.csv` was created.
 - No `challenge_manifest_v1.csv` was created.
 - No train/val/test split was created.
-- No training artifacts were created.
-- No datasets were moved, copied, or deleted.
-- RFMiD ZIP was not extracted.
+- No training or fitting artifacts were created.
+- No model, app, backend, runtime, or preserved-package files were changed.
+- The 82GB `diabetic-retinopathy-detection.zip` dataset has been downloaded but
+  remains parked; it was not inspected or processed in this lane.
 - Preserved baselines remain untouched.

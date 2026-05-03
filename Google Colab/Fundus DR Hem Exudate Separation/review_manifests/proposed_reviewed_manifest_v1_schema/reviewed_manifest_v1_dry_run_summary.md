@@ -3,7 +3,10 @@
 This dry run maps only the 98 Batch 008 proposed accepted DR-pattern rows into
 the proposed reviewed-manifest schema.
 
-No canonical `reviewed_manifest_v1.csv` was created.
+At the dry-run stage, no canonical `reviewed_manifest_v1.csv` was created.
+Current status: the canonical manifest now exists at
+`Google Colab/Fundus DR Hem Exudate Separation/review_manifests/reviewed_manifest_v1.csv`
+and starts with these same 98 Batch 008 accepted clean DR-pattern rows.
 
 ## Counts
 
@@ -48,8 +51,13 @@ This is a dry-run CSV only. It is intentionally named
 `reviewed_manifest_v1_dry_run_batch_008_only.csv` and must not be treated as the
 canonical `reviewed_manifest_v1.csv`.
 
-No canonical manifest was created yet.
+At the dry-run stage, no canonical manifest was created. The canonical
+`reviewed_manifest_v1.csv` was later created from this dry run after explicit
+approval.
+
 No fitting manifest was created or modified.
 No challenge manifest was created or modified.
 No training, fitting, model, app, backend, runtime, or preserved-package changes
 were made.
+The 82GB `diabetic-retinopathy-detection.zip` dataset remains parked and was
+not inspected or processed in this lane.
