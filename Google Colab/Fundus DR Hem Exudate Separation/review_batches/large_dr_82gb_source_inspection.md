@@ -146,6 +146,8 @@ because the full train image archive was not reassembled or extracted.
   ample free disk and must not copy a large dataset into the repository.
 - Future work should first verify split-ZIP integrity and train label-to-image
   mapping before building any review pack.
+- A local-only split-ZIP access plan has been added at
+  `Google Colab/Fundus DR Hem Exudate Separation/review_batches/large_dr_82gb_source_preview/large_dr_82gb_split_zip_access_plan.md`.
 
 ## Usefulness Assessment
 
