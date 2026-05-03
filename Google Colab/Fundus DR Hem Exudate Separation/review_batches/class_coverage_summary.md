@@ -253,7 +253,25 @@ Split-state totals:
 - No training, fitting, model, app, backend, runtime, or preserved-package
   changes have been made.
 - The 82GB `diabetic-retinopathy-detection.zip` dataset has been downloaded but
-  remains parked until a separate inspection-only lane is explicitly started.
+  remains parked for source inspection only; no rows from it have been added to
+  reviewed evidence.
+
+## Large 82GB DR Source Inspection Status
+
+A new inspection-only lane has started for:
+
+- `F:\Datasets\DR-Diabetic Retinopathy\diabetic-retinopathy-detection.zip`
+- locally verified at
+  `/Volumes/My Passport/Datasets/DR-Diabetic Retinopathy/diabetic-retinopathy-detection.zip`
+
+Inspection artifacts:
+
+- `large_dr_82gb_source_inspection.md`
+- `large_dr_82gb_source_preview/large_dr_82gb_preview_index.csv`
+
+This inspection created only a tiny label preview index. It did not add rows to
+`reviewed_manifest_v1.csv`, did not create fitting or challenge manifests, and
+did not create training exports.
 
 ## Interpretation
 
@@ -376,6 +394,7 @@ especially for:
 - No train/val/test split was created.
 - No training or fitting artifacts were created.
 - No model, app, backend, runtime, or preserved-package files were changed.
-- The 82GB `diabetic-retinopathy-detection.zip` dataset has been downloaded but
-  remains parked; it was not inspected or processed in this lane.
+- The 82GB `diabetic-retinopathy-detection.zip` dataset has now entered a
+  source inspection-only lane. It has not contributed any reviewed rows, fitting
+  rows, challenge rows, or training artifacts.
 - Preserved baselines remain untouched.
