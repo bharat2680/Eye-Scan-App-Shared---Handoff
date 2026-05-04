@@ -13,13 +13,17 @@ The canonical reviewed manifest now exists:
 
 Current canonical reviewed manifest state:
 
-- total rows = 98
-- `dr_pattern_dominant = 98`
-- `accepted = 98`
+- total rows = 932
+- `dr_pattern_dominant = 932`
+- `accepted = 932`
 
-The manifest currently contains only Batch 008 accepted clean DR-pattern
-evidence. Batches 001-007 remain historical review/support material and are not
-yet backfilled into `reviewed_manifest_v1.csv`.
+Current reviewed-manifest contribution:
+
+- Batch 008 accepted clean DR-pattern evidence: 98
+- Large DR Batch 001 accepted clean DR-pattern evidence: 834
+
+Batches 001-007 remain historical review/support material and are not yet
+backfilled into `reviewed_manifest_v1.csv`.
 
 This is **not** a `fitting_manifest_v1.csv`.
 It does **not** create a train/val/test split.
@@ -241,11 +245,13 @@ Split-state totals:
 ## Canonical `reviewed_manifest_v1.csv` Status
 
 - `reviewed_manifest_v1.csv` now exists.
-- It currently contains only Batch 008 accepted clean DR-pattern evidence.
-- `total rows = 98`
-- `review_bucket = dr_pattern_dominant`: 98
-- `review_status = accepted`: 98
+- It currently contains Batch 008 and Large DR Batch 001 accepted clean
+  DR-pattern evidence.
+- `total rows = 932`
+- `review_bucket = dr_pattern_dominant`: 932
+- `review_status = accepted`: 932
 - `source_batch = batch_008_kaggle_dr_224`: 98
+- `source_batch = large_dr_batch_001_moderate_full_review`: 834
 - Batches 001-007 remain historical review/support material and are not yet
   backfilled into `reviewed_manifest_v1.csv`.
 - `fitting_manifest_v1.csv` does not exist.
@@ -253,8 +259,8 @@ Split-state totals:
 - No training, fitting, model, app, backend, runtime, or preserved-package
   changes have been made.
 - The 82GB `diabetic-retinopathy-detection.zip` dataset has been downloaded but
-  remains parked for source inspection only; no rows from it have been added to
-  reviewed evidence.
+  has contributed Large DR Batch 001 accepted DR-pattern evidence after
+  conservative contact-sheet review.
 
 ## Large 82GB DR Source Inspection Status
 
@@ -269,15 +275,16 @@ Inspection artifacts:
 - `large_dr_82gb_source_inspection.md`
 - `large_dr_82gb_source_preview/large_dr_82gb_preview_index.csv`
 
-This inspection created only a tiny label preview index. It did not add rows to
-`reviewed_manifest_v1.csv`, did not create fitting or challenge manifests, and
-did not create training exports.
+This inspection first created only tiny preview/source-access artifacts. The
+later Large DR Batch 001 Moderate review lane added 834 accepted
+`dr_pattern_dominant` rows to `reviewed_manifest_v1.csv`. It still did not
+create fitting or challenge manifests, and did not create training exports.
 
 ## Interpretation
 
 The historical review artifacts above remain review/support material. The
-canonical `reviewed_manifest_v1.csv` currently includes only Batch 008 accepted
-clean DR-pattern evidence.
+canonical `reviewed_manifest_v1.csv` currently includes Batch 008 and Large DR
+Batch 001 accepted clean DR-pattern evidence.
 
 This summary is not a fitting manifest. No training is approved from this
 summary.
@@ -316,13 +323,21 @@ Before Batch 008, the historical review-batch pool above contained:
 
 - `dr_pattern_dominant = 37`
 
-The canonical `reviewed_manifest_v1.csv` now starts with Batch 008 accepted
-clean DR-pattern evidence only:
+The canonical `reviewed_manifest_v1.csv` started with Batch 008 accepted clean
+DR-pattern evidence:
 
 - `dr_pattern_dominant = 98`
 
+Large DR Batch 001 added:
+
+- `dr_pattern_dominant = 834`
+
+Current canonical reviewed-manifest DR-pattern coverage is:
+
+- `dr_pattern_dominant = 932`
+
 If Batches 001-007 are backfilled later through a separate reviewed-manifest
-task, expected combined DR-pattern reviewed coverage would be 135, subject to
+task, expected combined DR-pattern reviewed coverage would be 969, subject to
 that backfill verification.
 
 Clean `dr_pattern_dominant` coverage remains the hardest class to source
@@ -336,9 +351,9 @@ The reviewed pool has still mostly surfaced:
 - normal/non-specific cases
 
 So the lane now has a much better hemorrhage-vs-exudate-vs-mixed picture than
-it had before, and Batch 008 materially improved canonical
-`dr_pattern_dominant` coverage. Future backfill and expansion should still stay
-review-first.
+it had before, and Batch 008 plus Large DR Batch 001 materially improved
+canonical `dr_pattern_dominant` coverage. Future backfill and expansion should
+still stay review-first.
 
 ## Recommendation
 
@@ -387,14 +402,16 @@ especially for:
 ## Safety Validation
 
 - `reviewed_manifest_v1.csv` now exists.
-- It currently contains only Batch 008 accepted clean DR-pattern evidence.
+- It currently contains 932 accepted clean DR-pattern evidence rows.
+- Batch 008 contributed 98 rows.
+- Large DR Batch 001 contributed 834 rows.
 - Batches 001-007 are not yet backfilled into `reviewed_manifest_v1.csv`.
 - No `fitting_manifest_v1.csv` was created.
 - No `challenge_manifest_v1.csv` was created.
 - No train/val/test split was created.
 - No training or fitting artifacts were created.
 - No model, app, backend, runtime, or preserved-package files were changed.
-- The 82GB `diabetic-retinopathy-detection.zip` dataset has now entered a
-  source inspection-only lane. It has not contributed any reviewed rows, fitting
-  rows, challenge rows, or training artifacts.
+- The 82GB `diabetic-retinopathy-detection.zip` dataset has contributed reviewed
+  rows only through the Large DR Batch 001 conservative review lane. It has not
+  contributed fitting rows, challenge rows, or training artifacts.
 - Preserved baselines remain untouched.
