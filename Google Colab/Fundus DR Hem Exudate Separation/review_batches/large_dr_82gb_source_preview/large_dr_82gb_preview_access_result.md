@@ -15,6 +15,28 @@ or preserved-package files were changed.
   `/Volumes/My Passport/Datasets/DR-Diabetic Retinopathy/diabetic-retinopathy-detection.zip`
 - Allowed local-only work folder:
   `/Users/bharatsharma/Documents/EyeScan_Local_Data/large_dr_82gb_work/`
+- Preferred external scratch folder for retry:
+  `/Volumes/My Passport/EyeScan_Local_Data/large_dr_82gb_work/`
+
+## Retry Result - 2026-05-04
+
+The retry confirmed that `/Volumes/My Passport/` was mounted and the archive was
+visible at the expected path.
+
+The retry still stopped before Stage A reassembly/listing because there was no
+safe writable scratch location:
+
+- `/Volumes/My Passport` had about 406.0 GB free, but it was mounted as NTFS
+  read-only.
+- Creating `/Volumes/My Passport/EyeScan_Local_Data/large_dr_82gb_work/` failed
+  with `Read-only file system`.
+- The internal `/Users/bharatsharma/Documents` volume still had only about
+  16 GiB free, below the safe threshold for a train ZIP reassembly.
+
+Because the only high-capacity scratch volume was read-only and the internal
+scratch volume was too small, no train split files were copied, no train ZIP was
+reassembled, no train ZIP listing was created, and no preview images were
+extracted.
 
 ## Local Work Folder
 
@@ -31,7 +53,7 @@ No large files were written to these folders during this attempt.
 
 Train image access did not work in this run.
 
-Reason:
+Initial blocked-run reason:
 
 - `/Volumes/My Passport/Datasets/DR-Diabetic Retinopathy/diabetic-retinopathy-detection.zip`
   was not visible.
@@ -48,12 +70,24 @@ Additional safety blocker:
   any image extraction.
 - This is below the recommended 200-250 GiB free-space guardrail.
 
-Because of these blockers, Stage A stopped before reassembly or listing.
+Retry blocked-run reason:
+
+- `/Volumes/My Passport/Datasets/DR-Diabetic Retinopathy/diabetic-retinopathy-detection.zip`
+  was visible.
+- `/Volumes/My Passport` was mounted read-only as NTFS.
+- The external volume had enough free space but could not be used for scratch
+  writes.
+- The internal scratch volume still did not have enough free space for safe
+  train ZIP reassembly.
+
+Because of these blockers, Stage A stopped before reassembly or listing in both
+attempts.
 
 ## Stage A Outcome
 
 - Local work folder created: yes.
-- Source archive found at expected mounted path: no.
+- Source archive found at expected mounted path: yes on retry.
+- Safe writable high-capacity scratch path available: no.
 - Train split files copied: no.
 - Train split ZIP reassembled: no.
 - Train ZIP listed: no.
@@ -92,9 +126,9 @@ enough local scratch space is available:
 
 Before retrying Stage A/B:
 
-1. Unlock and mount the external `My Passport` data volume so the archive is
-   visible at `/Volumes/My Passport/Datasets/DR-Diabetic Retinopathy/`.
-2. Use a local-only work location with at least 200-250 GiB free space, or
-   choose a different approved external scratch location outside the repository.
-3. Re-run Stage A only after confirming the archive path and free-space
+1. Use a writable local-only work location with at least 200-250 GiB free
+   space.
+2. If using `My Passport`, remount it through a writable NTFS driver or copy the
+   archive to another approved external scratch disk that macOS can write to.
+3. Re-run Stage A only after confirming the archive path and writable free-space
    guardrails.
