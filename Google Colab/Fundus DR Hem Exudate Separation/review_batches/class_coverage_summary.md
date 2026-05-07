@@ -13,14 +13,23 @@ The canonical reviewed manifest now exists:
 
 Current canonical reviewed manifest state:
 
-- total rows = 932
+- total rows = 2955
 - `dr_pattern_dominant = 932`
-- `accepted = 932`
+- `normal_or_non_specific = 472`
+- `exudate_macular_pattern_dominant = 1080`
+- `mixed_hemorrhage_exudate_pattern = 466`
+- `hemorrhage_pattern_dominant_non_dr = 5`
+- `accepted = 2955`
 
 Current reviewed-manifest contribution:
 
 - Batch 008 accepted clean DR-pattern evidence: 98
 - Large DR Batch 001 accepted clean DR-pattern evidence: 834
+- Large DR Batch 001 accepted competing-bucket evidence: 2023
+
+Large DR Batch 001 now contributes both clean DR-pattern evidence and reviewed
+competing-bucket evidence. The `unusable_low_quality` proposal remains parked
+outside `reviewed_manifest_v1.csv` for a future quality/exclusion lane.
 
 Batches 001-007 remain historical review/support material and are not yet
 backfilled into `reviewed_manifest_v1.csv`.
