@@ -1,0 +1,74 @@
+{
+  "run_name": "baseline_001",
+  "device": "cpu",
+  "torch_version": "2.11.0+cpu",
+  "pretrained_note": "imagenet_pretrained",
+  "frozen_backbone": true,
+  "stop_reason": "early_stopping_patience",
+  "epochs_run": 14,
+  "best_validation_epoch": 9,
+  "validation": {
+    "accuracy": 0.7071428571428572,
+    "macro_precision": 0.7200045993364408,
+    "macro_recall": 0.7071428571428571,
+    "macro_f1": 0.7043369838182651,
+    "weighted_f1": 0.7043369838182651,
+    "total_examples": 280,
+    "correct_examples": 198,
+    "loss": 0.7307471735136849
+  },
+  "test": {
+    "accuracy": 0.7142857142857143,
+    "macro_precision": 0.7203781512605042,
+    "macro_recall": 0.7142857142857143,
+    "macro_f1": 0.7088698969907519,
+    "weighted_f1": 0.708869896990752,
+    "total_examples": 280,
+    "correct_examples": 200,
+    "loss": 0.7737406075000763
+  },
+  "strong_confusions": [
+    {
+      "truth": "exudate_macular_pattern_dominant",
+      "pred": "mixed_hemorrhage_exudate_pattern",
+      "count": 20
+    },
+    {
+      "truth": "mixed_hemorrhage_exudate_pattern",
+      "pred": "dr_pattern_dominant",
+      "count": 18
+    },
+    {
+      "truth": "dr_pattern_dominant",
+      "pred": "normal_or_non_specific",
+      "count": 7
+    },
+    {
+      "truth": "mixed_hemorrhage_exudate_pattern",
+      "pred": "exudate_macular_pattern_dominant",
+      "count": 7
+    },
+    {
+      "truth": "exudate_macular_pattern_dominant",
+      "pred": "normal_or_non_specific",
+      "count": 6
+    },
+    {
+      "truth": "exudate_macular_pattern_dominant",
+      "pred": "dr_pattern_dominant",
+      "count": 5
+    },
+    {
+      "truth": "normal_or_non_specific",
+      "pred": "dr_pattern_dominant",
+      "count": 4
+    },
+    {
+      "truth": "dr_pattern_dominant",
+      "pred": "mixed_hemorrhage_exudate_pattern",
+      "count": 4
+    }
+  ],
+  "class_collapse_observed": false,
+  "output_folder": "F:\\EyeScan_Local_Data\\large_dr_82gb_work\\fitting_v1_training_runs\\baseline_001"
+}
