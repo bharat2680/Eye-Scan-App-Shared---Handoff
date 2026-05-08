@@ -25,6 +25,11 @@ Contents:
 
 - `README.md`
 - `TRAINING_PLAN.md`
+- `FITTING_V1_BASELINE_EXECUTION_PLAN.md`
 - `DATA_ACCESS_NOTES.md`
 - `run_fundus_dr_fitting_v1_baseline_colab.ipynb`
 - `scripts/validate_fitting_manifest_v1.py`
+
+For the Dell/Windows execution-ready baseline setup, see:
+
+- `FITTING_V1_BASELINE_EXECUTION_PLAN.md`
