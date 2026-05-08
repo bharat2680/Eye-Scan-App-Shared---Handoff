@@ -1,22 +1,23 @@
-# Batch 008 Fitting Image Cache Windows Result
+﻿# Batch 008 Fitting Image Cache Windows Result
 
-Generated: 2026-05-07 18:54:48
+Generated: 2026-05-08 11:37:39
 
 ## Summary
 
 - Expected Batch 008 cache rows: 98
-- Found in Dell checkout: 0
-- Cached externally: 0
-- Missing: 98
+- Found/cached externally: 98
+- Missing: 0
 - External cache root: `F:\EyeScan_Local_Data\large_dr_82gb_work\fitting_v1_batch_008_image_cache`
-- External cache PNG count now: 0
-- External cache PNG bytes now: 0
-- Free space before audit/cache work: 399,924,711,424 bytes
-- Free space after audit/cache work: 399,924,711,424 bytes
+- Transfer manifest used: `F:\EyeScan_Local_Data\large_dr_82gb_work\fitting_v1_batch_008_image_cache\batch_008_fitting_98_transfer_manifest.csv`
+- External cache PNG count now: 98
+- External cache PNG bytes now: 6934155
+- Large DR external cached JPEG count: 1766
+- Total fitting images externally/resolvably available on Dell: 1864
+- Current F: free space after audit update: 399,910,522,880 bytes
 
 ## Source Interpretation
 
-Batch 008 rows were identified from `fitting_manifest_v1.csv` where `image_path` does not start with `train/`.
+Batch 008 rows were identified from `fitting_manifest_v1.csv` where `image_path` does not start with `train/`. The Large DR rows continue to resolve through the separate Windows external JPEG cache.
 
 - Fitting manifest rows: 1864
 - Large DR `train/` rows: 1766
@@ -24,18 +25,17 @@ Batch 008 rows were identified from `fitting_manifest_v1.csv` where `image_path`
 - Reviewed manifest rows: 2955
 - `challenge_manifest_v1.csv` found: 0
 
-The canonical Mac-side availability audit at `BATCH_008_FITTING_IMAGE_AVAILABILITY_AUDIT.md` reports these 98 PNGs as available on Mac. This Dell/Windows audit checks only whether the same repo-relative source paths exist in this Dell checkout.
-
 ## Dell/Windows Availability
 
-- Safe to use from Dell checkout as-is: no
-- Needs external training cache or synchronized asset bundle for Dell/Windows: yes
+The Mac-created Batch 008 transfer bundle is now present under the Dell external cache root and has been extracted there. Its transfer manifest maps each Batch 008 `evidence_id` and original repo-relative `image_path` to a copied PNG filename under `images/`.
 
-No PNG source files were found in the Dell checkout for the 98 Batch 008 fitting rows, so no raw PNGs were copied or fabricated.
+- Safe to use from Dell checkout as-is: no, these repo-relative PNGs are still not committed in this checkout.
+- Safe to use from Dell external cache: yes, all 98 Batch 008 fitting PNGs are present externally.
+- Raw PNGs committed to repo: 0
 
 ## Recommended Next Step
 
-Copy the Batch 008 upload-pack image files from the Mac-side checkout/artifact source into a Dell-accessible external cache, then rerun this audit to populate/verify the 98 PNG mappings.
+For a future training dry-run, configure the Windows data resolver to read Large DR `train/*.jpeg` rows from `F:\EyeScan_Local_Data\large_dr_82gb_work\fitting_v1_image_cache` and Batch 008 PNG rows from `F:\EyeScan_Local_Data\large_dr_82gb_work\fitting_v1_batch_008_image_cache\images` using the per-row mapping in this audit.
 
 ## Guardrails
 
