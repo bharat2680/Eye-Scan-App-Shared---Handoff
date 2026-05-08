@@ -1,0 +1,5 @@
+run_name,split,checkpoint_exists,per_row_prediction_csv,rows,misclassified_rows,target_error_slice_rows,exudate_to_mixed,mixed_to_dr,mixed_to_exudate,dr_to_normal
+baseline_001,val,true,F:\EyeScan_Local_Data\large_dr_82gb_work\fitting_v1_training_runs\baseline_001\baseline_001_per_row_predictions_val_test.csv,280,82,49,22,13,8,6
+baseline_001,test,true,F:\EyeScan_Local_Data\large_dr_82gb_work\fitting_v1_training_runs\baseline_001\baseline_001_per_row_predictions_val_test.csv,280,80,52,20,18,7,7
+baseline_002,val,true,F:\EyeScan_Local_Data\large_dr_82gb_work\fitting_v1_training_runs\baseline_002\baseline_002_per_row_predictions_val_test.csv,280,82,43,19,13,9,2
+baseline_002,test,true,F:\EyeScan_Local_Data\large_dr_82gb_work\fitting_v1_training_runs\baseline_002\baseline_002_per_row_predictions_val_test.csv,280,81,53,19,22,7,5
