@@ -30,6 +30,13 @@ A future training runtime should:
 - resolve image paths carefully
 - fail loudly on missing files instead of silently skipping data
 
+For the current Dell/Windows cache layout, see:
+
+- `DATA_PATH_RESOLUTION_WINDOWS.md`
+- `scripts/resolve_fitting_manifest_images_windows.py`
+- `data_cache_audit/fitting_v1_image_cache_manifest_windows.csv`
+- `data_cache_audit/batch_008_fitting_image_cache_manifest_windows.csv`
+
 ## Non-Goals
 
 This scaffold does not:
