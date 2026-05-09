@@ -1,0 +1,88 @@
+{
+  "run_name": "baseline_003_v2",
+  "device": "cpu",
+  "torch_version": "2.11.0+cpu",
+  "pretrained_note": "imagenet_pretrained_checkpoint_loaded_for_inference",
+  "frozen_backbone": true,
+  "top_block_fine_tuning": false,
+  "training_completed": false,
+  "stop_reason": "stopped_execution_timeout_after_epoch_5",
+  "epochs_run": 5,
+  "best_validation_epoch": 3,
+  "runtime_seconds_finalization": 960.6780290603638,
+  "resolved_manifest": "F:\\EyeScan_Local_Data\\large_dr_82gb_work\\fitting_v2_resolved_manifest_windows.csv",
+  "run_root": "F:\\EyeScan_Local_Data\\large_dr_82gb_work\\fitting_v1_training_runs\\baseline_003_v2",
+  "validation": {
+    "accuracy": 0.703125,
+    "macro_precision": 0.7372065867471156,
+    "macro_recall": 0.703125,
+    "macro_f1": 0.705366333835872,
+    "weighted_f1": 0.705366333835872,
+    "total_examples": 256,
+    "correct_examples": 180,
+    "loss": 0.8549362160265446
+  },
+  "test": {
+    "accuracy": 0.65234375,
+    "macro_precision": 0.6702830982508178,
+    "macro_recall": 0.65234375,
+    "macro_f1": 0.6527900014967819,
+    "weighted_f1": 0.6527900014967819,
+    "total_examples": 256,
+    "correct_examples": 167,
+    "loss": 0.864396370947361
+  },
+  "strong_confusions": [
+    {
+      "truth": "exudate_macular_pattern_dominant",
+      "pred": "mixed_hemorrhage_exudate_pattern",
+      "count": 16
+    },
+    {
+      "truth": "mixed_hemorrhage_exudate_pattern",
+      "pred": "dr_pattern_dominant",
+      "count": 15
+    },
+    {
+      "truth": "normal_or_non_specific",
+      "pred": "dr_pattern_dominant",
+      "count": 12
+    },
+    {
+      "truth": "mixed_hemorrhage_exudate_pattern",
+      "pred": "exudate_macular_pattern_dominant",
+      "count": 10
+    },
+    {
+      "truth": "normal_or_non_specific",
+      "pred": "mixed_hemorrhage_exudate_pattern",
+      "count": 7
+    },
+    {
+      "truth": "dr_pattern_dominant",
+      "pred": "mixed_hemorrhage_exudate_pattern",
+      "count": 7
+    },
+    {
+      "truth": "exudate_macular_pattern_dominant",
+      "pred": "dr_pattern_dominant",
+      "count": 7
+    },
+    {
+      "truth": "normal_or_non_specific",
+      "pred": "exudate_macular_pattern_dominant",
+      "count": 5
+    }
+  ],
+  "class_collapse_observed": false,
+  "baseline_comparison": {
+    "baseline_001_test_macro_f1": 0.7088698969907519,
+    "baseline_002_test_macro_f1": 0.707801841153512,
+    "baseline_003_v2_test_macro_f1": 0.6527900014967819,
+    "delta_vs_baseline_001_test_macro_f1": -0.05607989549396997,
+    "delta_vs_baseline_002_test_macro_f1": -0.055011839656730066,
+    "baseline_001_test_accuracy": 0.7142857142857143,
+    "baseline_002_test_accuracy": 0.7107142857142857,
+    "baseline_003_v2_test_accuracy": 0.65234375
+  }
+}

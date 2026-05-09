@@ -1,0 +1,5 @@
+split,class_name,precision,recall,f1,support
+test,normal_or_non_specific,0.8333333333333334,0.625,0.7142857142857143,64
+test,dr_pattern_dominant,0.6046511627906976,0.8125,0.6933333333333334,64
+test,exudate_macular_pattern_dominant,0.6909090909090909,0.59375,0.6386554621848739,64
+test,mixed_hemorrhage_exudate_pattern,0.5522388059701493,0.578125,0.564885496183206,64
