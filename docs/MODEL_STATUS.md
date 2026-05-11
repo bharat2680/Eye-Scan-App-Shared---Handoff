@@ -730,6 +730,33 @@ Last updated: 2026-03-23 21:36 AEDT
   no VisionFM or RETFound transfer-learning artifact exists yet in this lane
   because the required official weights are still missing
 
+## Fundus DR evidence lane status
+
+- canonical lane status:
+  `Google Colab/Fundus DR Hem Exudate Separation/review_manifests/FUNDUS_DR_EVIDENCE_LANE_STATUS.md`
+- reviewed evidence:
+  `reviewed_manifest_v1.csv` has `2955` rows
+- fitting manifests:
+  `fitting_manifest_v1.csv` has `1864` rows and `fitting_manifest_v2.csv`
+  has `1696` rows
+- challenge manifest:
+  `challenge_manifest_v1.csv` has `73` rows and is evaluation/stress-test
+  only
+- Baseline 001:
+  remains the evaluation reference baseline only
+- Baseline 002:
+  did not materially improve on Baseline 001
+- Baseline 003 v2:
+  underperformed and was timeout-limited
+- deployment status:
+  `evaluation_only_not_integration_ready`
+- integration rule:
+  Baseline 001, Baseline 002, and Baseline 003 are not production models; no
+  app, backend, runtime, model-loading, TFLite export, or preserved-package
+  promotion is approved from this Fundus DR evidence lane
+- next safe lane:
+  challenge evaluation planning, data expansion, and further manual review
+
 ## External fundus inspection status
 
 ### `Eye-Fundus.zip`

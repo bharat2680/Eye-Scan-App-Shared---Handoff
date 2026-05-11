@@ -55,6 +55,7 @@ Baseline 001
 - setup: EfficientNetB0, ImageNet initialization, frozen backbone
 - result: reference baseline
 - test macro F1: 0.7089
+- status: evaluation reference only; not a production model
 
 Baseline 002
 
@@ -62,6 +63,7 @@ Baseline 002
 - setup: EfficientNetB0 warmup plus top-block fine-tuning
 - result: no material improvement over Baseline 001
 - test macro F1: 0.7078
+- status: evaluation-only comparison run; not a production model
 
 Baseline 003 v2
 
@@ -69,9 +71,14 @@ Baseline 003 v2
 - setup: EfficientNetB0, frozen backbone
 - result: underperformed and was timeout-limited
 - test macro F1: 0.6528
+- status: evaluation-only comparison run; not a production model
 
 No production model has been selected. No model has been promoted. No
 app/backend integration is approved.
+
+Baseline 001 remains the evaluation reference baseline for this lane. Baselines
+001, 002, and 003 are not production models and do not approve app, backend,
+runtime, model-loading, or TFLite integration.
 
 ## Round 1 Error-Slice Review Summary
 
@@ -87,6 +94,8 @@ As a result:
   label-boundary candidates, and quality stress cases
 - the canonical challenge manifest is intentionally smaller but cleaner and
   independent from the current v2 fitting manifest
+- `challenge_manifest_v1.csv` is evaluation/stress-test only and must not be
+  used as training evidence or as an app-integration approval signal
 
 ## Current Recommendation
 
@@ -105,10 +114,16 @@ Next safe lane:
 - additional manual review of difficult or ambiguous cases
 - data expansion before more training, if broader coverage is needed
 
+The next safe work should stay in challenge evaluation planning, data
+expansion, or further manual review. No app/backend integration is approved from
+the current evidence lane state.
+
 ## Safety Statement
 
 - no TFLite export is approved
-- no app/backend/runtime changes are approved from this lane status
+- no app/backend/runtime/model-loading changes are approved from this lane
+  status
 - no production claims are approved
+- Baseline 001, Baseline 002, and Baseline 003 remain evaluation-only artifacts
 - all model artifacts remain evaluation-only and outside the repo
 - challenge rows must not be used for training
